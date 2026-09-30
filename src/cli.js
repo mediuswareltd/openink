@@ -62,7 +62,7 @@ function init(dir = ".") {
     fs.writeFileSync(path.join(target, file === "gitignore" ? ".gitignore" : file), text);
   }
   const rel = path.relative(process.cwd(), target);
-  console.log(green("✓") + ` Created ${rel || "."}/spec.yaml\n\nNext:\n  ${rel ? `cd ${rel} && ` : ""}npx @mediusware/openink dev`);
+  console.log(green("✓") + ` Created ${rel || "."}/spec.yaml\n\nNext:\n  ${rel ? `cd ${rel} && ` : ""}npx openink dev`);
 }
 
 /** @param {string[]} argv */
