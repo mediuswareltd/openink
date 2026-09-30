@@ -7,7 +7,7 @@ try {
   if (fs.existsSync(".githooks")) {
     execFileSync("git", ["rev-parse", "--is-inside-work-tree"], { stdio: "ignore" });
     execFileSync("git", ["config", "core.hooksPath", ".githooks"]);
-    console.log("✓ git hooks enabled: commit messages are checked against Conventional Commits");
+    console.error("✓ git hooks enabled: commit messages are checked against Conventional Commits");
   }
 } catch {
   // not a git checkout, or git is not installed: nothing to enable
