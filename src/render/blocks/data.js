@@ -16,7 +16,7 @@ export default [
     targets: (b) => (b.rows || []).map((r) => r?.go).filter(Boolean),
     render: (b, c) => {
       const cell = (x) => (isBlock(x) ? c.block(x) : c.tx(x));
-      return `<table class="sf-table"><thead><tr>${(b.columns || []).map((x) => `<th>${c.tx(x)}</th>`).join("")}</tr></thead><tbody>${(b.rows || [])
+      return `<table class="oi-table"><thead><tr>${(b.columns || []).map((x) => `<th>${c.tx(x)}</th>`).join("")}</tr></thead><tbody>${(b.rows || [])
         .map((r) => `<tr${r?.go ? ` class="click" data-go="${c.esc(r.go)}"` : ""}>${cellsOf(r).map((x) => `<td>${cell(x)}</td>`).join("")}</tr>`)
         .join("")}</tbody></table>`;
     },

@@ -9,28 +9,28 @@ export default [
     summary: "Image placeholder: hand-drawn box with a cross. Use `round` for avatars.",
     props: { h: size, label, round: { type: "boolean", doc: "Draw a circle instead of a box." } },
     render: (b, c) =>
-      `<sf-placeholder h="${+b.h || 140}" cross${b.label ? ` label="${c.esc(c.plain(b.label))}"` : ""}${b.round ? " round" : ""}></sf-placeholder>`,
+      `<oi-placeholder h="${+b.h || 140}" cross${b.label ? ` label="${c.esc(c.plain(b.label))}"` : ""}${b.round ? " round" : ""}></oi-placeholder>`,
   },
   {
     name: "map",
     group: "Media",
     summary: "Map placeholder with a pin.",
     props: { h: size, label },
-    render: (b, c) => `<sf-placeholder h="${+b.h || 160}" label="${c.esc(c.plain(b.label) || "Map")}" pin></sf-placeholder>`,
+    render: (b, c) => `<oi-placeholder h="${+b.h || 160}" label="${c.esc(c.plain(b.label) || "Map")}" pin></oi-placeholder>`,
   },
   {
     name: "box",
     group: "Media",
     summary: "Generic hand-drawn box, for ads, embeds, anything else.",
     props: { h: size, label },
-    render: (b, c) => `<sf-placeholder h="${+b.h || 80}" label="${c.esc(c.plain(b.label))}"></sf-placeholder>`,
+    render: (b, c) => `<oi-placeholder h="${+b.h || 80}" label="${c.esc(c.plain(b.label))}"></oi-placeholder>`,
   },
   {
     name: "video",
     group: "Media",
     summary: "Video placeholder with a play button.",
     props: { h: size, label },
-    render: (b, c) => `<sf-placeholder h="${+b.h || 220}" play${b.label ? ` label="${c.esc(c.plain(b.label))}"` : ""}></sf-placeholder>`,
+    render: (b, c) => `<oi-placeholder h="${+b.h || 220}" play${b.label ? ` label="${c.esc(c.plain(b.label))}"` : ""}></oi-placeholder>`,
   },
   {
     name: "carousel",
@@ -38,14 +38,14 @@ export default [
     summary: "Swipeable gallery: image placeholder with arrows and page dots.",
     props: { h: size, label, count: { type: "number", doc: "Number of slides shown as dots (default 4)." } },
     render: (b, c) =>
-      `<sf-placeholder h="${+b.h || 260}" cross dots="${+b.count || 4}"${b.label ? ` label="${c.esc(c.plain(b.label))}"` : ""}></sf-placeholder>`,
+      `<oi-placeholder h="${+b.h || 260}" cross dots="${+b.count || 4}"${b.label ? ` label="${c.esc(c.plain(b.label))}"` : ""}></oi-placeholder>`,
   },
   {
     name: "dropzone",
     group: "Media",
     summary: "Dashed upload area with an arrow.",
     props: { h: size, label },
-    render: (b, c) => `<sf-placeholder h="${+b.h || 140}" upload label="${c.esc(c.plain(b.label) || "Drop files here")}"></sf-placeholder>`,
+    render: (b, c) => `<oi-placeholder h="${+b.h || 140}" upload label="${c.esc(c.plain(b.label) || "Drop files here")}"></oi-placeholder>`,
   },
   {
     name: "chart",
@@ -58,8 +58,8 @@ export default [
       label: { type: "text", doc: "Caption in the corner." },
     },
     render: (b, c) =>
-      `<sf-chart kind="${c.esc(b.kind || "line")}" h="${+b.h || 200}"${b.values ? ` values="${c.esc(b.values.join(","))}"` : ""}${
+      `<oi-chart kind="${c.esc(b.kind || "line")}" h="${+b.h || 200}"${b.values ? ` values="${c.esc(b.values.join(","))}"` : ""}${
         b.label ? ` label="${c.esc(c.plain(b.label))}"` : ""
-      }></sf-chart>`,
+      }></oi-chart>`,
   },
 ];

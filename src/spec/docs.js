@@ -14,7 +14,7 @@ const TYPE_LABEL = {
   rows: "list of rows",
 };
 
-/** Markdown reference for every block, generated from the registry (also printed by `sketchframe blocks`). */
+/** Markdown reference for every block, generated from the registry (also printed by `openink blocks`). */
 export function blocksMarkdown() {
   const groups = [...new Set(blocks.map((b) => b.group))];
   const out = [

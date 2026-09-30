@@ -1,7 +1,7 @@
-# yaml-language-server: $schema=https://unpkg.com/sketchframe/schema/spec.schema.json
+# yaml-language-server: $schema=https://unpkg.com/openink/schema/spec.schema.json
 #
-# {{name}}: describe your screens here, then run `npx sketchframe dev`.
-# Block reference: `npx sketchframe blocks`
+# {{name}}: describe your screens here, then run `npx openink dev`.
+# Block reference: `npx openink blocks`
 
 name: {{name}}
 

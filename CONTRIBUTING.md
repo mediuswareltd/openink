@@ -5,7 +5,7 @@ Thanks for helping. This project is small on purpose: a YAML spec goes in, a han
 ## Setup
 
 ```bash
-git clone https://github.com/OWNER/sketchframe && cd sketchframe
+git clone https://github.com/OWNER/openink && cd openink
 npm install
 npm test                # unit + CLI tests, no browser needed
 npm run dev             # live preview of examples/rental-portal at http://localhost:3000
@@ -20,11 +20,11 @@ Node 20 or newer. `pdf`, `png` and `npm run screenshots` also need Chrome, Chrom
 | `src/render/blocks/` | Block definitions. **One definition drives rendering, validation, docs and the JSON Schema.** |
 | `src/render/` | `context.js` (helpers passed to blocks) and `page.js` (HTML shell) |
 | `src/runtime/` | JavaScript that runs in the generated page (navigation, i18n, placeholders) |
-| `src/styles/sketchframe.css` | All styling and the design tokens |
+| `src/styles/openink.css` | All styling and the design tokens |
 | `src/spec/` | Validator, schema generator, docs generator |
 | `src/cli.js` `build.js` `dev.js` `export.js` | Command line, build pipeline, dev server, PDF/PNG |
 | `examples/` | Example projects; they are validated by the tests and used for README screenshots |
-| `templates/starter/` | What `sketchframe init` copies |
+| `templates/starter/` | What `openink init` copies |
 
 ## Adding a block
 
@@ -40,7 +40,7 @@ Node 20 or newer. `pdf`, `png` and `npm run screenshots` also need Chrome, Chrom
 - Keep them focused; one change per PR.
 - `npm test` must pass. Add tests for behaviour changes.
 - User-visible changes go under **Unreleased** in `CHANGELOG.md`.
-- If you change how something looks, attach a screenshot (`sketchframe png examples/rental-portal`).
+- If you change how something looks, attach a screenshot (`openink png examples/rental-portal`).
 - **Do not upgrade `roughjs`** without testing every form control: wired-elements calls a function newer roughjs versions removed (`fillPolygon`), and the toggle, slider and textarea silently stop drawing.
 
 ## Reporting bugs

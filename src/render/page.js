@@ -47,17 +47,17 @@ ${(s.blocks || []).map((b) => c.block(b)).join("\n")}
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>${esc(spec.name)} · wireframe</title>
-<link rel="stylesheet" href="sketchframe.css" />
+<link rel="stylesheet" href="openink.css" />
 ${themeLink}
 ${colorCss}
 ${langCss}
-<script>window.SKETCHFRAME=${JSON.stringify({ languages: langs, first }).replace(/</g, "\\u003c")};</script>
-<script src="sketchframe.js" defer></script>
+<script>window.OPENINK=${JSON.stringify({ languages: langs, first }).replace(/</g, "\\u003c")};</script>
+<script src="openink.js" defer></script>
 ${dev ? DEV_RELOAD : ""}
 </head>
 <body>
 <div class="shell">
-<header class="sf-bar">
+<header class="oi-bar">
 <a class="brand" data-go="${esc(first)}">${esc(spec.name)}</a>
 ${nav}
 ${langBar}

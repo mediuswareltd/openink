@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../schema/spec.schema.json
 #
 # Every block, one screen per family. Use it as a visual catalogue and to compare themes:
-#   sketchframe dev examples/gallery --theme color      (sketch | color | pastel | blueprint | dark)
+#   openink dev examples/gallery --theme color      (sketch | color | pastel | blueprint | dark)
 
 name: Gallery
 

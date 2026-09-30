@@ -1,6 +1,6 @@
 import { $$, config, redraw } from "./dom.js";
 
-const STORAGE_KEY = "sketchframe_lang";
+const STORAGE_KEY = "openink_lang";
 
 /** Text lives in <span data-l="xx"> (shown by CSS). Attributes live in data-<attr>-<lang> and are swapped here. */
 export function setLang(lang) {

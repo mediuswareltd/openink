@@ -8,9 +8,9 @@ import { fileURLToPath } from "node:url";
 import { build, SpecError } from "../src/build.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const bin = path.join(root, "bin/sketchframe.js");
+const bin = path.join(root, "bin/openink.js");
 const cli = (args, cwd) => spawnSync(process.execPath, [bin, ...args], { cwd, encoding: "utf8", env: { ...process.env, NO_COLOR: "1" } });
-const tmp = () => fs.mkdtempSync(path.join(os.tmpdir(), "sketchframe-"));
+const tmp = () => fs.mkdtempSync(path.join(os.tmpdir(), "openink-"));
 
 test("--version prints the package version", () => {
   const { version } = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
@@ -27,7 +27,7 @@ test("init creates a project that validates and builds", () => {
   assert.equal(cli(["validate", dir]).status, 0);
   const built = cli(["build", dir]);
   assert.equal(built.status, 0, built.stderr);
-  for (const f of ["index.html", "sketchframe.js", "sketchframe.css"]) assert.ok(fs.existsSync(path.join(dir, "dist", f)), f);
+  for (const f of ["index.html", "openink.js", "openink.css"]) assert.ok(fs.existsSync(path.join(dir, "dist", f)), f);
 });
 
 test("init refuses to overwrite an existing spec", () => {
@@ -49,7 +49,7 @@ test("validate exits 1 and lists errors with their paths", () => {
 test("build without a spec explains what to do", () => {
   const r = cli(["build", tmp()]);
   assert.equal(r.status, 1);
-  assert.match(r.stderr, /No spec\.yaml found.*sketchframe init/);
+  assert.match(r.stderr, /No spec\.yaml found.*openink init/);
 });
 
 test("invalid YAML gives a readable error", () => {

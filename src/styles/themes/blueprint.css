@@ -8,10 +8,10 @@
   --note: #ffe08a;
   --card-bg: rgba(255, 255, 255, 0.07);
   --ok: #7ee2a8;
-  --sf-stroke: #cfe0ff;
-  --sf-fill: rgba(255, 255, 255, 0.08);
-  --sf-line: #6c93e0;
-  --sf-chart: #ffd166;
+  --oi-stroke: #cfe0ff;
+  --oi-fill: rgba(255, 255, 255, 0.08);
+  --oi-line: #6c93e0;
+  --oi-chart: #ffd166;
   --wired-toggle-on-color: #ffd166;
   --wired-slider-knob-color: #ffd166;
   --wired-slider-bar-color: #f1f6ff;

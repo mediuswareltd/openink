@@ -1,6 +1,6 @@
 import { ICON_NAMES } from "../../icons.js";
 
-/** Named colours a block or screen can be tinted with (`tone:`). Defined as CSS variables in sketchframe.css. */
+/** Named colours a block or screen can be tinted with (`tone:`). Defined as CSS variables in openink.css. */
 export const TONES = ["blue", "green", "yellow", "red", "purple", "pink", "orange", "teal", "gray"];
 
 /** Props every block accepts, whatever its type. Handled by the renderer, not by individual blocks. */

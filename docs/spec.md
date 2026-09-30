@@ -53,7 +53,7 @@ colors:             # optional: override single tokens on top of the theme
 | `blueprint` | White lines on blue graph paper. |
 | `dark` | Dark background, light lines, coral accent. |
 
-Try them without editing the spec: `sketchframe dev --theme dark`.
+Try them without editing the spec: `openink dev --theme dark`.
 
 `colors:` accepts `ink` (text and lines), `paper` (page background), `muted` (secondary text and outlines), `line` (dashed dividers), `accent` (pins, sliders, active states, "wait" badges), `note` (sticky notes) and `card` (card and dialog background). Values are any CSS colour.
 
@@ -69,7 +69,7 @@ theme: brand.css
 body { font-family: "Comic Neue", cursive; }
 ```
 
-Also available: `--wired-toggle-on-color`, `--wired-slider-knob-color`, `--wired-progress-color`, `--card-bg`, `--ok` (green of "on" badges) and the tone palette `--blue`, `--blue-bg`, … (see `src/styles/sketchframe.css`).
+Also available: `--wired-toggle-on-color`, `--wired-slider-knob-color`, `--wired-progress-color`, `--card-bg`, `--ok` (green of "on" badges) and the tone palette `--blue`, `--blue-bg`, … (see `src/styles/openink.css`).
 
 ### 2. One part: `tone:` and `fill:` on any block
 
@@ -117,7 +117,7 @@ A `{ type: modal, id: ... }` block inside a screen works too, but only from that
 
 ## Reusing blocks (YAML anchors)
 
-Top-level keys starting with `x-` are ignored by sketchframe, so you can define a block once there with an anchor (`&name`) and reuse it anywhere with an alias (`*name`):
+Top-level keys starting with `x-` are ignored by openink, so you can define a block once there with an anchor (`&name`) and reuse it anywhere with an alias (`*name`):
 
 ```yaml
 x-post-actions: &post-actions
@@ -200,13 +200,13 @@ Put images, logos or fonts in `assets/` next to the spec; the folder is copied t
 
 ## Output
 
-`sketchframe build` writes:
+`openink build` writes:
 
 ```
 dist/
 ├── index.html         all screens in one page; navigation is client-side (#screen-id)
-├── sketchframe.js     runtime, with wired-elements and RoughJS bundled in
-├── sketchframe.css
+├── openink.js     runtime, with wired-elements and RoughJS bundled in
+├── openink.css
 ├── theme-<name>.css   (if `theme:` is a preset other than sketch)
 ├── <your>.css         (if `theme:` is your own file)
 └── assets/            (if the folder exists)

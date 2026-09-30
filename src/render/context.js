@@ -40,7 +40,7 @@ export function createContext(spec) {
       `${b.go ? ` data-go="${esc(b.go)}"` : ""}${b.toast ? ctx.attr("data-toast", b.toast) : ""}${b.open ? ` data-open="${esc(b.open)}"` : ""}${b.close ? " data-close" : ""}`,
 
     /** A hand-drawn icon. */
-    icon: (name, size = 18, filled = false) => `<sf-icon name="${esc(name)}" size="${size}"${filled ? " filled" : ""}></sf-icon>`,
+    icon: (name, size = 18, filled = false) => `<oi-icon name="${esc(name)}" size="${size}"${filled ? " filled" : ""}></oi-icon>`,
 
     /** Icon + label, for buttons and nav items. Either may be missing. */
     inner: (b) => `${b.icon ? ctx.icon(b.icon) : ""}${b.label != null ? `<span class="btn-label">${ctx.tx(b.label)}</span>` : ""}`,

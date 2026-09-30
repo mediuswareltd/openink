@@ -1,10 +1,10 @@
 import rough from "roughjs/bundled/rough.esm.js";
 
 /**
- * <sf-placeholder h="160" label="Photo" cross pin round play dots="4" upload>
+ * <oi-placeholder h="160" label="Photo" cross pin round play dots="4" upload>
  * A hand-drawn box (RoughJS) used for images, maps, video, galleries, uploads.
  * Colours come from CSS variables, so a `tone` on a parent block recolours it:
- *   --sf-stroke (outline), --sf-fill (hatch fill), --accent (pin / play button)
+ *   --oi-stroke (outline), --oi-fill (hatch fill), --accent (pin / play button)
  */
 class Placeholder extends HTMLElement {
   connectedCallback() {
@@ -23,13 +23,13 @@ class Placeholder extends HTMLElement {
       svg.replaceChildren();
       svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
       const css = getComputedStyle(this);
-      const stroke = css.getPropertyValue("--sf-stroke").trim() || "#8a8a85";
-      const fill = css.getPropertyValue("--sf-fill").trim() || "#f3f1ea";
+      const stroke = css.getPropertyValue("--oi-stroke").trim() || "#8a8a85";
+      const fill = css.getPropertyValue("--oi-fill").trim() || "#f3f1ea";
       const accent = css.getPropertyValue("--accent").trim() || "#c2410c";
       const paper = css.getPropertyValue("--paper").trim() || "#fdfcf8";
       const rc = rough.svg(svg);
       const ink = { roughness: 1.6, stroke, seed: 7 };
-      const soft = { roughness: 1.6, stroke: css.getPropertyValue("--sf-line").trim() || "#cfcfc8", seed: 3 };
+      const soft = { roughness: 1.6, stroke: css.getPropertyValue("--oi-line").trim() || "#cfcfc8", seed: 3 };
       const solid = { ...ink, stroke: accent, fill: accent, fillStyle: "solid" };
 
       if (this.hasAttribute("round")) {
@@ -85,4 +85,4 @@ class Placeholder extends HTMLElement {
   }
 }
 
-if (!customElements.get("sf-placeholder")) customElements.define("sf-placeholder", Placeholder);
+if (!customElements.get("oi-placeholder")) customElements.define("oi-placeholder", Placeholder);

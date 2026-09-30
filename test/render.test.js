@@ -49,7 +49,7 @@ test("dev mode injects the reload poller, production does not", () => {
 
 test("theme adds a stylesheet link after the base styles", () => {
   const html = page({ theme: "theme.css", screens: [{ id: "a", blocks: [] }] });
-  assert.ok(html.indexOf("sketchframe.css") < html.indexOf("theme.css"));
+  assert.ok(html.indexOf("openink.css") < html.indexOf("theme.css"));
 });
 
 test("screen width and centered containers reach the markup", () => {
@@ -71,7 +71,7 @@ test("a screen tone is set on the section", () => {
 
 test("buttons render icons and stay usable without a label", () => {
   const withBoth = one({ type: "button", icon: "heart", label: "Like" });
-  assert.match(withBoth, /<sf-icon name="heart"[^>]*><\/sf-icon><span class="btn-label">Like<\/span>/);
+  assert.match(withBoth, /<oi-icon name="heart"[^>]*><\/oi-icon><span class="btn-label">Like<\/span>/);
   const iconOnly = one({ type: "button", icon: "heart" });
   assert.ok(!iconOnly.includes("btn-label"));
 });
@@ -96,7 +96,7 @@ test("themes and colors: preset stylesheet, custom file, and :root overrides", (
 });
 
 test("chart values reach the element, accordion opens the requested section", () => {
-  assert.match(one({ type: "chart", kind: "bar", values: [1, 2, 3] }), /<sf-chart kind="bar" h="200" values="1,2,3">/);
+  assert.match(one({ type: "chart", kind: "bar", values: [1, 2, 3] }), /<oi-chart kind="bar" h="200" values="1,2,3">/);
   const acc = one({ type: "accordion", open: 1, items: [{ label: "a", children: [] }, { label: "b", children: [] }] });
   assert.equal((acc.match(/<details open>/g) || []).length, 1);
 });

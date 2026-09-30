@@ -25,7 +25,7 @@ export default [
       ...ACTION,
     },
     render: (b, c) =>
-      `<div class="avatar${b.go || b.open ? " click" : ""}"${c.act(b)}><sf-placeholder h="${+b.size || 44}" round></sf-placeholder>${
+      `<div class="avatar${b.go || b.open ? " click" : ""}"${c.act(b)}><oi-placeholder h="${+b.size || 44}" round></oi-placeholder>${
         b.name || b.sub ? `<div class="avatar-text">${b.name ? `<strong>${c.tx(b.name)}</strong>` : ""}${b.sub ? `<span class="muted">${c.tx(b.sub)}</span>` : ""}</div>` : ""
       }</div>`,
   },
@@ -81,6 +81,6 @@ export default [
     group: "Content",
     summary: "Underlined text link.",
     props: { text: { type: "text", doc: "Link text.", required: true }, ...ACTION },
-    render: (b, c) => `<a class="sf-link"${c.act(b)}>${c.tx(b.text)}</a>`,
+    render: (b, c) => `<a class="oi-link"${c.act(b)}>${c.tx(b.text)}</a>`,
   },
 ];

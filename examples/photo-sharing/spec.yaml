@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=../../schema/spec.schema.json
 #
 # A photo-sharing social app: feed, stories, reels, explore, messages, profile and a mobile view.
-# Try it:  sketchframe dev examples/photo-sharing          (add --theme color | pastel | dark | blueprint)
+# Try it:  openink dev examples/photo-sharing          (add --theme color | pastel | dark | blueprint)
 #
 # Shows: icons, avatars, global modals, carousel + video, device frame + tab bar,
 #        and colouring only *parts* of an otherwise plain sketch (tone: pink / red / blue).
 #
-# Reusable pieces: top-level `x-*` keys are ignored by sketchframe, so they are a good place
+# Reusable pieces: top-level `x-*` keys are ignored by openink, so they are a good place
 # to define YAML anchors (&name) that screens reuse with an alias (*name).
 
 name: Picto

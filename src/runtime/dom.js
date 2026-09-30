@@ -1,6 +1,6 @@
 export const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
-export const config = window.SKETCHFRAME || { languages: [], first: "" };
+export const config = window.OPENINK || { languages: [], first: "" };
 
 /**
  * wired-elements only draw when their size changes, and they draw at 0x0 while hidden.

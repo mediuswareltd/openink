@@ -1,11 +1,11 @@
 # {{name}}
 
-Wireframes built with [sketchframe](https://github.com/OWNER/sketchframe).
+Wireframes built with [openink](https://github.com/OWNER/openink).
 
 ```bash
-npx sketchframe dev        # live preview at http://localhost:3000
-npx sketchframe build      # static site in dist/
-npx sketchframe pdf        # dist/{{name}}.pdf
+npx openink dev        # live preview at http://localhost:3000
+npx openink build      # static site in dist/
+npx openink pdf        # dist/{{name}}.pdf
 ```
 
-Edit `spec.yaml`; `npx sketchframe blocks` lists every block you can use.
+Edit `spec.yaml`; `npx openink blocks` lists every block you can use.

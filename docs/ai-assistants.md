@@ -1,6 +1,6 @@
 # Working with AI assistants
 
-sketchframe is designed so that an assistant (Claude Code, Cursor, Copilot, ChatGPT…) can turn a description into a prototype **without writing HTML**:
+Open Ink is designed so that an assistant (Claude Code, Cursor, Copilot, ChatGPT…) can turn a description into a prototype **without writing HTML**:
 
 > "Wireframe a marketplace for used bikes: search with filters, listing page with a contact form, seller dashboard."
 
@@ -8,12 +8,12 @@ The assistant writes `spec.yaml`, the tool checks it, and you get a consistent h
 
 ## How it works
 
-`sketchframe init` puts an `AGENTS.md` in your project. Most assistants read it automatically; it tells them to:
+`openink init` puts an `AGENTS.md` in your project. Most assistants read it automatically; it tells them to:
 
-1. Run `npx sketchframe blocks` to learn the available blocks.
+1. Run `npx openink blocks` to learn the available blocks.
 2. Edit `spec.yaml` only.
-3. Run `npx sketchframe validate` and fix what it reports.
-4. Run `npx sketchframe png` and look at `dist/png/*.png` to check the layout.
+3. Run `npx openink validate` and fix what it reports.
+4. Run `npx openink png` and look at `dist/png/*.png` to check the layout.
 
 If your assistant uses a different filename (`CLAUDE.md`, `.cursorrules`, …), copy or rename `AGENTS.md`.
 

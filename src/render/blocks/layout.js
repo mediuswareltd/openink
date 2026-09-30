@@ -59,7 +59,7 @@ export default [
       `<div class="accordion">${(b.items || [])
         .map(
           (s, i) =>
-            `<details${b.open === i ? " open" : ""}><summary>${c.tx(s.label)}<sf-icon name="chevron-down" size="18"></sf-icon></summary><div class="stack">${(s.children || [])
+            `<details${b.open === i ? " open" : ""}><summary>${c.tx(s.label)}<oi-icon name="chevron-down" size="18"></oi-icon></summary><div class="stack">${(s.children || [])
               .map((x) => c.block(x))
               .join("")}</div></details>`
         )

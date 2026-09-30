@@ -1,4 +1,4 @@
-# Extending sketchframe
+# Extending openink
 
 ## Add a block
 
@@ -66,18 +66,18 @@ If a block hides other blocks somewhere other than `children` (like `tabs` and `
 
 ## Change the look
 
-Everything visual is in `src/styles/sketchframe.css`, driven by CSS variables at the top. Add new component styles there. Projects can also override tokens with their own `theme:` file, without touching the framework.
+Everything visual is in `src/styles/openink.css`, driven by CSS variables at the top. Add new component styles there. Projects can also override tokens with their own `theme:` file, without touching the framework.
 
 ## Add runtime behaviour
 
-Code that runs in the generated page lives in `src/runtime/` and is bundled into `sketchframe.js` by esbuild. Interactive blocks mark their markup with `data-*` attributes (`data-chips`, `data-tabs`, …) and `src/runtime/index.js` handles the clicks by delegation.
+Code that runs in the generated page lives in `src/runtime/` and is bundled into `openink.js` by esbuild. Interactive blocks mark their markup with `data-*` attributes (`data-chips`, `data-tabs`, …) and `src/runtime/index.js` handles the clicks by delegation.
 
 Remember that wired-elements only draw when their size changes and draw at 0×0 while hidden. Call `redraw()` from `src/runtime/dom.js` after you show something that was hidden.
 
 ## Use it from code
 
 ```js
-import { build, validate, exportFiles } from "sketchframe";
+import { build, validate, exportFiles } from "openink";
 
 await build({ dir: "./my-project", out: "dist" });
 await exportFiles({ dir: "./my-project", png: true });

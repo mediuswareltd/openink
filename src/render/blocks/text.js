@@ -27,7 +27,7 @@ export default [
     group: "Text",
     summary: "Bulleted list.",
     props: { items: { type: "text[]", doc: "List items.", required: true } },
-    render: (b, c) => `<ul class="sf-list">${(b.items || []).map((i) => `<li>${c.tx(i)}</li>`).join("")}</ul>`,
+    render: (b, c) => `<ul class="oi-list">${(b.items || []).map((i) => `<li>${c.tx(i)}</li>`).join("")}</ul>`,
   },
   {
     name: "note",

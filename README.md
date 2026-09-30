@@ -1,4 +1,4 @@
-# sketchframe
+# Open Ink
 
 **Describe screens in YAML. Get a clickable, hand-drawn wireframe prototype.**
 
@@ -49,18 +49,18 @@ modals:
 ## Quick start
 
 ```bash
-npx sketchframe init my-wireframes
+npx openink init my-wireframes
 cd my-wireframes
-npx sketchframe dev            # live preview at http://localhost:3000
+npx openink dev            # live preview at http://localhost:3000
 ```
 
 ```bash
-npx sketchframe validate       # check the spec
-npx sketchframe build          # static site → dist/
-npx sketchframe pdf            # dist/<name>.pdf, one screen per page
-npx sketchframe png            # dist/png/<screen>.png
-npx sketchframe blocks         # list every block and its props
-npx sketchframe dev --theme dark     # try a colour theme without editing the spec
+npx openink validate       # check the spec
+npx openink build          # static site → dist/
+npx openink pdf            # dist/<name>.pdf, one screen per page
+npx openink png            # dist/png/<screen>.png
+npx openink blocks         # list every block and its props
+npx openink dev --theme dark     # try a colour theme without editing the spec
 ```
 
 Requires Node 20+. PDF and PNG export need Chrome, Chromium or Edge installed (set `CHROME_PATH` if it isn't found).
@@ -122,7 +122,7 @@ Details: [docs/spec.md#colour](docs/spec.md#colour).
 | [`gallery`](examples/gallery) | Every block on one screen per family; try it with `--theme dark` |
 
 ```bash
-npx sketchframe dev examples/photo-sharing
+npx openink dev examples/photo-sharing
 ```
 
 ## Documentation
@@ -137,7 +137,7 @@ npx sketchframe dev examples/photo-sharing
 ## Use it from code
 
 ```js
-import { build, validate, exportFiles } from "sketchframe";
+import { build, validate, exportFiles } from "openink";
 
 await build({ dir: "./my-project", out: "dist", theme: "dark" });
 await exportFiles({ dir: "./my-project", png: true });

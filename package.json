@@ -1,11 +1,11 @@
 {
-  "name": "sketchframe",
+  "name": "openink",
   "version": "0.1.0",
   "description": "Describe screens in YAML, get a clickable hand-drawn wireframe prototype (static HTML, PDF, PNG). Built on wired-elements and RoughJS.",
   "keywords": ["wireframe", "prototype", "sketch", "mockup", "hand-drawn", "wired-elements", "roughjs", "ux", "static-site-generator"],
   "license": "MIT",
   "type": "module",
-  "bin": { "sketchframe": "bin/sketchframe.js" },
+  "bin": { "openink": "bin/openink.js" },
   "main": "./src/index.js",
   "exports": {
     ".": "./src/index.js",
@@ -18,7 +18,7 @@
     "generate": "node scripts/generate.js",
     "test": "node --test \"test/*.test.js\"",
     "screenshots": "node scripts/screenshots.js",
-    "dev": "node bin/sketchframe.js dev examples/rental-portal"
+    "dev": "node bin/openink.js dev examples/rental-portal"
   },
   "dependencies": {
     "esbuild": "^0.28.2",

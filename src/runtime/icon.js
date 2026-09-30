@@ -2,7 +2,7 @@ import rough from "roughjs/bundled/rough.esm.js";
 import { ICONS } from "../icons.js";
 
 /**
- * <sf-icon name="heart" size="22" filled>
+ * <oi-icon name="heart" size="22" filled>
  * Hand-drawn icon (RoughJS). Inherits the surrounding text colour.
  */
 class Icon extends HTMLElement {
@@ -25,4 +25,4 @@ class Icon extends HTMLElement {
   }
 }
 
-if (!customElements.get("sf-icon")) customElements.define("sf-icon", Icon);
+if (!customElements.get("oi-icon")) customElements.define("oi-icon", Icon);

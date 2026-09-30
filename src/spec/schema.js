@@ -37,8 +37,8 @@ function modalProps() {
 export function buildSchema() {
   return {
     $schema: "https://json-schema.org/draft/2020-12/schema",
-    $id: "https://unpkg.com/sketchframe/schema/spec.schema.json",
-    title: "sketchframe spec",
+    $id: "https://unpkg.com/openink/schema/spec.schema.json",
+    title: "openink spec",
     type: "object",
     required: ["name", "screens"],
     additionalProperties: false,

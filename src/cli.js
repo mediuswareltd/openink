@@ -8,9 +8,9 @@ import { blocksMarkdown } from "./spec/docs.js";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const { version } = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
 
-const HELP = `sketchframe ${version}: sketchy, clickable wireframes from a YAML spec
+const HELP = `openink ${version}: sketchy, clickable wireframes from a YAML spec
 
-Usage: sketchframe <command> [dir] [options]
+Usage: openink <command> [dir] [options]
 
 Commands:
   init [dir]       Create a new project (spec.yaml + AI-assistant instructions)
@@ -62,7 +62,7 @@ function init(dir = ".") {
     fs.writeFileSync(path.join(target, file === "gitignore" ? ".gitignore" : file), text);
   }
   const rel = path.relative(process.cwd(), target);
-  console.log(green("✓") + ` Created ${rel || "."}/spec.yaml\n\nNext:\n  ${rel ? `cd ${rel} && ` : ""}npx sketchframe dev`);
+  console.log(green("✓") + ` Created ${rel || "."}/spec.yaml\n\nNext:\n  ${rel ? `cd ${rel} && ` : ""}npx openink dev`);
 }
 
 /** @param {string[]} argv */
@@ -116,7 +116,7 @@ export async function run(argv) {
     }
 
     default:
-      throw new Error(`Unknown command "${cmd}". Try \`sketchframe --help\`.`);
+      throw new Error(`Unknown command "${cmd}". Try \`openink --help\`.`);
   }
 }
 

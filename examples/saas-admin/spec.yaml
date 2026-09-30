@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=../../schema/spec.schema.json
 #
 # A small SaaS admin in the colourful `color` theme: stats, charts, users, settings.
-# Shows that sketchframe is not tied to one domain, and how a whole project can be coloured.
-#   sketchframe dev examples/saas-admin                  (try --theme dark or --theme sketch)
+# Shows that openink is not tied to one domain, and how a whole project can be coloured.
+#   openink dev examples/saas-admin                  (try --theme dark or --theme sketch)
 
 name: Acme Analytics
 theme: color

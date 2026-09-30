@@ -19,7 +19,7 @@ labels: bug
 ```
 
 **Environment**
-- sketchframe version:
+- openink version:
 - Node version:
 - OS:
 - Browser (for PDF/PNG or viewing):

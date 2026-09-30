@@ -3,7 +3,7 @@ import rough from "roughjs/bundled/rough.esm.js";
 const SAMPLE = { line: [3, 5, 4, 7, 6, 9, 8], area: [3, 5, 4, 7, 6, 9, 8], bar: [5, 8, 3, 9, 6, 7], pie: [40, 30, 20, 10], donut: [40, 30, 20, 10] };
 
 /**
- * <sf-chart kind="line|area|bar|pie|donut" h="200" values="3,5,4" label="Visitors">
+ * <oi-chart kind="line|area|bar|pie|donut" h="200" values="3,5,4" label="Visitors">
  * A hand-drawn chart with made-up data: it shows *where* a chart goes and what kind it is.
  */
 class Chart extends HTMLElement {
@@ -24,8 +24,8 @@ class Chart extends HTMLElement {
       svg.replaceChildren();
       svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
       const css = getComputedStyle(this);
-      const ink = css.getPropertyValue("--sf-stroke").trim() || "#8a8a85";
-      const tone = css.getPropertyValue("--sf-chart").trim() || css.getPropertyValue("--accent").trim() || "#c2410c";
+      const ink = css.getPropertyValue("--oi-stroke").trim() || "#8a8a85";
+      const tone = css.getPropertyValue("--oi-chart").trim() || css.getPropertyValue("--accent").trim() || "#c2410c";
       const rc = rough.svg(svg);
       const line = { roughness: 1.4, stroke: ink, seed: 5 };
       const max = Math.max(...data, 1);
@@ -82,4 +82,4 @@ class Chart extends HTMLElement {
   }
 }
 
-if (!customElements.get("sf-chart")) customElements.define("sf-chart", Chart);
+if (!customElements.get("oi-chart")) customElements.define("oi-chart", Chart);

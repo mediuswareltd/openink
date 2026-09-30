@@ -22,7 +22,7 @@ export class SpecError extends Error {
 /** Find and parse the spec in a project directory. */
 export function loadSpec(dir = ".") {
   const file = SPEC_FILES.map((f) => path.join(dir, f)).find(fs.existsSync);
-  if (!file) throw new SpecError(`No spec.yaml found in ${path.resolve(dir)}. Run \`sketchframe init\` to create one.`);
+  if (!file) throw new SpecError(`No spec.yaml found in ${path.resolve(dir)}. Run \`openink init\` to create one.`);
   let spec;
   try {
     spec = YAML.parse(fs.readFileSync(file, "utf8"));
@@ -65,8 +65,8 @@ export async function build({ dir = ".", out = "dist", dev = false, theme } = {}
   fs.rmSync(outDir, { recursive: true, force: true });
   fs.mkdirSync(outDir, { recursive: true });
   fs.writeFileSync(path.join(outDir, "index.html"), renderPage(spec, { dev }));
-  fs.writeFileSync(path.join(outDir, "sketchframe.js"), await bundleRuntime());
-  fs.copyFileSync(path.join(here, "styles/sketchframe.css"), path.join(outDir, "sketchframe.css"));
+  fs.writeFileSync(path.join(outDir, "openink.js"), await bundleRuntime());
+  fs.copyFileSync(path.join(here, "styles/openink.css"), path.join(outDir, "openink.css"));
   if (customTheme) {
     fs.mkdirSync(path.dirname(path.join(outDir, spec.theme)), { recursive: true });
     fs.copyFileSync(path.join(projectDir, spec.theme), path.join(outDir, spec.theme));

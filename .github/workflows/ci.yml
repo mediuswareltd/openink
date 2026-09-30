@@ -32,10 +32,10 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: node bin/sketchframe.js pdf examples/rental-portal
+      - run: node bin/openink.js pdf examples/rental-portal
         env:
           CHROME_PATH: /usr/bin/google-chrome
-      - run: node bin/sketchframe.js png examples/saas-admin
+      - run: node bin/openink.js png examples/saas-admin
         env:
           CHROME_PATH: /usr/bin/google-chrome
       - uses: actions/upload-artifact@v4
