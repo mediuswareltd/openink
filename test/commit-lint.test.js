@@ -115,3 +115,20 @@ test("the CLI reads a message file (as git passes it to the hook) and sets the e
   assert.equal(run(["--message", "nope"]).status, 1);
   assert.equal(run([]).status, 2);
 });
+
+test("every commit example in the docs passes the checker (so the docs cannot drift from the rules)", () => {
+  const messages = [];
+  for (const file of ["CONTRIBUTING.md", "AGENTS.md"]) {
+    const text = fs.readFileSync(path.join(root, file), "utf8").replace(/\r\n/g, "\n"); // Windows checkouts may use CRLF
+    for (const [, block] of text.matchAll(/```text\n([\s\S]*?)```/g)) {
+      // a block with blank lines is one multi-line message; otherwise every line is a message of its own
+      if (/\n\s*\n/.test(block.trim())) messages.push([file, block.trim()]);
+      else for (const line of block.trim().split("\n")) messages.push([file, line]);
+    }
+  }
+  assert.ok(messages.length >= 8, "expected to find the examples in the docs");
+  for (const [file, message] of messages) {
+    const { ok, errors } = lintCommit(message);
+    assert.ok(ok, `${file}: ${JSON.stringify(message.split("\n")[0])} -> ${errors.join(" ")}`);
+  }
+});

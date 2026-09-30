@@ -13,6 +13,8 @@ npm run dev             # live preview of examples/rental-portal at http://local
 
 Node 20 or newer. `pdf`, `png` and `npm run screenshots` also need Chrome, Chromium or Edge (set `CHROME_PATH` if it is not found).
 
+`npm install` also switches on the repository's git hook (`.githooks/commit-msg`), which checks every commit message against [Conventional Commits](#commit-messages).
+
 ## Where things live
 
 | Path | What it is |
@@ -35,9 +37,91 @@ Node 20 or newer. `pdf`, `png` and `npm run screenshots` also need Chrome, Chrom
 
 `npm test` fails if the generated files are stale.
 
+## Commit messages
+
+Every commit message follows [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/). The history then reads as a changelog, and the next version number can be worked out from the commits.
+
+```
+<type>(<scope>): <description>
+
+<body: why the change was made, not what it does>
+
+<footers: Closes #12, BREAKING CHANGE: ...>
+```
+
+The scope, body and footers are optional.
+
+**Types**
+
+| Type | Use it for | Version bump |
+|---|---|---|
+| `feat` | a new feature or block | minor |
+| `fix` | a bug fix | patch |
+| `perf` | a performance improvement | patch |
+| `docs` | documentation only (README, `docs/`, comments) | none |
+| `style` | formatting only, no change in behaviour | none |
+| `refactor` | a change that neither fixes a bug nor adds a feature | none |
+| `test` | adding or fixing tests | none |
+| `build` | `package.json`, dependencies, packaging | none |
+| `ci` | continuous-integration configuration | none |
+| `chore` | anything else that does not change `src/` or the tests | none |
+| `revert` | reverting an earlier commit | as the reverted commit |
+
+A **breaking change** (of the spec format, a CLI option or the public API) adds `!` before the colon and/or a `BREAKING CHANGE:` footer. It bumps the major version (while the version is `0.x`, the minor).
+
+**Scopes** name the part of the project. They are optional, and these are the ones in use:
+
+| Scope | Where |
+|---|---|
+| `cli` | `src/cli.js`, `bin/` |
+| `build`, `dev`, `export` | `src/build.js`, `src/dev.js`, `src/export.js` |
+| `blocks` | `src/render/blocks/` (a new or changed block) |
+| `render` | `src/render/` (context, page shell) |
+| `runtime` | `src/runtime/` (code that runs in the generated page) |
+| `spec` | `src/spec/` (validator, JSON Schema, docs generator) |
+| `styles`, `themes` | `src/styles/`, `src/styles/themes/` |
+| `examples`, `templates` | `examples/`, `templates/starter/` |
+| `assets` | `assets/` (logos) |
+| `deps` | dependency updates |
+
+**Rules**
+
+- Write the description in the imperative present tense ("add", not "added" or "adds"), start it in lower case, and do not end it with a full stop. Acronyms such as `PDF` or `SVG` may stay in capitals.
+- Keep the first line to 72 characters or fewer. Wrap body lines at 100.
+- Leave a blank line between the first line, the body and the footers.
+- One logical change per commit.
+- Reference issues in a footer: `Closes #12` or `Refs #7`.
+
+**Examples**
+
+```text
+feat(blocks): add a rating block
+fix(export): wait for wired-elements to draw before the screenshot
+docs: explain how to publish a release
+feat(spec)!: rename `nav` to `menu`
+chore(deps): bump esbuild to 0.28.2
+```
+
+```text
+fix(dev): keep serving the last good build when a rebuild fails
+
+The dev server threw the output away as soon as the spec had an error, so
+the browser showed a blank page until the error was fixed.
+
+Closes #12
+```
+
+Not accepted: `Update the docs` (no type), `Feat: Add a block.` (upper case, full stop), `added tests` (no type, past tense), `wip` (not a type).
+
+**Enforcement.** `npm install` sets `core.hooksPath` to `.githooks`, and `.githooks/commit-msg` rejects a message that breaks these rules, with an explanation of what to change. Check a message without committing using `npm run lint:commit -- --message "feat: add a thing"`. Merge, revert, `fixup!` and `squash!` messages are not checked. Please do not bypass the hook with `--no-verify`. Commits made before this rule are not rewritten.
+
+**Pull request titles** use the same format, because the title becomes the merge commit's description.
+
+**AI assistants.** `AGENTS.md` (which `CLAUDE.md` imports) and `.github/copilot-instructions.md` give assistants these rules, and the hook makes sure a message that ignores them is rejected.
+
 ## Pull requests
 
-- Keep them focused; one change per PR.
+- Keep them focused; one change per PR. Give the PR a [Conventional Commits](#commit-messages) title.
 - `npm test` must pass. Add tests for behaviour changes.
 - User-visible changes go under **Unreleased** in `CHANGELOG.md`.
 - If you change how something looks, attach a screenshot (`openink png examples/rental-portal`).
@@ -49,7 +133,7 @@ The package is published to npm as `@mediusware/openink`, **by hand, from `main`
 
 A release is only needed when something that ships in the package changes (`bin/`, `src/`, `templates/`, `schema/`, `docs/*.md`, `README.md`, `CHANGELOG.md`). Changes to tests, examples, screenshots or this file do not need one.
 
-1. **In the pull request**, bump `version` in `package.json` (semver) and add a section to `CHANGELOG.md`. Run `npm run generate && npm test`.
+1. **In the pull request**, bump `version` in `package.json` (semver) and add a section to `CHANGELOG.md`. Choose the bump from the commits since the last release (`git log v0.1.0..HEAD --oneline`): any breaking change is a major bump (minor while `0.x`), any `feat` a minor bump, otherwise a patch. Run `npm run generate && npm test`.
 2. **Merge the pull request into `main`.**
 3. **Publish from an up-to-date `main`:**
 
