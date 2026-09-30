@@ -1,6 +1,11 @@
-# Open Ink
+<h1 align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-white.svg">
+    <img src="assets/logo-black.svg" alt="Open Ink" width="340">
+  </picture>
+</h1>
 
-**Describe screens in YAML. Get a clickable, hand-drawn wireframe prototype.**
+<p align="center"><strong>Describe screens in YAML. Get a clickable, hand-drawn wireframe prototype.</strong></p>
 
 Static HTML you can host or open from disk, plus PDF and PNG export. Built on [wired-elements](https://github.com/rough-stuff/wired-elements) and [RoughJS](https://github.com/rough-stuff/rough), so it looks like a sketch and nobody mistakes it for the final design. Keep it plain pencil, or turn on colour for a whole project or just one part.
 
