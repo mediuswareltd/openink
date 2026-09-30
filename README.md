@@ -49,18 +49,24 @@ modals:
 ## Quick start
 
 ```bash
-npx openink init my-wireframes
+npx @mediusware/openink init my-wireframes
 cd my-wireframes
-npx openink dev            # live preview at http://localhost:3000
+npx @mediusware/openink dev            # live preview at http://localhost:3000
 ```
 
 ```bash
-npx openink validate       # check the spec
-npx openink build          # static site → dist/
-npx openink pdf            # dist/<name>.pdf, one screen per page
-npx openink png            # dist/png/<screen>.png
-npx openink blocks         # list every block and its props
-npx openink dev --theme dark     # try a colour theme without editing the spec
+npx @mediusware/openink validate       # check the spec
+npx @mediusware/openink build          # static site → dist/
+npx @mediusware/openink pdf            # dist/<name>.pdf, one screen per page
+npx @mediusware/openink png            # dist/png/<screen>.png
+npx @mediusware/openink blocks         # list every block and its props
+npx @mediusware/openink dev --theme dark     # try a colour theme without editing the spec
+```
+
+Install once to use the short command (`openink dev`, `openink build`, …):
+
+```bash
+npm install -g @mediusware/openink
 ```
 
 Requires Node 20+. PDF and PNG export need Chrome, Chromium or Edge installed (set `CHROME_PATH` if it isn't found).
@@ -122,7 +128,7 @@ Details: [docs/spec.md#colour](docs/spec.md#colour).
 | [`gallery`](examples/gallery) | Every block on one screen per family; try it with `--theme dark` |
 
 ```bash
-npx openink dev examples/photo-sharing
+npx @mediusware/openink dev examples/photo-sharing
 ```
 
 ## Documentation
@@ -137,7 +143,7 @@ npx openink dev examples/photo-sharing
 ## Use it from code
 
 ```js
-import { build, validate, exportFiles } from "openink";
+import { build, validate, exportFiles } from "@mediusware/openink";
 
 await build({ dir: "./my-project", out: "dist", theme: "dark" });
 await exportFiles({ dir: "./my-project", png: true });

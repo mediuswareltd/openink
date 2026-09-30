@@ -1,9 +1,14 @@
 {
-  "name": "openink",
+  "name": "@mediusware/openink",
   "version": "0.1.0",
   "description": "Describe screens in YAML, get a clickable hand-drawn wireframe prototype (static HTML, PDF, PNG). Built on wired-elements and RoughJS.",
   "keywords": ["wireframe", "prototype", "sketch", "mockup", "hand-drawn", "wired-elements", "roughjs", "ux", "static-site-generator"],
   "license": "MIT",
+  "author": "Mediusware",
+  "repository": { "type": "git", "url": "git+https://github.com/mediuswareltd/openink.git" },
+  "homepage": "https://github.com/mediuswareltd/openink#readme",
+  "bugs": { "url": "https://github.com/mediuswareltd/openink/issues" },
+  "publishConfig": { "access": "public" },
   "type": "module",
   "bin": { "openink": "bin/openink.js" },
   "main": "./src/index.js",
@@ -17,6 +22,7 @@
   "scripts": {
     "generate": "node scripts/generate.js",
     "test": "node --test \"test/*.test.js\"",
+    "prepublishOnly": "npm test",
     "screenshots": "node scripts/screenshots.js",
     "dev": "node bin/openink.js dev examples/rental-portal"
   },

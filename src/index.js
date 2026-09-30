@@ -1,7 +1,7 @@
 /**
  * Programmatic API.
  *
- *   import { build } from "openink";
+ *   import { build } from "@mediusware/openink";
  *   await build({ dir: "./my-project", out: "dist" });
  */
 export { build, loadSpec, SpecError } from "./build.js";

@@ -1,7 +1,7 @@
-# yaml-language-server: $schema=https://unpkg.com/openink/schema/spec.schema.json
+# yaml-language-server: $schema=https://unpkg.com/@mediusware/openink/schema/spec.schema.json
 #
-# {{name}}: describe your screens here, then run `npx openink dev`.
-# Block reference: `npx openink blocks`
+# {{name}}: describe your screens here, then run `npx @mediusware/openink dev`.
+# Block reference: `npx @mediusware/openink blocks`
 
 name: {{name}}
 
