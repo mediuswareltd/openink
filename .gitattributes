@@ -1,0 +1,12 @@
+# Text files are stored with LF and checked out with LF on every platform. Without this, a Windows checkout
+# (core.autocrlf=true) gets CRLF, and `npm publish` would ship CRLF files and a CRLF shebang in bin/openink.js.
+* text=auto eol=lf
+
+# binary files: never touch them
+*.png binary
+*.jpg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.woff2 binary
