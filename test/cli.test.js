@@ -105,3 +105,25 @@ test("build copies theme and assets, and reports a missing theme", async () => {
   fs.rmSync(path.join(dir, "theme.css"));
   await assert.rejects(build({ dir }), (e) => e instanceof SpecError && /Theme file "theme.css" not found/.test(e.issues[0].message));
 });
+
+test("dev falls back to the next free port when the requested one is taken", async () => {
+  const { dev } = await import("../src/dev.js");
+  const http = await import("node:http");
+  const dir = path.join(tmp(), "p");
+  assert.equal(cli(["init", dir]).status, 0);
+
+  const blocker = http.createServer();
+  await new Promise((r) => blocker.listen(0, r));
+  const taken = blocker.address().port;
+  const logs = [];
+  const server = await dev({ dir, port: taken, log: (m) => logs.push(m) });
+  try {
+    assert.notEqual(server.url, `http://localhost:${taken}`);
+    assert.ok(logs.some((m) => m.includes(`Port ${taken} is in use`)), logs.join("\n"));
+    const res = await fetch(server.url);
+    assert.equal(res.status, 200);
+  } finally {
+    server.close();
+    blocker.close();
+  }
+});
