@@ -1,0 +1,4 @@
+#!/bin/sh
+# Rejects commit messages that do not follow Conventional Commits. Enabled by `npm install`
+# (see scripts/setup-hooks.js). Rules and examples: CONTRIBUTING.md > "Commit messages".
+exec node "$(dirname "$0")/../scripts/commit-lint.js" "$1"
