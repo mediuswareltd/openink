@@ -8,6 +8,11 @@
     "screens"
   ],
   "additionalProperties": false,
+  "patternProperties": {
+    "^x-": {
+      "description": "Free-form: define YAML anchors here to reuse blocks."
+    }
+  },
   "properties": {
     "name": {
       "type": "string",
@@ -25,8 +30,57 @@
       "type": "string"
     },
     "theme": {
-      "type": "string",
-      "description": "Path (relative to the spec) of a CSS file that overrides the design tokens."
+      "anyOf": [
+        {
+          "enum": [
+            "sketch",
+            "color",
+            "pastel",
+            "blueprint",
+            "dark"
+          ]
+        },
+        {
+          "type": "string",
+          "pattern": "\\.css$"
+        }
+      ],
+      "description": "Colour theme: a preset (sketch, color, pastel, blueprint, dark) or the path of your own .css file. Default: sketch."
+    },
+    "colors": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ink": {
+          "type": "string",
+          "description": "CSS colour for the `ink` design token."
+        },
+        "paper": {
+          "type": "string",
+          "description": "CSS colour for the `paper` design token."
+        },
+        "muted": {
+          "type": "string",
+          "description": "CSS colour for the `muted` design token."
+        },
+        "line": {
+          "type": "string",
+          "description": "CSS colour for the `line` design token."
+        },
+        "accent": {
+          "type": "string",
+          "description": "CSS colour for the `accent` design token."
+        },
+        "note": {
+          "type": "string",
+          "description": "CSS colour for the `note` design token."
+        },
+        "card": {
+          "type": "string",
+          "description": "CSS colour for the `card` design token."
+        }
+      },
+      "description": "Override individual design tokens, on top of the theme."
     },
     "nav": {
       "description": "Header buttons: a list, or an object of named lists (screens choose one with `nav:`).",
@@ -47,6 +101,59 @@
           }
         }
       ]
+    },
+    "modals": {
+      "type": "array",
+      "description": "Dialogs that any screen can open with `open: <id>`. Same properties as a `modal` block.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique id; other blocks use it in `open:`."
+          },
+          "title": {
+            "$ref": "#/$defs/text",
+            "description": "Heading of the dialog."
+          },
+          "width": {
+            "enum": [
+              "narrow",
+              "medium",
+              "wide"
+            ],
+            "description": "Dialog width (default `medium`)."
+          },
+          "tone": {
+            "enum": [
+              "blue",
+              "green",
+              "yellow",
+              "red",
+              "purple",
+              "pink",
+              "orange",
+              "teal",
+              "gray"
+            ],
+            "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+          },
+          "fill": {
+            "type": "boolean",
+            "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/block"
+            }
+          }
+        }
+      }
     },
     "screens": {
       "type": "array",
@@ -74,6 +181,28 @@
           "note": {
             "$ref": "#/$defs/text",
             "description": "Sticky-note annotation shown at the top of the screen."
+          },
+          "tone": {
+            "enum": [
+              "blue",
+              "green",
+              "yellow",
+              "red",
+              "purple",
+              "pink",
+              "orange",
+              "teal",
+              "gray"
+            ],
+            "description": "Tint the whole screen with a colour."
+          },
+          "width": {
+            "enum": [
+              "narrow",
+              "medium",
+              "wide"
+            ],
+            "description": "Page width: narrow (~520px, phone-like), medium (~760px) or wide (default, full width)."
           },
           "blocks": {
             "type": "array",
@@ -107,10 +236,48 @@
     },
     "navItem": {
       "type": "object",
-      "required": [
-        "label"
-      ],
       "properties": {
+        "icon": {
+          "enum": [
+            "home",
+            "search",
+            "heart",
+            "comment",
+            "share",
+            "bookmark",
+            "plus",
+            "bell",
+            "user",
+            "users",
+            "mail",
+            "settings",
+            "camera",
+            "image",
+            "video",
+            "star",
+            "menu",
+            "more",
+            "close",
+            "check",
+            "arrow-right",
+            "arrow-left",
+            "chevron-down",
+            "chevron-right",
+            "play",
+            "pin",
+            "trash",
+            "edit",
+            "upload",
+            "download",
+            "lock",
+            "cart",
+            "chart",
+            "calendar",
+            "filter",
+            "info",
+            "send"
+          ]
+        },
         "label": {
           "$ref": "#/$defs/text"
         },
@@ -119,6 +286,9 @@
         },
         "toast": {
           "$ref": "#/$defs/text"
+        },
+        "open": {
+          "type": "string"
         }
       },
       "additionalProperties": false
@@ -162,6 +332,28 @@
             "type": {
               "const": "stack"
             },
+            "center": {
+              "type": "boolean",
+              "description": "Center the children horizontally."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            },
             "children": {
               "type": "array",
               "items": {
@@ -189,6 +381,24 @@
               "type": "boolean",
               "description": "Center the children."
             },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            },
             "children": {
               "type": "array",
               "items": {
@@ -211,6 +421,24 @@
             "cols": {
               "type": "number",
               "description": "Number of columns (default 2)."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             },
             "children": {
               "type": "array",
@@ -239,6 +467,10 @@
               "type": "boolean",
               "description": "No fill (a lighter, secondary card)."
             },
+            "center": {
+              "type": "boolean",
+              "description": "Center the content horizontally."
+            },
             "elevation": {
               "type": "number",
               "description": "Shadow layers, 1 to 5 (default 1)."
@@ -250,6 +482,139 @@
             "toast": {
               "$ref": "#/$defs/text",
               "description": "Message shown in a toast when clicked."
+            },
+            "open": {
+              "type": "string",
+              "description": "Id of a `modal` block to open when clicked."
+            },
+            "close": {
+              "type": "boolean",
+              "description": "Close the modal this block is inside when clicked."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/block"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Collapsible sections (FAQ, filters, settings groups).",
+          "required": [
+            "type",
+            "items"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "accordion"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "label"
+                ],
+                "properties": {
+                  "label": {
+                    "$ref": "#/$defs/text"
+                  },
+                  "children": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/block"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "List of `{ label, children }`."
+            },
+            "open": {
+              "type": "number",
+              "description": "Index of the section open at first (default: all closed)."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Wrap screens in a phone, tablet or browser frame. Ideal for mobile-app and responsive sketches.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "device"
+            },
+            "kind": {
+              "enum": [
+                "phone",
+                "tablet",
+                "browser"
+              ],
+              "description": "Frame type (default `phone`)."
+            },
+            "title": {
+              "$ref": "#/$defs/text",
+              "description": "Address shown in the browser bar."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             },
             "children": {
               "type": "array",
@@ -269,6 +634,24 @@
           "properties": {
             "type": {
               "const": "divider"
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
@@ -286,6 +669,24 @@
             "h": {
               "type": "number",
               "description": "Height in px (default 16)."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
@@ -304,6 +705,24 @@
             "text": {
               "$ref": "#/$defs/text",
               "description": "Heading text."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
@@ -322,6 +741,24 @@
             "text": {
               "$ref": "#/$defs/text",
               "description": "Heading text."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
@@ -340,6 +777,24 @@
             "text": {
               "$ref": "#/$defs/text",
               "description": "Heading text."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
@@ -366,6 +821,24 @@
             "bold": {
               "type": "boolean",
               "description": "Bold text."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
@@ -387,6 +860,24 @@
                 "$ref": "#/$defs/text"
               },
               "description": "List items."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
@@ -405,6 +896,24 @@
             "text": {
               "$ref": "#/$defs/text",
               "description": "Note text."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
@@ -431,6 +940,366 @@
                 "off"
               ],
               "description": "Colour: `on` green, `wait` orange, `off` grey."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Hand-drawn icon.",
+          "required": [
+            "type",
+            "name"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "icon"
+            },
+            "name": {
+              "enum": [
+                "home",
+                "search",
+                "heart",
+                "comment",
+                "share",
+                "bookmark",
+                "plus",
+                "bell",
+                "user",
+                "users",
+                "mail",
+                "settings",
+                "camera",
+                "image",
+                "video",
+                "star",
+                "menu",
+                "more",
+                "close",
+                "check",
+                "arrow-right",
+                "arrow-left",
+                "chevron-down",
+                "chevron-right",
+                "play",
+                "pin",
+                "trash",
+                "edit",
+                "upload",
+                "download",
+                "lock",
+                "cart",
+                "chart",
+                "calendar",
+                "filter",
+                "info",
+                "send"
+              ],
+              "description": "Icon name."
+            },
+            "size": {
+              "type": "number",
+              "description": "Size in px (default 22)."
+            },
+            "filled": {
+              "type": "boolean",
+              "description": "Solid instead of outline (heart, star, bookmark…)."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Round profile picture with an optional name and sub-line. Clickable.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "avatar"
+            },
+            "name": {
+              "$ref": "#/$defs/text",
+              "description": "Bold name next to the picture."
+            },
+            "sub": {
+              "$ref": "#/$defs/text",
+              "description": "Smaller line under the name."
+            },
+            "size": {
+              "type": "number",
+              "description": "Picture size in px (default 44)."
+            },
+            "go": {
+              "type": "string",
+              "description": "Id of the screen to open when clicked."
+            },
+            "toast": {
+              "$ref": "#/$defs/text",
+              "description": "Message shown in a toast when clicked."
+            },
+            "open": {
+              "type": "string",
+              "description": "Id of a `modal` block to open when clicked."
+            },
+            "close": {
+              "type": "boolean",
+              "description": "Close the modal this block is inside when clicked."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Big headline block for landing pages. Put call-to-action buttons (or an image) in `children`.",
+          "required": [
+            "type",
+            "title"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "hero"
+            },
+            "title": {
+              "$ref": "#/$defs/text",
+              "description": "Headline."
+            },
+            "text": {
+              "$ref": "#/$defs/text",
+              "description": "Supporting sentence."
+            },
+            "align": {
+              "enum": [
+                "left",
+                "center"
+              ],
+              "description": "Text alignment (default `center`)."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/block"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Number card for dashboards: label, big value and a change indicator.",
+          "required": [
+            "type",
+            "label",
+            "value"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "stat"
+            },
+            "label": {
+              "$ref": "#/$defs/text",
+              "description": "What is measured."
+            },
+            "value": {
+              "$ref": "#/$defs/text",
+              "description": "The number."
+            },
+            "delta": {
+              "$ref": "#/$defs/text",
+              "description": "Change, e.g. `+8%`."
+            },
+            "trend": {
+              "enum": [
+                "up",
+                "down",
+                "flat"
+              ],
+              "description": "Colours the change: `up` green, `down` orange, `flat` grey (default `up`)."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Star rating.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "rating"
+            },
+            "value": {
+              "type": "number",
+              "description": "Filled stars (default 4)."
+            },
+            "max": {
+              "type": "number",
+              "description": "Total stars (default 5)."
+            },
+            "text": {
+              "$ref": "#/$defs/text",
+              "description": "Text after the stars, e.g. `(128 reviews)`."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Underlined text link.",
+          "required": [
+            "type",
+            "text"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "link"
+            },
+            "text": {
+              "$ref": "#/$defs/text",
+              "description": "Link text."
+            },
+            "go": {
+              "type": "string",
+              "description": "Id of the screen to open when clicked."
+            },
+            "toast": {
+              "$ref": "#/$defs/text",
+              "description": "Message shown in a toast when clicked."
+            },
+            "open": {
+              "type": "string",
+              "description": "Id of a `modal` block to open when clicked."
+            },
+            "close": {
+              "type": "boolean",
+              "description": "Close the modal this block is inside when clicked."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
@@ -456,6 +1325,24 @@
             "round": {
               "type": "boolean",
               "description": "Draw a circle instead of a box."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
@@ -477,12 +1364,30 @@
             "label": {
               "$ref": "#/$defs/text",
               "description": "Caption centered in the box."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
         {
           "type": "object",
-          "description": "Generic hand-drawn box, for charts, video, ads, anything else.",
+          "description": "Generic hand-drawn box, for ads, embeds, anything else.",
           "required": [
             "type"
           ],
@@ -498,6 +1403,201 @@
             "label": {
               "$ref": "#/$defs/text",
               "description": "Caption centered in the box."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Video placeholder with a play button.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "video"
+            },
+            "h": {
+              "type": "number",
+              "description": "Height in px."
+            },
+            "label": {
+              "$ref": "#/$defs/text",
+              "description": "Caption centered in the box."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Swipeable gallery: image placeholder with arrows and page dots.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "carousel"
+            },
+            "h": {
+              "type": "number",
+              "description": "Height in px."
+            },
+            "label": {
+              "$ref": "#/$defs/text",
+              "description": "Caption centered in the box."
+            },
+            "count": {
+              "type": "number",
+              "description": "Number of slides shown as dots (default 4)."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Dashed upload area with an arrow.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "dropzone"
+            },
+            "h": {
+              "type": "number",
+              "description": "Height in px."
+            },
+            "label": {
+              "$ref": "#/$defs/text",
+              "description": "Caption centered in the box."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Hand-drawn chart with sample data. It shows where a chart goes and what kind it is.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "chart"
+            },
+            "kind": {
+              "enum": [
+                "line",
+                "area",
+                "bar",
+                "pie",
+                "donut"
+              ],
+              "description": "Chart type (default `line`)."
+            },
+            "h": {
+              "type": "number",
+              "description": "Height in px."
+            },
+            "values": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "description": "Your own data points. Leave out for sample data."
+            },
+            "label": {
+              "$ref": "#/$defs/text",
+              "description": "Caption in the corner."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
@@ -531,6 +1631,59 @@
             "disabled": {
               "type": "boolean",
               "description": "Grey out the field."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Search field with a magnifier.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "search"
+            },
+            "placeholder": {
+              "$ref": "#/$defs/text",
+              "description": "Placeholder text."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
@@ -556,6 +1709,24 @@
             "rows": {
               "type": "number",
               "description": "Visible rows (default 3)."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
@@ -585,6 +1756,24 @@
             "selected": {
               "type": "number",
               "description": "Index of the pre-selected option (default 0)."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
@@ -607,6 +1796,24 @@
             "checked": {
               "type": "boolean",
               "description": "Start ticked."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
@@ -629,6 +1836,24 @@
             "checked": {
               "type": "boolean",
               "description": "Start switched on."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
@@ -658,6 +1883,24 @@
             "selected": {
               "type": "number",
               "description": "Index of the pre-selected option (default 0)."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
@@ -679,15 +1922,32 @@
             "value": {
               "type": "number",
               "description": "Start position, 0 to 100 (default 30)."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
         {
           "type": "object",
-          "description": "Button. Navigates with `go`, shows a message with `toast`, or both.",
+          "description": "Button, optionally with an icon. Navigates with `go`, opens a `modal` with `open`, shows a message with `toast`.",
           "required": [
-            "type",
-            "label"
+            "type"
           ],
           "additionalProperties": false,
           "properties": {
@@ -696,7 +1956,49 @@
             },
             "label": {
               "$ref": "#/$defs/text",
-              "description": "Button text."
+              "description": "Button text. Leave out for an icon-only button."
+            },
+            "icon": {
+              "enum": [
+                "home",
+                "search",
+                "heart",
+                "comment",
+                "share",
+                "bookmark",
+                "plus",
+                "bell",
+                "user",
+                "users",
+                "mail",
+                "settings",
+                "camera",
+                "image",
+                "video",
+                "star",
+                "menu",
+                "more",
+                "close",
+                "check",
+                "arrow-right",
+                "arrow-left",
+                "chevron-down",
+                "chevron-right",
+                "play",
+                "pin",
+                "trash",
+                "edit",
+                "upload",
+                "download",
+                "lock",
+                "cart",
+                "chart",
+                "calendar",
+                "filter",
+                "info",
+                "send"
+              ],
+              "description": "Icon shown before the label."
             },
             "primary": {
               "type": "boolean",
@@ -713,6 +2015,32 @@
             "toast": {
               "$ref": "#/$defs/text",
               "description": "Message shown in a toast when clicked."
+            },
+            "open": {
+              "type": "string",
+              "description": "Id of a `modal` block to open when clicked."
+            },
+            "close": {
+              "type": "boolean",
+              "description": "Close the modal this block is inside when clicked."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
@@ -738,6 +2066,24 @@
             "active": {
               "type": "number",
               "description": "Index of the selected pill (default 0)."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
@@ -774,6 +2120,24 @@
                 "additionalProperties": false
               },
               "description": "List of `{ label, children }`."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         },
@@ -807,6 +2171,395 @@
             "toast": {
               "$ref": "#/$defs/text",
               "description": "Message shown in a toast when clicked."
+            },
+            "open": {
+              "type": "string",
+              "description": "Id of a `modal` block to open when clicked."
+            },
+            "close": {
+              "type": "boolean",
+              "description": "Close the modal this block is inside when clicked."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Path to the current page. The last item is the current one.",
+          "required": [
+            "type",
+            "items"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "breadcrumb"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/text"
+              },
+              "description": "Path segments."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Previous / page numbers / next.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "pagination"
+            },
+            "pages": {
+              "type": "number",
+              "description": "Number of pages (default 5)."
+            },
+            "active": {
+              "type": "number",
+              "description": "Current page, starting at 1 (default 1)."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Numbered progress through a multi-step flow (checkout, onboarding).",
+          "required": [
+            "type",
+            "items"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "steps"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/text"
+              },
+              "description": "Step names."
+            },
+            "active": {
+              "type": "number",
+              "description": "Index of the current step, starting at 0 (default 0)."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Bottom tab bar of a mobile app: icons with small labels.",
+          "required": [
+            "type",
+            "items"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "tabbar"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "icon": {
+                    "enum": [
+                      "home",
+                      "search",
+                      "heart",
+                      "comment",
+                      "share",
+                      "bookmark",
+                      "plus",
+                      "bell",
+                      "user",
+                      "users",
+                      "mail",
+                      "settings",
+                      "camera",
+                      "image",
+                      "video",
+                      "star",
+                      "menu",
+                      "more",
+                      "close",
+                      "check",
+                      "arrow-right",
+                      "arrow-left",
+                      "chevron-down",
+                      "chevron-right",
+                      "play",
+                      "pin",
+                      "trash",
+                      "edit",
+                      "upload",
+                      "download",
+                      "lock",
+                      "cart",
+                      "chart",
+                      "calendar",
+                      "filter",
+                      "info",
+                      "send"
+                    ]
+                  },
+                  "label": {
+                    "$ref": "#/$defs/text"
+                  },
+                  "go": {
+                    "type": "string"
+                  },
+                  "toast": {
+                    "$ref": "#/$defs/text"
+                  },
+                  "open": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "List of `{ icon, label, go, toast, open }`."
+            },
+            "active": {
+              "type": "number",
+              "description": "Index of the highlighted item (default 0)."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Banner for information, success, warnings and errors.",
+          "required": [
+            "type",
+            "text"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "alert"
+            },
+            "text": {
+              "$ref": "#/$defs/text",
+              "description": "Message."
+            },
+            "title": {
+              "$ref": "#/$defs/text",
+              "description": "Bold first line."
+            },
+            "kind": {
+              "enum": [
+                "info",
+                "success",
+                "warning",
+                "error"
+              ],
+              "description": "Type and colour (default `info`)."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Progress bar.",
+          "required": [
+            "type",
+            "value"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "progress"
+            },
+            "value": {
+              "type": "number",
+              "description": "Percent complete, 0 to 100."
+            },
+            "label": {
+              "$ref": "#/$defs/text",
+              "description": "Caption above the bar."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Dialog that opens over the screen when a button, card or link has `open: <id>`. Close with a `close: true` button, the X, or a click outside.",
+          "required": [
+            "type",
+            "id"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "modal"
+            },
+            "id": {
+              "type": "string",
+              "description": "Unique id; other blocks use it in `open:`."
+            },
+            "title": {
+              "$ref": "#/$defs/text",
+              "description": "Heading of the dialog."
+            },
+            "width": {
+              "enum": [
+                "narrow",
+                "medium",
+                "wide"
+              ],
+              "description": "Dialog width (default `medium`)."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/block"
+              }
             }
           }
         },
@@ -861,6 +2614,24 @@
                 ]
               },
               "description": "List of rows: `[cell, cell]` or `{ cells: [...], go: screenId }`."
+            },
+            "tone": {
+              "enum": [
+                "blue",
+                "green",
+                "yellow",
+                "red",
+                "purple",
+                "pink",
+                "orange",
+                "teal",
+                "gray"
+              ],
+              "description": "Colour this block and everything inside it: outlines, text and drawn shapes."
+            },
+            "fill": {
+              "type": "boolean",
+              "description": "Give the block a tinted background (uses `tone`, or a neutral tint)."
             }
           }
         }

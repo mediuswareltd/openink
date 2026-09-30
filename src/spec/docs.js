@@ -1,4 +1,6 @@
 import { blocks } from "../render/blocks/index.js";
+import { COMMON, ACTION } from "../render/blocks/shared.js";
+import { ICON_NAMES } from "../icons.js";
 
 const TYPE_LABEL = {
   text: "text",
@@ -6,7 +8,9 @@ const TYPE_LABEL = {
   number: "number",
   boolean: "boolean",
   "text[]": "list of text",
-  tabs: "list of `{ label, children }`",
+  "number[]": "list of numbers",
+  sections: "list of `{ label, children }`",
+  links: "list of `{ icon, label, go, toast, open }`",
   rows: "list of rows",
 };
 
@@ -20,6 +24,26 @@ export function blocksMarkdown() {
     "",
     "Every entry in a screen's `blocks:` list is `{ type: <name>, ...props }`. Blocks marked **children** also take a `children:` list of blocks.",
     "A `text` value is a string, a number, or a translation object such as `{ en: \"Hello\", de: \"Hallo\" }` (needs `languages:` in the spec).",
+    "",
+    "## Props every block accepts",
+    "",
+    "| Prop | Type | Description |",
+    "|---|---|---|",
+    ...Object.entries(COMMON).map(([k, p]) => `| \`${k}\` | ${p.enum ? p.enum.map((e) => `\`${e}\``).join(" \\| ") : p.type} | ${p.doc} |`),
+    "",
+    "## Actions",
+    "",
+    "Blocks that list `go`, `toast`, `open` or `close` in their props are clickable (`button`, `card`, `avatar`, `link`, `nextbar`, nav and tab-bar items) and accept:",
+    "",
+    "| Prop | Type | Description |",
+    "|---|---|---|",
+    ...Object.entries(ACTION).map(([k, p]) => `| \`${k}\` | ${p.type} | ${p.doc} |`),
+    "",
+    `## Icons`,
+    "",
+    "Used by `icon`, `button.icon`, nav items and `tabbar`:",
+    "",
+    ICON_NAMES.map((n) => `\`${n}\``).join(" · "),
     "",
   ];
   for (const g of groups) {

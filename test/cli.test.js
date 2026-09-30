@@ -75,6 +75,23 @@ test("build refuses an output directory that would contain the project", () => {
   return assert.rejects(build({ dir, out: "." }), /would contain the project/);
 });
 
+test("--theme overrides the spec, copies the preset stylesheet, and rejects unknown themes", () => {
+  const dir = tmp();
+  fs.writeFileSync(path.join(dir, "spec.yaml"), "name: x\nscreens:\n  - { id: a, blocks: [] }\n");
+  const r = cli(["build", dir, "--theme", "dark"]);
+  assert.equal(r.status, 0, r.stderr);
+  assert.ok(fs.existsSync(path.join(dir, "dist/theme-dark.css")));
+  assert.match(fs.readFileSync(path.join(dir, "dist/index.html"), "utf8"), /theme-dark\.css/);
+  const bad = cli(["build", dir, "--theme", "neon"]);
+  assert.equal(bad.status, 1);
+  assert.match(bad.stderr, /Unknown theme "neon"/);
+});
+
+test("every preset theme has a stylesheet", async () => {
+  const { THEME_PRESETS } = await import("../src/themes.js");
+  for (const t of THEME_PRESETS.filter((x) => x !== "sketch")) assert.ok(fs.existsSync(path.join(root, "src/styles/themes", `${t}.css`)), t);
+});
+
 test("build copies theme and assets, and reports a missing theme", async () => {
   const dir = tmp();
   fs.mkdirSync(path.join(dir, "assets"));

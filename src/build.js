@@ -5,6 +5,7 @@ import YAML from "yaml";
 import * as esbuild from "esbuild";
 import { validate } from "./spec/validate.js";
 import { renderPage } from "./render/page.js";
+import { isPreset } from "./themes.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const SPEC_FILES = ["spec.yaml", "spec.yml", "spec.json"];
@@ -42,10 +43,10 @@ async function bundleRuntime() {
 
 /**
  * Build a project into static files.
- * @param {{ dir?: string, out?: string, dev?: boolean }} [opts]
+ * @param {{ dir?: string, out?: string, dev?: boolean, theme?: string }} [opts]  `theme` overrides the spec's theme
  * @returns {Promise<{ outDir: string, spec: object, warnings: {path:string,message:string}[] }>}
  */
-export async function build({ dir = ".", out = "dist", dev = false } = {}) {
+export async function build({ dir = ".", out = "dist", dev = false, theme } = {}) {
   const projectDir = path.resolve(dir);
   const outDir = path.resolve(projectDir, out);
   if (projectDir === outDir || projectDir.startsWith(outDir + path.sep)) {
@@ -53,8 +54,10 @@ export async function build({ dir = ".", out = "dist", dev = false } = {}) {
   }
 
   const { spec } = loadSpec(projectDir);
+  if (theme) spec.theme = theme;
   const { errors, warnings } = validate(spec);
-  if (spec && typeof spec.theme === "string" && !fs.existsSync(path.join(projectDir, spec.theme))) {
+  const customTheme = typeof spec?.theme === "string" && !isPreset(spec.theme) && spec.theme.endsWith(".css");
+  if (customTheme && !fs.existsSync(path.join(projectDir, spec.theme))) {
     errors.push({ path: "theme", message: `Theme file "${spec.theme}" not found next to the spec.` });
   }
   if (errors.length) throw new SpecError(`${errors.length} problem${errors.length > 1 ? "s" : ""} in the spec`, errors);
@@ -64,7 +67,12 @@ export async function build({ dir = ".", out = "dist", dev = false } = {}) {
   fs.writeFileSync(path.join(outDir, "index.html"), renderPage(spec, { dev }));
   fs.writeFileSync(path.join(outDir, "sketchframe.js"), await bundleRuntime());
   fs.copyFileSync(path.join(here, "styles/sketchframe.css"), path.join(outDir, "sketchframe.css"));
-  if (spec.theme) fs.copyFileSync(path.join(projectDir, spec.theme), path.join(outDir, spec.theme));
+  if (customTheme) {
+    fs.mkdirSync(path.dirname(path.join(outDir, spec.theme)), { recursive: true });
+    fs.copyFileSync(path.join(projectDir, spec.theme), path.join(outDir, spec.theme));
+  } else if (spec.theme && spec.theme !== "sketch") {
+    fs.copyFileSync(path.join(here, "styles/themes", `${spec.theme}.css`), path.join(outDir, `theme-${spec.theme}.css`));
+  }
 
   // Optional real images / logos: put them in <project>/assets and reference them as assets/…
   const assets = path.join(projectDir, "assets");

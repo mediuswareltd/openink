@@ -34,9 +34,10 @@ npm test
 | `string` | string; add `enum: [...]` to restrict values |
 | `number`, `boolean` | as named |
 | `text[]` | list of `text` |
-| `tabs`, `rows` | the structured props used by `tabs` and `table` |
+| `number[]` | list of numbers |
+| `sections`, `links`, `rows` | structured props: `[{ label, children }]` (tabs, accordion), `[{ icon, label, go, … }]` (tab bar), table rows |
 
-Set `required: true` on a prop to make the validator insist on it.
+Set `required: true` on a prop to make the validator insist on it. Spread `...ACTION` (from `shared.js`) into `props` to make a block clickable (`go`, `toast`, `open`, `close`), and use `c.act(b)` in `render`. Every block also accepts `tone` and `fill` automatically.
 
 ### Containers
 
@@ -57,7 +58,9 @@ If a block hides other blocks somewhere other than `children` (like `tabs` and `
 | `c.attr(name, v)` | An attribute whose value may be translated. |
 | `c.plain(v)` | Plain string of a text value (first language). |
 | `c.esc(s)` | Escape a raw string. **Always escape anything you interpolate.** |
-| `c.act(b)` | `data-go` / `data-toast` attributes for clickable blocks. |
+| `c.act(b)` | `data-go` / `data-toast` / `data-open` / `data-close` attributes for clickable blocks. |
+| `c.icon(name, size, filled)` | A hand-drawn icon. |
+| `c.inner(b)` | Icon + label markup for buttons. |
 | `c.label(b)` | A form label from `b.label`. |
 | `c.block(x)` / `c.kids(b)` | Render one nested block / all `children`. |
 

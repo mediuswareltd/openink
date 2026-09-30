@@ -1,19 +1,24 @@
-import { ACTION } from "./shared.js";
+import { ACTION, ICON } from "./shared.js";
+
+/** Nested blocks of a `{ label, children }` list (tabs, accordion sections). */
+export const sectionsNested = (key) => (b) =>
+  (b[key] || []).flatMap((t, i) => (t?.children || []).map((x, j) => [`.${key}[${i}].children[${j}]`, x]));
 
 /** @type {import("./index.js").BlockDef[]} */
 export default [
   {
     name: "button",
     group: "Actions",
-    summary: "Button. Navigates with `go`, shows a message with `toast`, or both.",
+    summary: "Button, optionally with an icon. Navigates with `go`, opens a `modal` with `open`, shows a message with `toast`.",
     props: {
-      label: { type: "text", doc: "Button text.", required: true },
+      label: { type: "text", doc: "Button text. Leave out for an icon-only button." },
+      icon: { ...ICON, doc: "Icon shown before the label." },
       primary: { type: "boolean", doc: "Heavier border: the main action on the screen." },
       disabled: { type: "boolean", doc: "Grey out the button." },
       ...ACTION,
     },
     render: (b, c) =>
-      `<wired-button elevation="${b.primary ? 3 : 1}"${c.act(b)}${b.disabled ? " disabled" : ""}>${c.tx(b.label)}</wired-button>`,
+      `<wired-button elevation="${b.primary ? 3 : 1}"${c.act(b)}${b.disabled ? " disabled" : ""}>${c.inner(b)}</wired-button>`,
   },
   {
     name: "chips",
@@ -34,8 +39,8 @@ export default [
     name: "tabs",
     group: "Actions",
     summary: "Tab strip. Each tab has its own list of blocks.",
-    props: { tabs: { type: "tabs", doc: "List of `{ label, children }`.", required: true } },
-    nested: (b) => (b.tabs || []).flatMap((t, i) => (t?.children || []).map((x, j) => [`.tabs[${i}].children[${j}]`, x])),
+    props: { tabs: { type: "sections", doc: "List of `{ label, children }`.", required: true } },
+    nested: sectionsNested("tabs"),
     render: (b, c) => {
       const tabs = b.tabs || [];
       return `<div class="tabs" data-tabs><div class="row">${tabs

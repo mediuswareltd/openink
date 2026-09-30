@@ -20,6 +20,13 @@ export default [
       }${b.disabled ? " disabled" : ""}></wired-input></div>`,
   },
   {
+    name: "search",
+    group: "Forms",
+    summary: "Search field with a magnifier.",
+    props: { placeholder },
+    render: (b, c) => `<wired-search-input${c.attr("placeholder", b.placeholder)}></wired-search-input>`,
+  },
+  {
     name: "textarea",
     group: "Forms",
     summary: "Multi-line text field.",

@@ -1,0 +1,28 @@
+/* color: a confident, colourful look. Indigo and rose on warm white. */
+:root {
+  --ink: #1f2340;
+  --paper: #fffdf8;
+  --muted: #6b7099;
+  --line: #d9dcf0;
+  --accent: #e11d48;
+  --note: #fde68a;
+  --card-bg: #ffffff;
+  --ok: #059669;
+  --sf-fill: #eef0ff;
+  --sf-chart: #4f46e5;
+  --wired-toggle-on-color: #4f46e5;
+  --wired-slider-knob-color: #e11d48;
+  --wired-slider-bar-color: #4f46e5;
+  --wired-progress-color: #4f46e5;
+  --wired-radio-icon-color: #4f46e5;
+  --wired-checkbox-icon-color: #4f46e5;
+  --tone-bg: #eef0ff;
+}
+h1, h2 { color: #312e81; }
+.sf-bar .brand { color: #4f46e5; }
+wired-button { background: #eef0ff; color: #312e81; }
+wired-button[elevation="3"] { background: #4f46e5; color: #fff; }
+.badge.wait { background: #ffe4e6; }
+.badge.on { background: #d1fae5; }
+.card { border-radius: 8px; }
+.steps .on .dot { background: #4f46e5; border-color: #4f46e5; }

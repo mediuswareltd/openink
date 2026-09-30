@@ -35,8 +35,15 @@ export function createContext(spec) {
       return s;
     },
 
-    /** data-go / data-toast attributes for clickable blocks. */
-    act: (b) => `${b.go ? ` data-go="${esc(b.go)}"` : ""}${b.toast ? ctx.attr("data-toast", b.toast) : ""}`,
+    /** data-go / data-toast / data-open / data-close attributes for clickable blocks. */
+    act: (b) =>
+      `${b.go ? ` data-go="${esc(b.go)}"` : ""}${b.toast ? ctx.attr("data-toast", b.toast) : ""}${b.open ? ` data-open="${esc(b.open)}"` : ""}${b.close ? " data-close" : ""}`,
+
+    /** A hand-drawn icon. */
+    icon: (name, size = 18, filled = false) => `<sf-icon name="${esc(name)}" size="${size}"${filled ? " filled" : ""}></sf-icon>`,
+
+    /** Icon + label, for buttons and nav items. Either may be missing. */
+    inner: (b) => `${b.icon ? ctx.icon(b.icon) : ""}${b.label != null ? `<span class="btn-label">${ctx.tx(b.label)}</span>` : ""}`,
 
     label: (b) => (b.label ? `<label class="fl">${ctx.tx(b.label)}</label>` : ""),
 
@@ -44,7 +51,10 @@ export function createContext(spec) {
       if (typeof b === "string") return getBlock("text").render({ text: b }, ctx);
       const def = getBlock(b?.type);
       if (!def) throw new Error(`Unknown block type "${b?.type}". Known types: ${blockNames().join(", ")}`);
-      return def.render(b, ctx);
+      const html = def.render(b, ctx);
+      // `tone` / `fill` work on any block: wrap it in an element that sets the colour variables
+      if (!b.tone && !b.fill) return html;
+      return `<div class="tone"${b.tone ? ` data-tone="${esc(b.tone)}"` : ""}${b.fill ? " data-fill" : ""}>${html}</div>`;
     },
 
     kids: (b) => (b.children || []).map((x) => ctx.block(x)).join(""),

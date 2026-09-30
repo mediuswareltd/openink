@@ -1,16 +1,23 @@
 # yaml-language-server: $schema=../../schema/spec.schema.json
-# A small SaaS admin: analytics, users, settings. Shows that sketchframe is not tied to any one domain.
+#
+# A small SaaS admin in the colourful `color` theme: stats, charts, users, settings.
+# Shows that sketchframe is not tied to one domain, and how a whole project can be coloured.
+#   sketchframe dev examples/saas-admin                  (try --theme dark or --theme sketch)
+
 name: Acme Analytics
+theme: color
+colors:
+  accent: "#f97316"          # override a single colour on top of the theme
 
 nav:
-  - { label: Overview, go: overview }
-  - { label: Users, go: users }
-  - { label: Settings, go: settings }
+  - { icon: chart, label: Overview, go: overview }
+  - { icon: users, label: Users, go: users }
+  - { icon: settings, label: Settings, go: settings }
 
 screens:
   - id: overview
     title: Overview
-    note: Charts are placeholders. Date range chips filter every widget on the page.
+    note: "Charts show sample data. The date-range chips would filter every widget on the page."
     blocks:
       - type: row
         between: true
@@ -18,29 +25,19 @@ screens:
           - { type: h1, text: Overview }
           - { type: chips, options: [7 days, 30 days, 12 months], active: 1 }
       - type: grid
-        cols: 3
+        cols: 4
         children:
-          - type: card
-            title: Visitors
-            children:
-              - { type: h2, text: "12,480" }
-              - { type: badge, status: on, text: "+8% vs last period" }
-          - type: card
-            title: Sign-ups
-            children:
-              - { type: h2, text: "342" }
-              - { type: badge, status: on, text: "+3%" }
-          - type: card
-            title: Churn
-            children:
-              - { type: h2, text: "2.1%" }
-              - { type: badge, status: wait, text: "+0.4 pts" }
-      - { type: box, h: 220, label: "Line chart: visitors over time" }
+          - { type: stat, label: Visitors, value: "12,480", delta: "+8%", trend: up }
+          - { type: stat, label: Sign-ups, value: "342", delta: "+3%", trend: up }
+          - { type: stat, label: Churn, value: "2.1%", delta: "+0.4 pts", trend: down }
+          - { type: stat, label: MRR, value: "$8.2k", delta: unchanged, trend: flat }
+      - { type: chart, kind: area, h: 240, label: Visitors over time }
       - type: grid
         cols: 2
         children:
-          - { type: box, h: 160, label: Top pages }
-          - { type: box, h: 160, label: Traffic sources }
+          - { type: chart, kind: bar, h: 200, label: Top pages }
+          - { type: chart, kind: donut, h: 200, label: Traffic sources }
+      - { type: alert, kind: warning, title: Heads up, text: "Your trial ends in 3 days." }
 
   - id: users
     title: Users
@@ -49,34 +46,47 @@ screens:
         between: true
         children:
           - { type: h1, text: Users }
-          - { type: button, label: Invite user, primary: true, toast: Invitation sent }
-      - { type: input, placeholder: Search by name or email }
+          - { type: button, label: Invite user, icon: plus, primary: true, open: invite }
+      - { type: search, placeholder: Search by name or email }
       - type: table
         columns: [User, Role, Status, ""]
         rows:
           - cells:
-              - type: row
-                children:
-                  - { type: image, round: true, h: 36 }
-                  - Ana Keller
+              - { type: avatar, name: Ana Keller, sub: ana@acme.com, size: 36 }
               - Admin
               - { type: badge, status: on, text: Active }
-              - Edit →
+              - { type: button, icon: edit }
             go: user
           - cells:
-              - type: row
-                children:
-                  - { type: image, round: true, h: 36 }
-                  - Marc Dubois
+              - { type: avatar, name: Marc Dubois, sub: marc@acme.com, size: 36 }
               - Editor
               - { type: badge, status: wait, text: Invited }
-              - Edit →
+              - { type: button, icon: edit }
             go: user
+          - cells:
+              - { type: avatar, name: Lea Meier, sub: lea@acme.com, size: 36 }
+              - Viewer
+              - { type: badge, status: off, text: Suspended }
+              - { type: button, icon: edit }
+            go: user
+      - { type: pagination, pages: 4, active: 1 }
+      - type: modal
+        id: invite
+        title: Invite a user
+        children:
+          - { type: input, label: Email, inputType: email, placeholder: name@company.com }
+          - { type: select, label: Role, options: [Admin, Editor, Viewer], selected: 1 }
+          - type: row
+            children:
+              - { type: button, label: Send invite, icon: send, primary: true, close: true, toast: Invitation sent }
+              - { type: button, label: Cancel, close: true }
 
   - id: user
     title: Edit user
+    width: medium
     blocks:
-      - { type: h1, text: Ana Keller }
+      - { type: breadcrumb, items: [Users, Ana Keller] }
+      - { type: avatar, name: Ana Keller, sub: Admin, size: 72 }
       - type: tabs
         tabs:
           - label: Profile
@@ -89,13 +99,17 @@ screens:
               - { type: checkbox, label: Manage billing, checked: true }
               - { type: checkbox, label: Export data }
               - { type: checkbox, label: Invite users, checked: true }
+          - label: Activity
+            children:
+              - { type: chart, kind: line, h: 160, label: Logins }
       - type: row
         children:
-          - { type: button, label: Save, primary: true, go: users, toast: Saved }
+          - { type: button, label: Save, icon: check, primary: true, go: users, toast: Saved }
           - { type: button, label: Cancel, go: users }
 
   - id: settings
     title: Settings
+    width: medium
     blocks:
       - { type: h1, text: Settings }
       - type: card
@@ -105,8 +119,14 @@ screens:
           - { type: toggle, label: Alert when traffic drops }
           - { type: radio, label: Digest, options: [Daily, Weekly, Never], selected: 1 }
       - type: card
-        title: Danger zone
-        dash: true
+        title: Storage
         children:
-          - { type: text, muted: true, text: Deleting the workspace cannot be undone. }
-          - { type: button, label: Delete workspace, toast: Are you sure? }
+          - { type: progress, label: "7.2 GB of 10 GB used", value: 72 }
+          - { type: button, label: Upgrade plan, icon: arrow-right, primary: true }
+      - type: card
+        tone: red
+        fill: true
+        title: Danger zone
+        children:
+          - { type: text, text: "Deleting the workspace cannot be undone." }
+          - { type: button, label: Delete workspace, icon: trash, toast: Are you sure? }

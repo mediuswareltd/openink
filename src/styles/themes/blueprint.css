@@ -1,0 +1,31 @@
+/* blueprint: white lines on blue paper. Looks like an architect's drawing. */
+:root {
+  --ink: #f1f6ff;
+  --paper: #0f3b8c;
+  --muted: #a9c4f5;
+  --line: #4b78d6;
+  --accent: #ffd166;
+  --note: #ffe08a;
+  --card-bg: rgba(255, 255, 255, 0.07);
+  --ok: #7ee2a8;
+  --sf-stroke: #cfe0ff;
+  --sf-fill: rgba(255, 255, 255, 0.08);
+  --sf-line: #6c93e0;
+  --sf-chart: #ffd166;
+  --wired-toggle-on-color: #ffd166;
+  --wired-slider-knob-color: #ffd166;
+  --wired-slider-bar-color: #f1f6ff;
+  --wired-progress-color: #ffd166;
+  --wired-progress-label-color: #f1f6ff;
+  --wired-progress-label-background: transparent;
+  --wired-radio-icon-color: #f1f6ff;
+  --wired-checkbox-icon-color: #f1f6ff;
+  --wired-item-selected-bg: #1f56b8;
+  --wired-item-selected-color: #fff;
+  --tone-bg: rgba(255, 255, 255, 0.12);
+}
+body { background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 28px 28px; }
+wired-input, wired-textarea, wired-search-input { color: var(--ink); }
+wired-combo { border-color: var(--muted); }
+.toast { background: #f1f6ff; color: #0f3b8c; }
+.alert { background: rgba(255,255,255,.08); }

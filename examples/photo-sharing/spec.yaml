@@ -1,0 +1,529 @@
+# yaml-language-server: $schema=../../schema/spec.schema.json
+#
+# A photo-sharing social app: feed, stories, reels, explore, messages, profile and a mobile view.
+# Try it:  sketchframe dev examples/photo-sharing          (add --theme color | pastel | dark | blueprint)
+#
+# Shows: icons, avatars, global modals, carousel + video, device frame + tab bar,
+#        and colouring only *parts* of an otherwise plain sketch (tone: pink / red / blue).
+#
+# Reusable pieces: top-level `x-*` keys are ignored by sketchframe, so they are a good place
+# to define YAML anchors (&name) that screens reuse with an alias (*name).
+
+name: Picto
+
+x-post-actions: &post-actions
+  type: row
+  between: true
+  children:
+    - type: row
+      children:
+        - { type: button, icon: heart, toast: Liked, tone: red }
+        - { type: button, icon: comment, go: post }
+        - { type: button, icon: send, open: share }
+    - { type: button, icon: bookmark, toast: Saved to collection }
+
+x-explore-tile: &explore-tile
+  type: card
+  go: post
+  children:
+    - { type: image, h: 150, label: Photo }
+
+nav:
+  default:
+    - { icon: home, label: Feed, go: feed }
+    - { icon: search, label: Explore, go: explore }
+    - { icon: video, label: Reels, go: reels }
+    - { icon: plus, label: New post, go: new-post }
+    - { icon: send, label: Messages, go: messages }
+    - { icon: bell, go: activity }
+    - { icon: user, go: profile }
+    - { label: Mobile view, go: mobile }
+  auth: []
+
+# Dialogs that any screen can open with `open: <id>`
+modals:
+  - id: share
+    title: Share
+    width: narrow
+    children:
+      - { type: search, placeholder: Search people }
+      - { type: avatar, name: mia.travels, sub: Photographer }
+      - { type: avatar, name: chef.luca, sub: Home cooking }
+      - { type: avatar, name: studio.nord, sub: Design studio }
+      - type: row
+        children:
+          - { type: button, label: Send, icon: send, primary: true, close: true, toast: Sent }
+          - { type: button, label: Copy link, toast: Link copied, close: true }
+
+  - id: post-options
+    width: narrow
+    children:
+      - { type: button, label: Report, tone: red, close: true, toast: Reported }
+      - { type: button, label: Unfollow, close: true, toast: Unfollowed }
+      - { type: button, label: Go to post, go: post }
+      - { type: button, label: Copy link, close: true, toast: Link copied }
+      - { type: button, label: Cancel, close: true }
+
+  - id: confirm-logout
+    title: Log out?
+    width: narrow
+    children:
+      - { type: text, muted: true, text: "You can log back in at any time." }
+      - type: row
+        children:
+          - { type: button, label: Log out, primary: true, go: login }
+          - { type: button, label: Stay logged in, close: true }
+
+screens:
+  # ------------------------------------------------------------------ onboarding
+  - id: login
+    title: Log in
+    nav: auth
+    note: "Start screen. Two ways in: email and password, or a social account."
+    blocks:
+      - type: grid
+        cols: 2
+        children:
+          - type: device
+            kind: phone
+            children:
+              - { type: image, h: 380, label: App preview }
+          - type: stack
+            children:
+              - type: card
+                children:
+                  - { type: h1, text: Picto }
+                  - { type: input, label: Email or username, placeholder: you@example.com }
+                  - { type: input, label: Password, inputType: password }
+                  - { type: button, label: Log in, primary: true, go: feed }
+                  - { type: divider }
+                  - { type: button, label: Continue with Google, icon: user, go: feed }
+                  - { type: link, text: Forgot password?, go: forgot }
+              - type: card
+                dash: true
+                children:
+                  - { type: text, text: "Don't have an account?" }
+                  - { type: button, label: Sign up, go: signup }
+
+  - id: signup
+    title: Sign up
+    nav: auth
+    width: narrow
+    blocks:
+      - { type: steps, items: [Account, Profile, Follow], active: 0 }
+      - type: card
+        children:
+          - { type: h1, text: Create your account }
+          - { type: input, label: Email, inputType: email }
+          - { type: input, label: Full name }
+          - { type: input, label: Username, placeholder: "Letters, numbers, dots" }
+          - { type: input, label: Password, inputType: password }
+          - { type: checkbox, label: I agree to the terms and privacy policy }
+          - { type: button, label: Sign up, primary: true, go: welcome }
+          - { type: link, text: I already have an account, go: login }
+
+  - id: forgot
+    title: Reset password
+    nav: auth
+    width: narrow
+    blocks:
+      - type: card
+        children:
+          - { type: h1, text: Trouble logging in? }
+          - { type: text, muted: true, text: "Enter your email and we will send you a link to get back into your account." }
+          - { type: input, label: Email, inputType: email }
+          - { type: button, label: Send login link, primary: true, toast: "Link sent. Check your inbox." }
+          - { type: link, text: Back to login, go: login }
+
+  - id: welcome
+    title: Find people to follow
+    nav: auth
+    width: narrow
+    note: "Shown once after sign-up. Skipping is allowed; following at least 5 people improves the feed."
+    blocks:
+      - { type: steps, items: [Account, Profile, Follow], active: 2 }
+      - { type: h1, text: Follow a few people to get started }
+      - type: table
+        columns: ["", ""]
+        rows:
+          - - { type: avatar, name: mia.travels, sub: Photographer }
+            - { type: button, label: Follow, toast: Following }
+          - - { type: avatar, name: chef.luca, sub: Home cooking }
+            - { type: button, label: Follow, toast: Following }
+          - - { type: avatar, name: studio.nord, sub: Design studio }
+            - { type: button, label: Follow, toast: Following }
+      - type: row
+        between: true
+        children:
+          - { type: button, label: Skip for now, go: feed }
+          - { type: button, label: Continue, icon: arrow-right, primary: true, go: feed }
+
+  # ------------------------------------------------------------------ main app
+  - id: feed
+    title: Feed
+    width: narrow
+    note: "Stories on top, then posts from people you follow, newest first. Infinite scroll, no pages."
+    blocks:
+      - type: grid
+        cols: 5
+        children:
+          - { type: card, go: story, dash: true, center: true, children: [{ type: avatar, size: 56 }, { type: text, muted: true, text: Your story }] }
+          - { type: card, go: story, dash: true, center: true, tone: pink, children: [{ type: avatar, size: 56 }, { type: text, text: mia }] }
+          - { type: card, go: story, dash: true, center: true, tone: pink, children: [{ type: avatar, size: 56 }, { type: text, text: luca }] }
+          - { type: card, go: story, dash: true, center: true, children: [{ type: avatar, size: 56 }, { type: text, muted: true, text: nord }] }
+          - { type: card, go: story, dash: true, center: true, children: [{ type: avatar, size: 56 }, { type: text, muted: true, text: anna }] }
+      - type: card
+        children:
+          - type: row
+            between: true
+            children:
+              - { type: avatar, name: mia.travels, sub: Lisbon }
+              - { type: button, icon: more, open: post-options }
+          - { type: carousel, h: 300, count: 4, label: "Photo 1 of 4" }
+          - *post-actions
+          - { type: text, bold: true, text: "1,204 likes" }
+          - { type: text, text: "mia.travels  Golden hour in Lisbon" }
+          - { type: link, text: View all 24 comments, go: post }
+          - { type: input, placeholder: Add a comment }
+      - type: card
+        children:
+          - type: row
+            between: true
+            children:
+              - { type: avatar, name: chef.luca, sub: Milan }
+              - { type: button, icon: more, open: post-options }
+          - { type: image, h: 300, label: Photo }
+          - *post-actions
+          - { type: text, bold: true, text: "389 likes" }
+          - { type: text, text: "chef.luca  Sunday pasta, recipe in bio" }
+          - { type: link, text: View all 8 comments, go: post }
+          - { type: input, placeholder: Add a comment }
+      - type: card
+        dash: true
+        title: Suggested for you
+        children:
+          - { type: avatar, name: anna.k, sub: "Followed by mia.travels" }
+          - { type: avatar, name: studio.nord, sub: "Followed by 3 others" }
+
+  - id: story
+    title: Story viewer
+    width: narrow
+    note: "Full screen. Tap right for next, left for previous, hold to pause. Auto-advances after 5 seconds."
+    blocks:
+      - { type: progress, value: 40 }
+      - type: row
+        between: true
+        children:
+          - { type: avatar, name: mia.travels, sub: 2h }
+          - { type: button, icon: close, go: feed }
+      - { type: image, h: 420, label: Story photo }
+      - type: row
+        children:
+          - { type: input, placeholder: Send message }
+          - { type: button, icon: heart, toast: Liked, tone: red }
+          - { type: button, icon: send, open: share }
+      - type: row
+        between: true
+        children:
+          - { type: button, icon: arrow-left, label: Previous, go: story }
+          - { type: button, icon: arrow-right, label: Next, go: feed }
+
+  - id: post
+    title: Post
+    blocks:
+      - { type: breadcrumb, items: [Feed, mia.travels, Post] }
+      - type: grid
+        cols: 2
+        children:
+          - { type: carousel, h: 460, count: 4, label: Photo }
+          - type: stack
+            children:
+              - type: row
+                between: true
+                children:
+                  - { type: avatar, name: mia.travels, sub: Lisbon }
+                  - { type: button, label: Follow, toast: Following }
+              - { type: divider }
+              - { type: avatar, name: luca.f, sub: "Stunning light!", size: 32 }
+              - { type: avatar, name: anna.k, sub: "Adding this to my list", size: 32 }
+              - { type: divider }
+              - *post-actions
+              - { type: text, bold: true, text: "1,204 likes" }
+              - { type: text, muted: true, text: 2 days ago }
+              - { type: input, placeholder: Add a comment }
+              - { type: button, label: Post, primary: true, toast: Comment posted }
+
+  - id: explore
+    title: Explore
+    note: "Grid of posts picked for you. Search suggests accounts, tags and places as you type."
+    blocks:
+      - { type: search, placeholder: "Search accounts, tags and places" }
+      - { type: chips, options: [For you, Reels, Travel, Food, Art, Music], active: 0 }
+      - type: grid
+        cols: 3
+        children:
+          - *explore-tile
+          - *explore-tile
+          - *explore-tile
+          - { type: video, h: 190, label: Reel }
+          - *explore-tile
+          - *explore-tile
+          - *explore-tile
+          - *explore-tile
+          - *explore-tile
+
+  - id: reels
+    title: Reels
+    width: narrow
+    note: "Full-screen vertical videos. Swipe up for the next one."
+    blocks:
+      - { type: video, h: 440, label: Reel }
+      - type: row
+        between: true
+        children:
+          - type: row
+            children:
+              - { type: button, icon: heart, label: "12.4k", toast: Liked, tone: red }
+              - { type: button, icon: comment, label: "312", go: post }
+              - { type: button, icon: send, open: share }
+          - { type: button, icon: more, open: post-options }
+      - type: row
+        between: true
+        children:
+          - { type: avatar, name: chef.luca, sub: "Pasta in 60 seconds" }
+          - { type: button, label: Follow, toast: Following }
+
+  - id: new-post
+    title: New post
+    note: "Three steps in the real app: choose photos, edit (crop, filter), then write the caption. Shown here as one screen."
+    blocks:
+      - { type: h1, text: Create new post }
+      - type: grid
+        cols: 2
+        children:
+          - type: stack
+            children:
+              - { type: dropzone, h: 320, label: Drag photos and videos here }
+              - { type: button, label: Select from computer, icon: upload, toast: File picker opens }
+          - type: card
+            children:
+              - { type: avatar, name: your.username }
+              - { type: textarea, label: Caption, placeholder: Write a caption, rows: 4 }
+              - { type: input, label: Add location }
+              - { type: input, label: Tag people }
+              - { type: radio, label: Audience, options: [Everyone, Followers, Close friends] }
+              - { type: toggle, label: Hide like count on this post }
+              - { type: toggle, label: Turn off commenting }
+              - type: row
+                children:
+                  - { type: button, label: Share, icon: check, primary: true, go: feed, toast: Post shared }
+                  - { type: button, label: Cancel, go: feed }
+
+  - id: messages
+    title: Messages
+    width: narrow
+    blocks:
+      - type: row
+        between: true
+        children:
+          - { type: h1, text: Messages }
+          - { type: button, icon: edit, toast: Choose who to message }
+      - { type: search, placeholder: Search messages }
+      - type: table
+        columns: ["", ""]
+        rows:
+          - cells:
+              - { type: avatar, name: mia.travels, sub: "Send me the location!" }
+              - { type: badge, status: wait, text: 2 new }
+            go: chat
+          - cells:
+              - { type: avatar, name: chef.luca, sub: "Thanks :)" }
+              - ""
+            go: chat
+          - cells:
+              - { type: avatar, name: studio.nord, sub: Seen }
+              - ""
+            go: chat
+
+  - id: chat
+    title: Conversation
+    width: narrow
+    blocks:
+      - type: row
+        between: true
+        children:
+          - type: row
+            children:
+              - { type: button, icon: arrow-left, go: messages }
+              - { type: avatar, name: mia.travels, sub: Active now }
+          - { type: button, icon: info, toast: "Mute, block or report" }
+      - { type: card, dash: true, children: [{ type: text, text: "Hey! Loved your last post" }] }
+      - { type: card, tone: blue, children: [{ type: text, text: "Thank you! It was taken at the Alfama viewpoint" }] }
+      - { type: card, dash: true, children: [{ type: text, text: "Send me the location!" }] }
+      - type: row
+        children:
+          - { type: button, icon: image, toast: Attach a photo }
+          - { type: input, placeholder: Message }
+          - { type: button, icon: send, primary: true, toast: Sent }
+
+  - id: activity
+    title: Activity
+    width: narrow
+    blocks:
+      - { type: h1, text: Activity }
+      - type: tabs
+        tabs:
+          - label: All
+            children:
+              - type: table
+                columns: ["", ""]
+                rows:
+                  - cells: [{ type: avatar, name: mia.travels, sub: liked your photo }, 5m]
+                    go: post
+                  - cells: [{ type: avatar, name: chef.luca, sub: started following you }, 1h]
+                    go: profile
+                  - cells: [{ type: avatar, name: anna.k, sub: "commented: Amazing!" }, 3h]
+                    go: post
+          - label: Follow requests
+            children:
+              - type: table
+                columns: ["", ""]
+                rows:
+                  - - { type: avatar, name: studio.nord, sub: wants to follow you }
+                    - type: row
+                      children:
+                        - { type: button, icon: check, primary: true, toast: Request confirmed }
+                        - { type: button, icon: close, toast: Request deleted }
+          - label: Mentions
+            children:
+              - { type: alert, kind: info, text: "No mentions yet. When someone tags you, it shows up here." }
+
+  - id: profile
+    title: Profile
+    note: "Own profile. On someone else's profile the buttons become Follow and Message."
+    blocks:
+      - type: grid
+        cols: 2
+        children:
+          - { type: avatar, name: your.username, sub: Your name, size: 96 }
+          - type: stack
+            children:
+              - type: row
+                children:
+                  - { type: text, bold: true, text: "84 posts" }
+                  - { type: text, bold: true, text: "1,320 followers" }
+                  - { type: text, bold: true, text: "410 following" }
+              - type: row
+                children:
+                  - { type: button, label: Edit profile, icon: edit, go: edit-profile }
+                  - { type: button, icon: settings, go: settings }
+      - { type: text, text: "Photographer and coffee person. Lisbon / Zurich." }
+      - type: tabs
+        tabs:
+          - label: Posts
+            children:
+              - type: grid
+                cols: 3
+                children:
+                  - *explore-tile
+                  - *explore-tile
+                  - *explore-tile
+                  - *explore-tile
+                  - *explore-tile
+                  - *explore-tile
+          - label: Reels
+            children:
+              - type: grid
+                cols: 3
+                children:
+                  - { type: video, h: 190 }
+                  - { type: video, h: 190 }
+                  - { type: video, h: 190 }
+          - label: Saved
+            children:
+              - { type: text, muted: true, text: "Only you can see what you have saved." }
+              - type: grid
+                cols: 3
+                children:
+                  - *explore-tile
+                  - *explore-tile
+                  - *explore-tile
+
+  - id: edit-profile
+    title: Edit profile
+    width: narrow
+    blocks:
+      - { type: h1, text: Edit profile }
+      - type: card
+        children:
+          - type: row
+            children:
+              - { type: avatar, size: 80 }
+              - { type: button, label: Change photo, icon: camera, toast: Photo picker opens }
+          - { type: input, label: Name, value: Your name }
+          - { type: input, label: Username, value: your.username }
+          - { type: textarea, label: Bio, rows: 3 }
+          - { type: input, label: Website }
+          - type: row
+            children:
+              - { type: button, label: Submit, primary: true, go: profile, toast: Profile updated }
+              - { type: button, label: Cancel, go: profile }
+
+  - id: settings
+    title: Settings
+    width: narrow
+    blocks:
+      - { type: h1, text: Settings }
+      - type: accordion
+        open: 0
+        items:
+          - label: Privacy
+            children:
+              - { type: toggle, label: Private account }
+              - { type: toggle, label: Show activity status, checked: true }
+              - { type: select, label: Who can message you, options: [Everyone, People you follow, No one] }
+          - label: Notifications
+            children:
+              - { type: toggle, label: Likes, checked: true }
+              - { type: toggle, label: Comments, checked: true }
+              - { type: toggle, label: New followers, checked: true }
+              - { type: toggle, label: Messages, checked: true }
+      - { type: alert, kind: warning, title: Storage almost full, text: "Free up space or upgrade your plan." }
+      - { type: button, label: Log out, icon: lock, tone: red, open: confirm-logout }
+
+  # ------------------------------------------------------------------ mobile
+  - id: mobile
+    title: Mobile view
+    width: medium
+    note: "The same feed on a phone. The tab bar replaces the top navigation."
+    blocks:
+      - type: device
+        kind: phone
+        children:
+          - type: row
+            between: true
+            children:
+              - { type: h2, text: Picto }
+              - type: row
+                children:
+                  - { type: button, icon: heart, go: activity }
+                  - { type: button, icon: send, go: messages }
+          - type: row
+            children:
+              - { type: avatar, size: 48 }
+              - { type: avatar, size: 48 }
+              - { type: avatar, size: 48 }
+              - { type: avatar, size: 48 }
+          - { type: divider }
+          - { type: avatar, name: mia.travels, sub: Lisbon, size: 36 }
+          - { type: image, h: 230, label: Photo }
+          - *post-actions
+          - { type: text, bold: true, text: "1,204 likes" }
+          - type: tabbar
+            active: 0
+            items:
+              - { icon: home, go: feed }
+              - { icon: search, go: explore }
+              - { icon: plus, go: new-post }
+              - { icon: video, go: reels }
+              - { icon: user, go: profile }

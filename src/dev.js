@@ -11,16 +11,16 @@ const MIME = {
 
 /**
  * Serve the project with live reload: rebuilds when files change and the browser refreshes itself.
- * @param {{ dir?: string, out?: string, port?: number, log?: (msg: string) => void, onIssues?: (e: SpecError) => void }} [opts]
+ * @param {{ dir?: string, out?: string, port?: number, theme?: string, log?: (msg: string) => void, onIssues?: (e: SpecError) => void }} [opts]
  */
-export async function dev({ dir = ".", out = ".sketchframe-dev", port = 3000, log = console.log, onIssues = () => {} } = {}) {
+export async function dev({ dir = ".", out = ".sketchframe-dev", port = 3000, theme, log = console.log, onIssues = () => {} } = {}) {
   const projectDir = path.resolve(dir);
   const outDir = path.resolve(projectDir, out);
   let version = String(Date.now());
 
   const rebuild = async () => {
     try {
-      const { warnings } = await build({ dir, out, dev: true });
+      const { warnings } = await build({ dir, out, dev: true, theme });
       version = String(Date.now());
       log(`✓ built${warnings.length ? ` (${warnings.length} warning${warnings.length > 1 ? "s" : ""})` : ""}`);
     } catch (e) {

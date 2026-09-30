@@ -24,6 +24,7 @@ Commands:
 Options:
   --out <dir>      Output directory, relative to the project (default: dist)
   --port <n>       Dev server port (default: 3000)
+  --theme <name>   Try a colour theme without editing the spec: sketch, color, pastel, blueprint, dark
   -v, --version    Print the version
   -h, --help       Show this help
 
@@ -39,7 +40,7 @@ function parse(argv) {
     const a = argv[i];
     if (a === "-h" || a === "--help") opts.help = true;
     else if (a === "-v" || a === "--version") opts.version = true;
-    else if (a === "--out" || a === "--port") {
+    else if (a === "--out" || a === "--port" || a === "--theme") {
       if (argv[i + 1] === undefined) throw new Error(`${a} needs a value`);
       opts[a.slice(2)] = argv[++i];
     } else if (a.startsWith("-")) throw new Error(`Unknown option ${a}. Try --help.`);
@@ -89,7 +90,7 @@ export async function run(argv) {
     }
 
     case "build": {
-      const { outDir, spec, warnings } = await build({ dir, out });
+      const { outDir, spec, warnings } = await build({ dir, out, theme: opts.theme });
       printIssues(warnings, yellow, "warn ");
       return console.log(green("✓") + ` ${spec.screens.length} screens → ${path.relative(process.cwd(), path.join(outDir, "index.html")) || "index.html"}`);
     }
@@ -97,7 +98,7 @@ export async function run(argv) {
     case "pdf":
     case "png": {
       const { exportFiles } = await import("./export.js");
-      const { files } = await exportFiles({ dir, out, png: cmd === "png" });
+      const { files } = await exportFiles({ dir, out, png: cmd === "png", theme: opts.theme });
       return console.log(green("✓") + ` ${files.length === 1 ? path.relative(process.cwd(), files[0]) : `${files.length} PNGs in ${path.relative(process.cwd(), path.dirname(files[0]))}`}`);
     }
 
@@ -106,6 +107,7 @@ export async function run(argv) {
       const server = await dev({
         dir,
         port: opts.port ? +opts.port : 3000,
+        theme: opts.theme,
         onIssues: (e) => { console.error(red("✗ " + e.message)); printIssues(e.issues, red, "error"); },
       });
       console.log(green("✓") + ` Serving ${server.url}  ${dim("(Ctrl+C to stop)")}`);

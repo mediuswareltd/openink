@@ -33,6 +33,68 @@ test("misspelt property is a warning with a suggestion", () => {
   assert.match(r.warnings[0].message, /no property "lable"\. Did you mean "label"\?/);
 });
 
+test("an unquoted comma inside { } gets an explanation instead of a confusing property warning", () => {
+  // YAML: { type: input, placeholder: Search a, b and c }  ->  key "b and c" with null value
+  const r = validate(spec({ screens: [{ id: "a", blocks: [{ type: "input", placeholder: "Search a", "b and c": null }] }] }));
+  assert.match(r.warnings[0].message, /A comma inside \{ \.\.\. \} ends the value.*quotes/);
+});
+
+test("x- top-level keys are allowed (for YAML anchors) but other unknown keys warn", () => {
+  const r = validate(spec({ "x-post": { type: "text", text: "x" }, extra: 1 }));
+  assert.equal(r.warnings.length, 1);
+  assert.match(r.warnings[0].message, /Unknown top-level field "extra"/);
+});
+
+test("screen width must be narrow, medium or wide", () => {
+  assert.deepEqual(validate(spec({ screens: [{ id: "a", width: "narrow", blocks: [] }] })).errors, []);
+  const r = validate(spec({ screens: [{ id: "a", width: "tiny", blocks: [] }] }));
+  assert.match(r.errors[0].message, /`width` must be one of: narrow, medium, wide/);
+});
+
+test("tone and fill are accepted on any block and checked", () => {
+  assert.deepEqual(validate(spec({ screens: [{ id: "a", tone: "pink", blocks: [{ type: "text", text: "x", tone: "blue", fill: true }] }] })).errors, []);
+  const r = validate(spec({ screens: [{ id: "a", tone: "mauve", blocks: [{ type: "text", text: "x", tone: "brown", fill: "yes" }] }] }));
+  assert.equal(r.errors.length, 3);
+  assert.match(messages(r), /`tone` must be one of: blue, green/);
+});
+
+test("icons are checked, with a suggestion", () => {
+  const r = validate(spec({ screens: [{ id: "a", blocks: [{ type: "button", icon: "hart" }] }] }));
+  assert.match(r.errors[0].message, /Unknown icon "hart"\. Did you mean "heart"\?/);
+  assert.deepEqual(validate(spec({ screens: [{ id: "a", blocks: [{ type: "button", icon: "heart" }, { type: "icon", name: "star", filled: true }] }] })).errors, []);
+});
+
+test("modals: open must point at a defined modal (in a screen or in the global list); ids are unique", () => {
+  const ok = validate(spec({ modals: [{ id: "m1", children: [] }], screens: [{ id: "a", blocks: [{ type: "button", label: "x", open: "m1" }, { type: "modal", id: "m2" }, { type: "button", label: "y", open: "m2" }] }] }));
+  assert.deepEqual(ok.errors, []);
+  const bad = validate(spec({ modals: [{ id: "m1" }], screens: [{ id: "a", blocks: [{ type: "button", label: "x", open: "mm" }, { type: "modal", id: "m1" }] }] }));
+  assert.match(messages(bad), /Opens unknown modal "mm"/);
+  assert.match(messages(bad), /Duplicate modal id "m1"/);
+});
+
+test("theme and colors are validated", () => {
+  assert.deepEqual(validate(spec({ theme: "dark", colors: { accent: "#e11d48", card: "white" } })).errors, []);
+  assert.deepEqual(validate(spec({ theme: "brand.css" })).errors, []);
+  assert.match(messages(validate(spec({ theme: "darkk" }))), /Unknown theme "darkk".*Did you mean "dark"\?/);
+  assert.match(messages(validate(spec({ colors: { acent: "red" } }))), /Unknown colour "acent".*Did you mean "accent"\?/);
+  assert.match(messages(validate(spec({ colors: { accent: "red; background: url(x)" } }))), /must be a CSS colour/);
+});
+
+test("tabbar items and nav items may use icons and are link-checked", () => {
+  const r = validate(spec({
+    nav: [{ icon: "home", go: "a" }],
+    screens: [{ id: "a", blocks: [{ type: "tabbar", items: [{ icon: "home", go: "a" }, { icon: "user", go: "nowhere" }] }] }],
+  }));
+  assert.match(messages(r), /unknown screen "nowhere"/);
+  assert.equal(r.errors.length, 1);
+});
+
+test("new structured props are checked: accordion items, chart values", () => {
+  const r = validate(spec({ screens: [{ id: "a", blocks: [{ type: "accordion", items: [{ children: [] }] }, { type: "chart", values: [1, "x"] }] }] }));
+  assert.match(messages(r), /Each entry needs a `label`/);
+  assert.match(messages(r), /`values` must be a list of numbers/);
+});
+
 test("missing required prop is an error", () => {
   const r = validate(spec({ screens: [{ id: "a", blocks: [{ type: "h1" }] }] }));
   assert.match(messages(r), /"h1" requires `text`/);

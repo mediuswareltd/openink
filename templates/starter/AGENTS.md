@@ -13,5 +13,6 @@ When the user describes a product or a change:
 Rules:
 - It is a wireframe: hand-drawn look, image and map placeholders, no real content, no colour beyond the theme.
 - Every screen must be reachable through `go:` links; end a flow with a `nextbar`.
+- Use `icon:` on buttons, `avatar`, `stat`, `chart`, `modal` (open with `open: <id>`) and `device` for mobile screens where they fit. `theme: color` colours the whole project; `tone: blue` colours a single block.
 - For several languages set `languages: [en, de]` and give every visible string as `{ en: …, de: … }`.
 - Do not edit `dist/`; it is regenerated.

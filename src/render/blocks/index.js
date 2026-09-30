@@ -4,14 +4,19 @@ import media from "./media.js";
 import forms from "./forms.js";
 import actions from "./actions.js";
 import data from "./data.js";
+import content from "./content.js";
+import feedback from "./feedback.js";
+import navigation from "./navigation.js";
+import overlay from "./overlay.js";
 
 /**
  * A block is one entry in a screen's `blocks` list. Everything the framework knows about it
  * (validation, docs, JSON Schema, rendering) comes from this one definition.
  *
  * @typedef {object} PropDef
- * @property {"text"|"string"|"number"|"boolean"|"text[]"|"tabs"|"rows"} type
+ * @property {"text"|"string"|"number"|"boolean"|"text[]"|"number[]"|"sections"|"links"|"rows"} type
  *   `text` = string, number, or a `{ lang: string }` translation object.
+ *   `sections` = list of `{ label, children }`; `links` = list of `{ icon, label, go, toast, open }`.
  * @property {string} doc            Shown in the generated docs and in editor tooltips.
  * @property {boolean} [required]
  * @property {string[]} [enum]       Allowed values (for `type: "string"`).
@@ -28,7 +33,7 @@ import data from "./data.js";
  */
 
 /** @type {BlockDef[]} */
-export const blocks = [...layout, ...text, ...media, ...forms, ...actions, ...data];
+export const blocks = [...layout, ...text, ...content, ...media, ...forms, ...actions, ...navigation, ...feedback, ...overlay, ...data];
 
 const byName = new Map(blocks.map((b) => [b.name, b]));
 if (byName.size !== blocks.length) throw new Error("Duplicate block name in src/render/blocks");

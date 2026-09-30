@@ -5,11 +5,41 @@
 Every entry in a screen's `blocks:` list is `{ type: <name>, ...props }`. Blocks marked **children** also take a `children:` list of blocks.
 A `text` value is a string, a number, or a translation object such as `{ en: "Hello", de: "Hallo" }` (needs `languages:` in the spec).
 
+## Props every block accepts
+
+| Prop | Type | Description |
+|---|---|---|
+| `tone` | `blue` \| `green` \| `yellow` \| `red` \| `purple` \| `pink` \| `orange` \| `teal` \| `gray` | Colour this block and everything inside it: outlines, text and drawn shapes. |
+| `fill` | boolean | Give the block a tinted background (uses `tone`, or a neutral tint). |
+
+## Actions
+
+Blocks that list `go`, `toast`, `open` or `close` in their props are clickable (`button`, `card`, `avatar`, `link`, `nextbar`, nav and tab-bar items) and accept:
+
+| Prop | Type | Description |
+|---|---|---|
+| `go` | string | Id of the screen to open when clicked. |
+| `toast` | text | Message shown in a toast when clicked. |
+| `open` | string | Id of a `modal` block to open when clicked. |
+| `close` | boolean | Close the modal this block is inside when clicked. |
+
+## Icons
+
+Used by `icon`, `button.icon`, nav items and `tabbar`:
+
+`home` · `search` · `heart` · `comment` · `share` · `bookmark` · `plus` · `bell` · `user` · `users` · `mail` · `settings` · `camera` · `image` · `video` · `star` · `menu` · `more` · `close` · `check` · `arrow-right` · `arrow-left` · `chevron-down` · `chevron-right` · `play` · `pin` · `trash` · `edit` · `upload` · `download` · `lock` · `cart` · `chart` · `calendar` · `filter` · `info` · `send`
+
 ## Layout
 
 ### `stack` · children
 
 Vertical stack of blocks.
+
+| Prop | Type | Description |
+|---|---|---|
+| `center` | boolean | Center the children horizontally. |
+
+\* required
 
 ### `row` · children
 
@@ -40,9 +70,34 @@ Hand-drawn box around related blocks. Clickable when `go` is set.
 |---|---|---|
 | `title` | text | Small heading at the top of the card. |
 | `dash` | boolean | No fill (a lighter, secondary card). |
+| `center` | boolean | Center the content horizontally. |
 | `elevation` | number | Shadow layers, 1 to 5 (default 1). |
 | `go` | string | Id of the screen to open when clicked. |
 | `toast` | text | Message shown in a toast when clicked. |
+| `open` | string | Id of a `modal` block to open when clicked. |
+| `close` | boolean | Close the modal this block is inside when clicked. |
+
+\* required
+
+### `accordion`
+
+Collapsible sections (FAQ, filters, settings groups).
+
+| Prop | Type | Description |
+|---|---|---|
+| `items` * | list of `{ label, children }` | List of `{ label, children }`. |
+| `open` | number | Index of the section open at first (default: all closed). |
+
+\* required
+
+### `device` · children
+
+Wrap screens in a phone, tablet or browser frame. Ideal for mobile-app and responsive sketches.
+
+| Prop | Type | Description |
+|---|---|---|
+| `kind` | `phone` \| `tablet` \| `browser` | Frame type (default `phone`). |
+| `title` | text | Address shown in the browser bar. |
 
 \* required
 
@@ -135,6 +190,87 @@ Small status pill.
 
 \* required
 
+## Content
+
+### `icon`
+
+Hand-drawn icon.
+
+| Prop | Type | Description |
+|---|---|---|
+| `name` * | `home` \| `search` \| `heart` \| `comment` \| `share` \| `bookmark` \| `plus` \| `bell` \| `user` \| `users` \| `mail` \| `settings` \| `camera` \| `image` \| `video` \| `star` \| `menu` \| `more` \| `close` \| `check` \| `arrow-right` \| `arrow-left` \| `chevron-down` \| `chevron-right` \| `play` \| `pin` \| `trash` \| `edit` \| `upload` \| `download` \| `lock` \| `cart` \| `chart` \| `calendar` \| `filter` \| `info` \| `send` | Icon name. |
+| `size` | number | Size in px (default 22). |
+| `filled` | boolean | Solid instead of outline (heart, star, bookmark…). |
+
+\* required
+
+### `avatar`
+
+Round profile picture with an optional name and sub-line. Clickable.
+
+| Prop | Type | Description |
+|---|---|---|
+| `name` | text | Bold name next to the picture. |
+| `sub` | text | Smaller line under the name. |
+| `size` | number | Picture size in px (default 44). |
+| `go` | string | Id of the screen to open when clicked. |
+| `toast` | text | Message shown in a toast when clicked. |
+| `open` | string | Id of a `modal` block to open when clicked. |
+| `close` | boolean | Close the modal this block is inside when clicked. |
+
+\* required
+
+### `hero` · children
+
+Big headline block for landing pages. Put call-to-action buttons (or an image) in `children`.
+
+| Prop | Type | Description |
+|---|---|---|
+| `title` * | text | Headline. |
+| `text` | text | Supporting sentence. |
+| `align` | `left` \| `center` | Text alignment (default `center`). |
+
+\* required
+
+### `stat`
+
+Number card for dashboards: label, big value and a change indicator.
+
+| Prop | Type | Description |
+|---|---|---|
+| `label` * | text | What is measured. |
+| `value` * | text | The number. |
+| `delta` | text | Change, e.g. `+8%`. |
+| `trend` | `up` \| `down` \| `flat` | Colours the change: `up` green, `down` orange, `flat` grey (default `up`). |
+
+\* required
+
+### `rating`
+
+Star rating.
+
+| Prop | Type | Description |
+|---|---|---|
+| `value` | number | Filled stars (default 4). |
+| `max` | number | Total stars (default 5). |
+| `text` | text | Text after the stars, e.g. `(128 reviews)`. |
+
+\* required
+
+### `link`
+
+Underlined text link.
+
+| Prop | Type | Description |
+|---|---|---|
+| `text` * | text | Link text. |
+| `go` | string | Id of the screen to open when clicked. |
+| `toast` | text | Message shown in a toast when clicked. |
+| `open` | string | Id of a `modal` block to open when clicked. |
+| `close` | boolean | Close the modal this block is inside when clicked. |
+
+\* required
+
 ## Media
 
 ### `image`
@@ -162,12 +298,59 @@ Map placeholder with a pin.
 
 ### `box`
 
-Generic hand-drawn box, for charts, video, ads, anything else.
+Generic hand-drawn box, for ads, embeds, anything else.
 
 | Prop | Type | Description |
 |---|---|---|
 | `h` | number | Height in px. |
 | `label` | text | Caption centered in the box. |
+
+\* required
+
+### `video`
+
+Video placeholder with a play button.
+
+| Prop | Type | Description |
+|---|---|---|
+| `h` | number | Height in px. |
+| `label` | text | Caption centered in the box. |
+
+\* required
+
+### `carousel`
+
+Swipeable gallery: image placeholder with arrows and page dots.
+
+| Prop | Type | Description |
+|---|---|---|
+| `h` | number | Height in px. |
+| `label` | text | Caption centered in the box. |
+| `count` | number | Number of slides shown as dots (default 4). |
+
+\* required
+
+### `dropzone`
+
+Dashed upload area with an arrow.
+
+| Prop | Type | Description |
+|---|---|---|
+| `h` | number | Height in px. |
+| `label` | text | Caption centered in the box. |
+
+\* required
+
+### `chart`
+
+Hand-drawn chart with sample data. It shows where a chart goes and what kind it is.
+
+| Prop | Type | Description |
+|---|---|---|
+| `kind` | `line` \| `area` \| `bar` \| `pie` \| `donut` | Chart type (default `line`). |
+| `h` | number | Height in px. |
+| `values` | list of numbers | Your own data points. Leave out for sample data. |
+| `label` | text | Caption in the corner. |
 
 \* required
 
@@ -184,6 +367,16 @@ Single-line text field.
 | `value` | text | Pre-filled value. |
 | `inputType` | string | HTML input type: `text`, `email`, `password`, `number`… |
 | `disabled` | boolean | Grey out the field. |
+
+\* required
+
+### `search`
+
+Search field with a magnifier.
+
+| Prop | Type | Description |
+|---|---|---|
+| `placeholder` | text | Placeholder text. |
 
 \* required
 
@@ -260,15 +453,18 @@ Range slider.
 
 ### `button`
 
-Button. Navigates with `go`, shows a message with `toast`, or both.
+Button, optionally with an icon. Navigates with `go`, opens a `modal` with `open`, shows a message with `toast`.
 
 | Prop | Type | Description |
 |---|---|---|
-| `label` * | text | Button text. |
+| `label` | text | Button text. Leave out for an icon-only button. |
+| `icon` | `home` \| `search` \| `heart` \| `comment` \| `share` \| `bookmark` \| `plus` \| `bell` \| `user` \| `users` \| `mail` \| `settings` \| `camera` \| `image` \| `video` \| `star` \| `menu` \| `more` \| `close` \| `check` \| `arrow-right` \| `arrow-left` \| `chevron-down` \| `chevron-right` \| `play` \| `pin` \| `trash` \| `edit` \| `upload` \| `download` \| `lock` \| `cart` \| `chart` \| `calendar` \| `filter` \| `info` \| `send` | Icon shown before the label. |
 | `primary` | boolean | Heavier border: the main action on the screen. |
 | `disabled` | boolean | Grey out the button. |
 | `go` | string | Id of the screen to open when clicked. |
 | `toast` | text | Message shown in a toast when clicked. |
+| `open` | string | Id of a `modal` block to open when clicked. |
+| `close` | boolean | Close the modal this block is inside when clicked. |
 
 \* required
 
@@ -304,6 +500,92 @@ Tab strip. Each tab has its own list of blocks.
 | `button` | text | Button text (default “Continue →”). |
 | `go` | string | Id of the screen to open when clicked. |
 | `toast` | text | Message shown in a toast when clicked. |
+| `open` | string | Id of a `modal` block to open when clicked. |
+| `close` | boolean | Close the modal this block is inside when clicked. |
+
+\* required
+
+## Navigation
+
+### `breadcrumb`
+
+Path to the current page. The last item is the current one.
+
+| Prop | Type | Description |
+|---|---|---|
+| `items` * | list of text | Path segments. |
+
+\* required
+
+### `pagination`
+
+Previous / page numbers / next.
+
+| Prop | Type | Description |
+|---|---|---|
+| `pages` | number | Number of pages (default 5). |
+| `active` | number | Current page, starting at 1 (default 1). |
+
+\* required
+
+### `steps`
+
+Numbered progress through a multi-step flow (checkout, onboarding).
+
+| Prop | Type | Description |
+|---|---|---|
+| `items` * | list of text | Step names. |
+| `active` | number | Index of the current step, starting at 0 (default 0). |
+
+\* required
+
+### `tabbar`
+
+Bottom tab bar of a mobile app: icons with small labels.
+
+| Prop | Type | Description |
+|---|---|---|
+| `items` * | list of `{ icon, label, go, toast, open }` | List of `{ icon, label, go, toast, open }`. |
+| `active` | number | Index of the highlighted item (default 0). |
+
+\* required
+
+## Feedback
+
+### `alert`
+
+Banner for information, success, warnings and errors.
+
+| Prop | Type | Description |
+|---|---|---|
+| `text` * | text | Message. |
+| `title` | text | Bold first line. |
+| `kind` | `info` \| `success` \| `warning` \| `error` | Type and colour (default `info`). |
+
+\* required
+
+### `progress`
+
+Progress bar.
+
+| Prop | Type | Description |
+|---|---|---|
+| `value` * | number | Percent complete, 0 to 100. |
+| `label` | text | Caption above the bar. |
+
+\* required
+
+## Overlays
+
+### `modal` · children
+
+Dialog that opens over the screen when a button, card or link has `open: <id>`. Close with a `close: true` button, the X, or a click outside.
+
+| Prop | Type | Description |
+|---|---|---|
+| `id` * | string | Unique id; other blocks use it in `open:`. |
+| `title` | text | Heading of the dialog. |
+| `width` | `narrow` \| `medium` \| `wide` | Dialog width (default `medium`). |
 
 \* required
 

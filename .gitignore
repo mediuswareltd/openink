@@ -3,3 +3,5 @@ dist/
 .sketchframe-dev/
 *.log
 .DS_Store
+
+projects/

@@ -1,8 +1,10 @@
 import rough from "roughjs/bundled/rough.esm.js";
 
 /**
- * <sf-placeholder h="160" label="Photo" cross pin round>
- * A hand-drawn box (RoughJS) used for images, maps and anything not worth drawing.
+ * <sf-placeholder h="160" label="Photo" cross pin round play dots="4" upload>
+ * A hand-drawn box (RoughJS) used for images, maps, video, galleries, uploads.
+ * Colours come from CSS variables, so a `tone` on a parent block recolours it:
+ *   --sf-stroke (outline), --sf-fill (hatch fill), --accent (pin / play button)
  */
 class Placeholder extends HTMLElement {
   connectedCallback() {
@@ -20,14 +22,21 @@ class Placeholder extends HTMLElement {
       if (!w) return;
       svg.replaceChildren();
       svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
+      const css = getComputedStyle(this);
+      const stroke = css.getPropertyValue("--sf-stroke").trim() || "#8a8a85";
+      const fill = css.getPropertyValue("--sf-fill").trim() || "#f3f1ea";
+      const accent = css.getPropertyValue("--accent").trim() || "#c2410c";
+      const paper = css.getPropertyValue("--paper").trim() || "#fdfcf8";
       const rc = rough.svg(svg);
-      const ink = { roughness: 1.6, stroke: "#8a8a85", seed: 7 };
-      const soft = { roughness: 1.6, stroke: "#cfcfc8", seed: 3 };
+      const ink = { roughness: 1.6, stroke, seed: 7 };
+      const soft = { roughness: 1.6, stroke: css.getPropertyValue("--sf-line").trim() || "#cfcfc8", seed: 3 };
+      const solid = { ...ink, stroke: accent, fill: accent, fillStyle: "solid" };
 
       if (this.hasAttribute("round")) {
-        svg.appendChild(rc.circle(w / 2, h / 2, Math.min(w, h) - 6, ink));
+        svg.appendChild(rc.circle(w / 2, h / 2, Math.min(w, h) - 6, { ...ink, fill, fillStyle: "solid" }));
       } else {
-        svg.appendChild(rc.rectangle(3, 3, w - 6, h - 6, { ...ink, fill: "#f3f1ea", fillStyle: "hachure", hachureGap: 12, fillWeight: 0.6 }));
+        const dashed = this.hasAttribute("upload") ? { strokeLineDash: [8, 6] } : {};
+        svg.appendChild(rc.rectangle(3, 3, w - 6, h - 6, { ...ink, ...dashed, fill, fillStyle: "hachure", hachureGap: 12, fillWeight: 0.6 }));
         if (this.hasAttribute("cross")) {
           svg.appendChild(rc.line(3, 3, w - 3, h - 3, soft));
           svg.appendChild(rc.line(w - 3, 3, 3, h - 3, soft));
@@ -35,8 +44,31 @@ class Placeholder extends HTMLElement {
       }
       if (this.hasAttribute("pin")) {
         const y = h * 0.38;
-        svg.appendChild(rc.circle(w / 2, y, 22, { ...ink, stroke: "#c2410c", fill: "#c2410c", fillStyle: "solid" }));
-        svg.appendChild(rc.line(w / 2, y + 10, w / 2, y + 24, { ...ink, stroke: "#c2410c", strokeWidth: 2 }));
+        svg.appendChild(rc.circle(w / 2, y, 22, solid));
+        svg.appendChild(rc.line(w / 2, y + 10, w / 2, y + 24, { ...ink, stroke: accent, strokeWidth: 2 }));
+      }
+      if (this.hasAttribute("play")) {
+        const cy = h * 0.42;
+        svg.appendChild(rc.circle(w / 2, cy, Math.min(56, h * 0.4), { ...ink, stroke: accent, fill: paper, fillStyle: "solid", strokeWidth: 2 }));
+        svg.appendChild(rc.polygon([[w / 2 - 7, cy - 10], [w / 2 - 7, cy + 10], [w / 2 + 11, cy]], solid));
+      }
+      if (this.hasAttribute("upload")) {
+        const cy = h * 0.38;
+        svg.appendChild(rc.line(w / 2, cy + 14, w / 2, cy - 14, { ...ink, strokeWidth: 2.2 }));
+        svg.appendChild(rc.linearPath([[w / 2 - 11, cy - 3], [w / 2, cy - 15], [w / 2 + 11, cy - 3]], { ...ink, strokeWidth: 2.2 }));
+      }
+      const dots = +this.getAttribute("dots");
+      if (dots > 0) {
+        const y = h - 16;
+        for (let i = 0; i < dots; i++) {
+          const x = w / 2 + (i - (dots - 1) / 2) * 16;
+          svg.appendChild(rc.circle(x, y, 7, i === 0 ? { ...ink, stroke: accent, fill: accent, fillStyle: "solid" } : { ...ink, fill: paper, fillStyle: "solid" }));
+        }
+        for (const dir of [-1, 1]) {
+          const x = dir < 0 ? 22 : w - 22;
+          svg.appendChild(rc.circle(x, h / 2, 26, { ...ink, fill: paper, fillStyle: "solid" }));
+          svg.appendChild(rc.linearPath([[x - dir * 3, h / 2 - 6], [x + dir * 3, h / 2], [x - dir * 3, h / 2 + 6]], { ...ink, strokeWidth: 1.8 }));
+        }
       }
     };
 

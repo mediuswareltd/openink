@@ -25,14 +25,14 @@ const slug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(
 /**
  * Build the project, then export a PDF (one screen per A4 landscape page) or PNG screenshots.
  * Needs Chrome, Chromium or Edge installed (set CHROME_PATH to point at one).
- * @param {{ dir?: string, out?: string, png?: boolean }} [opts]
+ * @param {{ dir?: string, out?: string, png?: boolean, theme?: string }} [opts]
  * @returns {Promise<{ files: string[] }>}
  */
-export async function exportFiles({ dir = ".", out = "dist", png = false } = {}) {
+export async function exportFiles({ dir = ".", out = "dist", png = false, theme } = {}) {
   const executablePath = findBrowser();
   if (!executablePath) throw new Error("No Chrome, Chromium or Edge found. Install one, or set CHROME_PATH to its executable.");
 
-  const { outDir, spec } = await build({ dir, out });
+  const { outDir, spec } = await build({ dir, out, theme });
   const { default: puppeteer } = await import("puppeteer-core");
   const browser = await puppeteer.launch({ executablePath, headless: true });
   try {

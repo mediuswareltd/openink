@@ -1,0 +1,205 @@
+# yaml-language-server: $schema=../../schema/spec.schema.json
+#
+# Every block, one screen per family. Use it as a visual catalogue and to compare themes:
+#   sketchframe dev examples/gallery --theme color      (sketch | color | pastel | blueprint | dark)
+
+name: Gallery
+
+nav:
+  - { label: Start, go: start }
+  - { label: Content, go: content }
+  - { label: Media, go: media }
+  - { label: Forms, go: forms }
+  - { label: Navigation, go: navigation }
+  - { label: Colours, go: colours }
+
+screens:
+  # ------------------------------------------------------------------ start
+  - id: start
+    title: Start
+    blocks:
+      - type: hero
+        title: Sketch it. Click it. Ship the idea.
+        text: A catalogue of every block. Try the colour themes with the --theme option.
+        children:
+          - type: row
+            center: true
+            children:
+              - { type: button, label: Open the modal, icon: plus, primary: true, open: welcome }
+              - { type: button, label: See colours, icon: star, go: colours }
+      - { type: alert, kind: info, title: Heads up, text: "This is an info alert. There are also success, warning and error." }
+      - { type: alert, kind: success, text: Saved. }
+      - { type: alert, kind: warning, text: Your trial ends in 3 days. }
+      - { type: alert, kind: error, text: Payment failed. }
+      - type: modal
+        id: welcome
+        title: Welcome
+        children:
+          - { type: text, text: "A modal opens over the screen. Close it with the X, the button, Escape, or a click outside." }
+          - { type: input, label: Your name }
+          - type: row
+            children:
+              - { type: button, label: Save, primary: true, close: true, toast: Saved }
+              - { type: button, label: Cancel, close: true }
+
+  # ------------------------------------------------------------------ content
+  - id: content
+    title: Content
+    blocks:
+      - { type: h1, text: Content }
+      - type: grid
+        cols: 3
+        children:
+          - { type: stat, label: Visitors, value: "12,480", delta: "+8%", trend: up }
+          - { type: stat, label: Churn, value: "2.1%", delta: "+0.4 pts", trend: down }
+          - { type: stat, label: Plan, value: Pro, delta: unchanged, trend: flat }
+      - { type: h3, text: Avatars }
+      - type: row
+        children:
+          - { type: avatar, name: mia.travels, sub: 2h ago }
+          - { type: avatar, name: chef.luca, size: 56 }
+          - { type: avatar, size: 32 }
+      - { type: h3, text: Rating and links }
+      - { type: rating, value: 4, text: (128 reviews) }
+      - { type: link, text: Read the full story, go: media }
+      - { type: h3, text: Icons }
+      - type: row
+        children:
+          - { type: icon, name: home }
+          - { type: icon, name: search }
+          - { type: icon, name: heart, filled: true }
+          - { type: icon, name: comment }
+          - { type: icon, name: share }
+          - { type: icon, name: bookmark }
+          - { type: icon, name: bell }
+          - { type: icon, name: user }
+          - { type: icon, name: users }
+          - { type: icon, name: mail }
+          - { type: icon, name: settings }
+          - { type: icon, name: camera }
+          - { type: icon, name: image }
+          - { type: icon, name: video }
+          - { type: icon, name: star, filled: true }
+          - { type: icon, name: pin }
+          - { type: icon, name: cart }
+          - { type: icon, name: chart }
+          - { type: icon, name: calendar }
+          - { type: icon, name: lock }
+          - { type: icon, name: edit }
+          - { type: icon, name: trash }
+          - { type: icon, name: upload }
+          - { type: icon, name: send }
+      - { type: h3, text: Badges and tables }
+      - type: table
+        columns: [Name, Status, ""]
+        rows:
+          - [Alpha, { type: badge, status: on, text: Active }, { type: button, label: Edit, icon: edit }]
+          - [Beta, { type: badge, status: wait, text: Pending }, { type: button, label: Edit, icon: edit }]
+          - [Gamma, { type: badge, status: off, text: Archived }, { type: button, label: Edit, icon: edit }]
+
+  # ------------------------------------------------------------------ media
+  - id: media
+    title: Media
+    blocks:
+      - { type: h1, text: Media and charts }
+      - type: grid
+        cols: 2
+        children:
+          - { type: image, h: 160, label: Image }
+          - { type: map, h: 160 }
+          - { type: video, h: 200, label: Video }
+          - { type: carousel, h: 200, label: Gallery, count: 5 }
+          - { type: dropzone, h: 160, label: Drop files here }
+          - { type: box, h: 160, label: Anything else }
+      - { type: h3, text: Charts }
+      - type: grid
+        cols: 2
+        children:
+          - { type: chart, kind: line, label: Line }
+          - { type: chart, kind: area, label: Area }
+          - { type: chart, kind: bar, label: Bar }
+          - { type: chart, kind: donut, label: Donut }
+
+  # ------------------------------------------------------------------ forms
+  - id: forms
+    title: Forms
+    width: medium
+    blocks:
+      - { type: h1, text: Forms }
+      - type: card
+        children:
+          - { type: search, placeholder: Search anything }
+          - { type: input, label: Text field, placeholder: Type here }
+          - { type: input, label: Password, inputType: password }
+          - { type: textarea, label: Message, rows: 3 }
+          - { type: select, label: Country, options: [Switzerland, Germany, France, Italy] }
+          - { type: radio, label: Plan, options: [Free, Pro, Team], selected: 1 }
+          - { type: checkbox, label: I agree to the terms, checked: true }
+          - { type: toggle, label: Email notifications, checked: true }
+          - { type: slider, label: Volume, value: 60 }
+          - { type: progress, label: Upload, value: 65 }
+          - type: row
+            children:
+              - { type: button, label: Submit, icon: check, primary: true, toast: Submitted }
+              - { type: button, label: Cancel }
+              - { type: button, icon: trash }
+
+  # ------------------------------------------------------------------ navigation
+  - id: navigation
+    title: Navigation
+    blocks:
+      - { type: h1, text: Navigation }
+      - { type: breadcrumb, items: [Home, Shop, Shoes, Sneakers] }
+      - { type: steps, items: [Cart, Address, Payment, Done], active: 1 }
+      - { type: tabs, tabs: [{ label: Details, children: [{ type: text, text: First tab content. }] }, { label: Reviews, children: [{ type: rating, value: 5 }] }] }
+      - type: accordion
+        open: 0
+        items:
+          - label: How does it work?
+            children:
+              - { type: text, text: You describe screens in YAML and get a clickable prototype. }
+          - label: Can I use my own colours?
+            children:
+              - { type: text, text: "Yes - themes, colors and per-block tones." }
+      - { type: pagination, pages: 6, active: 2 }
+      - { type: h3, text: Tab bar in a phone frame }
+      - type: device
+        kind: phone
+        children:
+          - { type: h2, text: My app }
+          - { type: image, h: 200, label: Content }
+          - type: tabbar
+            active: 0
+            items:
+              - { icon: home, label: Home }
+              - { icon: search, label: Search }
+              - { icon: plus }
+              - { icon: bell, label: Alerts }
+              - { icon: user, label: Me }
+
+  # ------------------------------------------------------------------ colours
+  - id: colours
+    title: Colours
+    blocks:
+      - { type: h1, text: Colour a whole project or just one part }
+      - { type: text, muted: true, text: "Project: theme: color | pastel | blueprint | dark, or colors: { accent: '#e11d48' }.  Part: tone: blue on any block." }
+      - type: grid
+        cols: 3
+        children:
+          - { type: card, tone: blue, title: blue, children: [{ type: text, text: Outlines and text take the colour. }, { type: button, label: Action, primary: true }] }
+          - { type: card, tone: green, title: green, children: [{ type: text, text: Great for success states. }, { type: chart, kind: bar, h: 90 }] }
+          - { type: card, tone: yellow, title: yellow, children: [{ type: text, text: Highlights and warnings. }, { type: rating, value: 4 }] }
+          - { type: card, tone: red, title: red, children: [{ type: text, text: Errors and danger zones. }, { type: button, label: Delete, icon: trash }] }
+          - { type: card, tone: purple, title: purple, children: [{ type: text, text: Premium features. }, { type: progress, value: 40 }] }
+          - { type: card, tone: pink, title: pink, children: [{ type: text, text: Friendly and playful. }, { type: icon, name: heart, filled: true, size: 28 }] }
+          - { type: card, tone: orange, title: orange, children: [{ type: text, text: Calls to action. }, { type: badge, status: wait, text: New }] }
+          - { type: card, tone: teal, title: teal, children: [{ type: text, text: Calm and trustworthy. }, { type: toggle, label: Enabled, checked: true }] }
+          - { type: card, tone: gray, title: gray, children: [{ type: text, text: De-emphasised content. }, { type: image, h: 60, label: Image }] }
+      - { type: h3, text: "fill: true tints the background" }
+      - { type: alert, kind: info, text: "You can mix tone and fill on any block, and even on a whole screen." }
+      - type: row
+        children:
+          - { type: text, tone: blue, fill: true, text: Blue fill }
+          - { type: text, tone: green, fill: true, text: Green fill }
+          - { type: text, tone: pink, fill: true, text: Pink fill }
+          - { type: text, fill: true, text: Neutral fill }

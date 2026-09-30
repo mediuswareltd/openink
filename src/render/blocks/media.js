@@ -21,8 +21,45 @@ export default [
   {
     name: "box",
     group: "Media",
-    summary: "Generic hand-drawn box, for charts, video, ads, anything else.",
+    summary: "Generic hand-drawn box, for ads, embeds, anything else.",
     props: { h: size, label },
     render: (b, c) => `<sf-placeholder h="${+b.h || 80}" label="${c.esc(c.plain(b.label))}"></sf-placeholder>`,
+  },
+  {
+    name: "video",
+    group: "Media",
+    summary: "Video placeholder with a play button.",
+    props: { h: size, label },
+    render: (b, c) => `<sf-placeholder h="${+b.h || 220}" play${b.label ? ` label="${c.esc(c.plain(b.label))}"` : ""}></sf-placeholder>`,
+  },
+  {
+    name: "carousel",
+    group: "Media",
+    summary: "Swipeable gallery: image placeholder with arrows and page dots.",
+    props: { h: size, label, count: { type: "number", doc: "Number of slides shown as dots (default 4)." } },
+    render: (b, c) =>
+      `<sf-placeholder h="${+b.h || 260}" cross dots="${+b.count || 4}"${b.label ? ` label="${c.esc(c.plain(b.label))}"` : ""}></sf-placeholder>`,
+  },
+  {
+    name: "dropzone",
+    group: "Media",
+    summary: "Dashed upload area with an arrow.",
+    props: { h: size, label },
+    render: (b, c) => `<sf-placeholder h="${+b.h || 140}" upload label="${c.esc(c.plain(b.label) || "Drop files here")}"></sf-placeholder>`,
+  },
+  {
+    name: "chart",
+    group: "Media",
+    summary: "Hand-drawn chart with sample data. It shows where a chart goes and what kind it is.",
+    props: {
+      kind: { type: "string", enum: ["line", "area", "bar", "pie", "donut"], doc: "Chart type (default `line`)." },
+      h: size,
+      values: { type: "number[]", doc: "Your own data points. Leave out for sample data." },
+      label: { type: "text", doc: "Caption in the corner." },
+    },
+    render: (b, c) =>
+      `<sf-chart kind="${c.esc(b.kind || "line")}" h="${+b.h || 200}"${b.values ? ` values="${c.esc(b.values.join(","))}"` : ""}${
+        b.label ? ` label="${c.esc(c.plain(b.label))}"` : ""
+      }></sf-chart>`,
   },
 ];
