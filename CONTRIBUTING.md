@@ -5,7 +5,7 @@ Thanks for helping. This project is small on purpose: a YAML spec goes in, a han
 ## Setup
 
 ```bash
-git clone https://github.com/OWNER/openink && cd openink
+git clone https://github.com/mediuswareltd/openink && cd openink
 npm install
 npm test                # unit + CLI tests, no browser needed
 npm run dev             # live preview of examples/rental-portal at http://localhost:3000
@@ -42,6 +42,27 @@ Node 20 or newer. `pdf`, `png` and `npm run screenshots` also need Chrome, Chrom
 - User-visible changes go under **Unreleased** in `CHANGELOG.md`.
 - If you change how something looks, attach a screenshot (`openink png examples/rental-portal`).
 - **Do not upgrade `roughjs`** without testing every form control: wired-elements calls a function newer roughjs versions removed (`fillPolygon`), and the toggle, slider and textarea silently stop drawing.
+
+## Releasing (maintainers)
+
+The package is published to npm as `@mediusware/openink`, **by hand, from `main`**. This repository has no CI or publish automation. You need an npm account that belongs to the `@mediusware` organization, with 2FA enabled (npm refuses to publish without it).
+
+A release is only needed when something that ships in the package changes (`bin/`, `src/`, `templates/`, `schema/`, `docs/*.md`, `README.md`, `CHANGELOG.md`). Changes to tests, examples, screenshots or this file do not need one.
+
+1. **In the pull request**, bump `version` in `package.json` (semver) and add a section to `CHANGELOG.md`. Run `npm run generate && npm test`.
+2. **Merge the pull request into `main`.**
+3. **Publish from an up-to-date `main`:**
+
+   ```bash
+   git switch main && git pull
+   npm login                       # opens the browser
+   npm pack --dry-run              # check the file list: no docs/img, no examples, no node_modules
+   npm publish --dry-run           # full rehearsal, publishes nothing
+   npm publish                     # runs the tests first (prepublishOnly); add --otp=123456 if asked
+   git tag v0.1.0 && git push --tags
+   ```
+
+`publishConfig.access` is `public`, so no `--access` flag is needed. To see whether a pull request has been merged: `gh pr view <number> --json state,mergedAt`.
 
 ## Reporting bugs
 
