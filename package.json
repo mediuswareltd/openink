@@ -1,5 +1,5 @@
 {
-  "name": "@mediusware/openink",
+  "name": "openink",
   "version": "0.1.0",
   "description": "Describe screens in YAML, get a clickable hand-drawn wireframe prototype (static HTML, PDF, PNG). Built on wired-elements and RoughJS.",
   "keywords": ["wireframe", "prototype", "sketch", "mockup", "hand-drawn", "wired-elements", "roughjs", "ux", "static-site-generator"],

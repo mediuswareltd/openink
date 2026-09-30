@@ -10,10 +10,10 @@ The assistant writes `spec.yaml`, the tool checks it, and you get a consistent h
 
 `openink init` puts an `AGENTS.md` in your project. Most assistants read it automatically; it tells them to:
 
-1. Run `npx @mediusware/openink blocks` to learn the available blocks.
+1. Run `npx openink blocks` to learn the available blocks.
 2. Edit `spec.yaml` only.
-3. Run `npx @mediusware/openink validate` and fix what it reports.
-4. Run `npx @mediusware/openink png` and look at `dist/png/*.png` to check the layout.
+3. Run `npx openink validate` and fix what it reports.
+4. Run `npx openink png` and look at `dist/png/*.png` to check the layout.
 
 If your assistant uses a different filename (`CLAUDE.md`, `.cursorrules`, …), copy or rename `AGENTS.md`.
 

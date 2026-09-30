@@ -45,7 +45,7 @@ Node 20 or newer. `pdf`, `png` and `npm run screenshots` also need Chrome, Chrom
 
 ## Releasing (maintainers)
 
-The package is published to npm as `@mediusware/openink`, **by hand, from `main`**. This repository has no CI or publish automation. You need an npm account that belongs to the `@mediusware` organization, with 2FA enabled (npm refuses to publish without it).
+The package is published to npm as `openink`, **by hand, from `main`**. This repository has no CI or publish automation. You need an npm account listed as a maintainer of `openink` (`npm owner ls openink`), with 2FA enabled (npm refuses to publish without it).
 
 A release is only needed when something that ships in the package changes (`bin/`, `src/`, `templates/`, `schema/`, `docs/*.md`, `README.md`, `CHANGELOG.md`). Changes to tests, examples, screenshots or this file do not need one.
 

@@ -77,7 +77,7 @@ Remember that wired-elements only draw when their size changes and draw at 0×0 
 ## Use it from code
 
 ```js
-import { build, validate, exportFiles } from "@mediusware/openink";
+import { build, validate, exportFiles } from "openink";
 
 await build({ dir: "./my-project", out: "dist" });
 await exportFiles({ dir: "./my-project", png: true });

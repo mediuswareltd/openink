@@ -37,7 +37,7 @@ function modalProps() {
 export function buildSchema() {
   return {
     $schema: "https://json-schema.org/draft/2020-12/schema",
-    $id: "https://unpkg.com/@mediusware/openink/schema/spec.schema.json",
+    $id: "https://unpkg.com/openink/schema/spec.schema.json",
     title: "openink spec",
     type: "object",
     required: ["name", "screens"],
