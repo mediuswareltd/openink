@@ -9,6 +9,8 @@ const MIME = {
   ".webp": "image/webp", ".ico": "image/x-icon", ".woff2": "font/woff2", ".pdf": "application/pdf",
 };
 
+const MAX_PORT_TRIES = 10;
+
 /**
  * Serve the project with live reload: rebuilds when files change and the browser refreshes itself.
  * @param {{ dir?: string, out?: string, port?: number, theme?: string, log?: (msg: string) => void, onIssues?: (e: SpecError) => void }} [opts]
@@ -38,7 +40,20 @@ export async function dev({ dir = ".", out = ".openink-dev", port = 3000, theme,
     res.writeHead(200, { "Content-Type": MIME[path.extname(file)] || "application/octet-stream", "Cache-Control": "no-store" });
     fs.createReadStream(file).pipe(res);
   });
-  await new Promise((resolve, reject) => server.once("error", reject).listen(port, resolve));
+  // If the port is taken, try the next ones (3000 → 3001 → …) before giving up.
+  const wanted = port;
+  for (let attempt = 0; ; attempt++, port++) {
+    try {
+      await new Promise((resolve, reject) => server.once("error", reject).listen(port, () => { server.off("error", reject); resolve(); }));
+      break;
+    } catch (e) {
+      if (e.code !== "EADDRINUSE" || attempt >= MAX_PORT_TRIES - 1) {
+        fs.rmSync(outDir, { recursive: true, force: true });
+        throw e.code === "EADDRINUSE" ? new Error(`Ports ${wanted}–${port} are all in use. Pick another with --port.`) : e;
+      }
+    }
+  }
+  if (port !== wanted) log(`Port ${wanted} is in use, using ${port} instead.`);
 
   let timer;
   const watcher = fs.watch(projectDir, { recursive: true }, (_, name) => {

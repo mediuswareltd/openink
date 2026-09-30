@@ -23,7 +23,7 @@ Commands:
 
 Options:
   --out <dir>      Output directory, relative to the project (default: dist)
-  --port <n>       Dev server port (default: 3000)
+  --port <n>       Dev server port (default: 3000; the next free port if taken)
   --theme <name>   Try a colour theme without editing the spec: sketch, color, pastel, blueprint, dark
   -v, --version    Print the version
   -h, --help       Show this help
