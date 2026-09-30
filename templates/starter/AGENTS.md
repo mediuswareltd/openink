@@ -1,14 +1,14 @@
 # Wireframe project: instructions for AI assistants
 
-This folder is a [openink](https://github.com/OWNER/openink) project. The whole prototype is described in `spec.yaml`. Never write HTML by hand.
+This folder is a [openink](https://github.com/mediuswareltd/openink) project. The whole prototype is described in `spec.yaml`. Never write HTML by hand.
 
 When the user describes a product or a change:
 
-1. Run `npx openink blocks` to see every block type and its props (or read the JSON Schema at `node_modules/openink/schema/spec.schema.json`).
+1. Run `npx @mediusware/openink blocks` to see every block type and its props (or read the JSON Schema at `node_modules/openink/schema/spec.schema.json`).
 2. Edit `spec.yaml`. One entry in `screens:` per real page or state. Give each a `title`, and use `note:` for behaviour a sketch cannot show.
-3. Run `npx openink validate`. Fix every error; read the warnings (they catch typos and unreachable screens).
-4. Run `npx openink png` and look at `dist/png/*.png` to check the layout. `npx openink dev` gives a live preview.
-5. Tell the user where the result is: `dist/index.html` (and `npx openink pdf` for a PDF).
+3. Run `npx @mediusware/openink validate`. Fix every error; read the warnings (they catch typos and unreachable screens).
+4. Run `npx @mediusware/openink png` and look at `dist/png/*.png` to check the layout. `npx @mediusware/openink dev` gives a live preview.
+5. Tell the user where the result is: `dist/index.html` (and `npx @mediusware/openink pdf` for a PDF).
 
 Rules:
 - It is a wireframe: hand-drawn look, image and map placeholders, no real content, no colour beyond the theme.
