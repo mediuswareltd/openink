@@ -1,0 +1,120 @@
+# yaml-language-server: $schema=../../schema/spec.schema.json
+# Demo project: uses every block type. Copy this folder to start a new project.
+name: RentDemo
+languages: [en, de]          # optional: remove for a single-language project
+nav:
+  default:
+    - { label: { en: Search, de: Suche }, go: search }
+    - { label: { en: Owner login, de: Anmelden }, go: dashboard }
+  owner:
+    - { label: Dashboard, go: dashboard }
+    - { label: New listing, go: new }
+    - { label: Public site, go: search }
+
+screens:
+  - id: search
+    title: { en: Home + search, de: Startseite + Suche }
+    note: { en: "Results are already showing. There is no Search button.", de: "Ergebnisse sind schon sichtbar. Kein Suchbutton." }
+    blocks:
+      - { type: h1, text: { en: Find a property, de: Immobilie finden } }
+      - { type: chips, options: [Rent, Buy], active: 0 }
+      - type: card
+        children:
+          - { type: input, label: { en: Location, de: Ort }, placeholder: { en: "Canton, PLZ or city", de: "Kanton, PLZ oder Stadt" }, value: Zürich }
+          - { type: select, label: Property type, options: [Any, Apartment, House, Commercial] }
+      - type: grid
+        cols: 3
+        children:
+          - type: card
+            go: detail
+            children:
+              - { type: image, h: 110, label: Photo }
+              - { type: h3, text: Bahnhofstr. 12 }
+              - { type: text, muted: true, text: "3.5 rooms · CHF 2'450" }
+          - type: card
+            go: detail
+            children:
+              - { type: image, h: 110, label: Photo }
+              - { type: h3, text: Rue du Rhône 5 }
+              - { type: text, muted: true, text: "2.5 rooms · CHF 1'980" }
+          - type: card
+            go: detail
+            children:
+              - { type: image, h: 110, label: Photo }
+              - { type: h3, text: Via Nassa 3 }
+              - { type: text, muted: true, text: "House · CHF 1.25M" }
+
+  - id: detail
+    title: Listing page
+    blocks:
+      - { type: h1, text: "Bahnhofstrasse 12 · Zürich" }
+      - type: grid
+        cols: 2
+        children:
+          - type: stack
+            children:
+              - { type: image, h: 220, label: Photo gallery }
+              - { type: map, h: 130 }
+              - type: tabs
+                tabs:
+                  - label: Features
+                    children:
+                      - { type: list, items: [Balcony, Elevator, Pets allowed] }
+                  - label: Costs
+                    children:
+                      - { type: text, text: "Net rent CHF 2'200 + Nebenkosten CHF 250" }
+          - type: card
+            title: Contact
+            children:
+              - { type: input, label: Name, placeholder: Your name }
+              - { type: input, label: Email, inputType: email, placeholder: you@email.ch }
+              - { type: textarea, label: Message, placeholder: I am interested… }
+              - { type: checkbox, label: Send me similar listings }
+              - { type: button, label: Send interest, primary: true, toast: { en: Interest sent, de: Anfrage gesendet } }
+      - { type: nextbar, text: Owner side, button: Go to dashboard →, go: dashboard }
+
+  - id: dashboard
+    title: Owner dashboard
+    nav: owner
+    blocks:
+      - type: row
+        between: true
+        children:
+          - { type: h1, text: Dashboard }
+          - { type: button, label: + New listing, primary: true, go: new }
+      - type: table
+        columns: [Listing, Status, Invoice, ""]
+        rows:
+          - cells:
+              - Bahnhofstr. 12
+              - { type: badge, status: on, text: Active }
+              - { type: badge, status: wait, text: 30d to pay }
+              - View →
+            go: detail
+          - cells:
+              - Rue du Rhône 5
+              - { type: badge, status: on, text: Active }
+              - { type: badge, status: on, text: Paid }
+              - View →
+            go: detail
+      - type: card
+        dash: true
+        children:
+          - { type: toggle, label: Email me on new leads, checked: true }
+          - { type: radio, label: Billing cycle, options: [Monthly, Yearly] }
+          - { type: slider, label: Photo quality }
+
+  - id: new
+    title: New listing
+    nav: owner
+    blocks:
+      - { type: h1, text: New listing }
+      - type: grid
+        cols: 2
+        children:
+          - { type: input, label: Address, placeholder: "Street, city" }
+          - { type: input, label: Net rent (CHF), value: "2200" }
+          - { type: select, label: Type, options: [Apartment, House, Plot, Commercial] }
+          - { type: image, h: 60, label: Upload photos (min 7) }
+      - { type: divider }
+      - { type: button, label: Publish, primary: true, go: dashboard, toast: Published }

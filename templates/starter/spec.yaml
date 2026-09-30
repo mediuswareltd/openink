@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=https://unpkg.com/sketchframe/schema/spec.schema.json
+#
+# {{name}}: describe your screens here, then run `npx sketchframe dev`.
+# Block reference: `npx sketchframe blocks`
+
+name: {{name}}
+
+nav:
+  - { label: Home, go: home }
+  - { label: Sign up, go: signup }
+
+screens:
+  - id: home
+    title: Home
+    note: Replace this with what the screen is for, or behaviour a sketch cannot show.
+    blocks:
+      - { type: h1, text: A short promise }
+      - { type: text, muted: true, text: One sentence that explains it. }
+      - type: grid
+        cols: 3
+        children:
+          - type: card
+            children:
+              - { type: image, h: 90, label: Icon }
+              - { type: h3, text: Feature one }
+          - type: card
+            children:
+              - { type: image, h: 90, label: Icon }
+              - { type: h3, text: Feature two }
+          - type: card
+            children:
+              - { type: image, h: 90, label: Icon }
+              - { type: h3, text: Feature three }
+      - { type: button, label: Get started, primary: true, go: signup }
+
+  - id: signup
+    title: Sign up
+    blocks:
+      - { type: h1, text: Create your account }
+      - type: card
+        children:
+          - { type: input, label: Email, inputType: email, placeholder: you@company.com }
+          - { type: input, label: Password, inputType: password }
+          - { type: button, label: Create account, primary: true, go: dashboard }
+
+  - id: dashboard
+    title: Dashboard
+    blocks:
+      - { type: h1, text: Dashboard }
+      - type: table
+        columns: [Name, Status]
+        rows:
+          - [First item, { type: badge, status: on, text: Active }]
+          - [Second item, { type: badge, status: wait, text: Pending }]
+      - { type: nextbar, text: End of the flow., button: Start over, go: home }

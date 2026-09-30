@@ -1,0 +1,870 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unpkg.com/sketchframe/schema/spec.schema.json",
+  "title": "sketchframe spec",
+  "type": "object",
+  "required": [
+    "name",
+    "screens"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Title shown in the header and browser tab."
+    },
+    "languages": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z]{2,3}$"
+      },
+      "description": "Language codes. The first is the default."
+    },
+    "footer": {
+      "type": "string"
+    },
+    "theme": {
+      "type": "string",
+      "description": "Path (relative to the spec) of a CSS file that overrides the design tokens."
+    },
+    "nav": {
+      "description": "Header buttons: a list, or an object of named lists (screens choose one with `nav:`).",
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/navItem"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/navItem"
+            }
+          }
+        }
+      ]
+    },
+    "screens": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "blocks"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z][\\w-]*$",
+            "description": "Unique id, used by `go:` links."
+          },
+          "title": {
+            "$ref": "#/$defs/text"
+          },
+          "nav": {
+            "type": "string",
+            "description": "Name of the nav set to show on this screen."
+          },
+          "note": {
+            "$ref": "#/$defs/text",
+            "description": "Sticky-note annotation shown at the top of the screen."
+          },
+          "blocks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/block"
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "text": {
+      "anyOf": [
+        {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number"
+            ]
+          }
+        }
+      ]
+    },
+    "navItem": {
+      "type": "object",
+      "required": [
+        "label"
+      ],
+      "properties": {
+        "label": {
+          "$ref": "#/$defs/text"
+        },
+        "go": {
+          "type": "string"
+        },
+        "toast": {
+          "$ref": "#/$defs/text"
+        }
+      },
+      "additionalProperties": false
+    },
+    "cell": {
+      "anyOf": [
+        {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number"
+            ]
+          }
+        },
+        {
+          "$ref": "#/$defs/block"
+        }
+      ]
+    },
+    "block": {
+      "anyOf": [
+        {
+          "type": "string",
+          "description": "Shorthand for a `text` block."
+        },
+        {
+          "type": "object",
+          "description": "Vertical stack of blocks.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "stack"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/block"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Horizontal row that wraps on small screens.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "row"
+            },
+            "between": {
+              "type": "boolean",
+              "description": "Push the first and last child to opposite ends."
+            },
+            "center": {
+              "type": "boolean",
+              "description": "Center the children."
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/block"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Equal-width columns. Collapses to one column on phones.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "grid"
+            },
+            "cols": {
+              "type": "number",
+              "description": "Number of columns (default 2)."
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/block"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Hand-drawn box around related blocks. Clickable when `go` is set.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "card"
+            },
+            "title": {
+              "$ref": "#/$defs/text",
+              "description": "Small heading at the top of the card."
+            },
+            "dash": {
+              "type": "boolean",
+              "description": "No fill (a lighter, secondary card)."
+            },
+            "elevation": {
+              "type": "number",
+              "description": "Shadow layers, 1 to 5 (default 1)."
+            },
+            "go": {
+              "type": "string",
+              "description": "Id of the screen to open when clicked."
+            },
+            "toast": {
+              "$ref": "#/$defs/text",
+              "description": "Message shown in a toast when clicked."
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/block"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Hand-drawn horizontal line.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "divider"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Empty vertical space.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "spacer"
+            },
+            "h": {
+              "type": "number",
+              "description": "Height in px (default 16)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Level 1 heading.",
+          "required": [
+            "type",
+            "text"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "h1"
+            },
+            "text": {
+              "$ref": "#/$defs/text",
+              "description": "Heading text."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Level 2 heading.",
+          "required": [
+            "type",
+            "text"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "h2"
+            },
+            "text": {
+              "$ref": "#/$defs/text",
+              "description": "Heading text."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Level 3 heading.",
+          "required": [
+            "type",
+            "text"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "h3"
+            },
+            "text": {
+              "$ref": "#/$defs/text",
+              "description": "Heading text."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Paragraph. A bare string in a `children` list is shorthand for this block.",
+          "required": [
+            "type",
+            "text"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "text"
+            },
+            "text": {
+              "$ref": "#/$defs/text",
+              "description": "Paragraph text."
+            },
+            "muted": {
+              "type": "boolean",
+              "description": "Grey, smaller text."
+            },
+            "bold": {
+              "type": "boolean",
+              "description": "Bold text."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Bulleted list.",
+          "required": [
+            "type",
+            "items"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "list"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/text"
+              },
+              "description": "List items."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Yellow sticky-note annotation. Use it for behaviour a sketch cannot show.",
+          "required": [
+            "type",
+            "text"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "note"
+            },
+            "text": {
+              "$ref": "#/$defs/text",
+              "description": "Note text."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Small status pill.",
+          "required": [
+            "type",
+            "text"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "badge"
+            },
+            "text": {
+              "$ref": "#/$defs/text",
+              "description": "Badge text."
+            },
+            "status": {
+              "enum": [
+                "on",
+                "wait",
+                "off"
+              ],
+              "description": "Colour: `on` green, `wait` orange, `off` grey."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Image placeholder: hand-drawn box with a cross. Use `round` for avatars.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "image"
+            },
+            "h": {
+              "type": "number",
+              "description": "Height in px."
+            },
+            "label": {
+              "$ref": "#/$defs/text",
+              "description": "Caption centered in the box."
+            },
+            "round": {
+              "type": "boolean",
+              "description": "Draw a circle instead of a box."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Map placeholder with a pin.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "map"
+            },
+            "h": {
+              "type": "number",
+              "description": "Height in px."
+            },
+            "label": {
+              "$ref": "#/$defs/text",
+              "description": "Caption centered in the box."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Generic hand-drawn box, for charts, video, ads, anything else.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "box"
+            },
+            "h": {
+              "type": "number",
+              "description": "Height in px."
+            },
+            "label": {
+              "$ref": "#/$defs/text",
+              "description": "Caption centered in the box."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Single-line text field.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "input"
+            },
+            "label": {
+              "$ref": "#/$defs/text",
+              "description": "Label shown above the control."
+            },
+            "placeholder": {
+              "$ref": "#/$defs/text",
+              "description": "Placeholder text."
+            },
+            "value": {
+              "$ref": "#/$defs/text",
+              "description": "Pre-filled value."
+            },
+            "inputType": {
+              "type": "string",
+              "description": "HTML input type: `text`, `email`, `password`, `number`…"
+            },
+            "disabled": {
+              "type": "boolean",
+              "description": "Grey out the field."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Multi-line text field.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "textarea"
+            },
+            "label": {
+              "$ref": "#/$defs/text",
+              "description": "Label shown above the control."
+            },
+            "placeholder": {
+              "$ref": "#/$defs/text",
+              "description": "Placeholder text."
+            },
+            "rows": {
+              "type": "number",
+              "description": "Visible rows (default 3)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Dropdown.",
+          "required": [
+            "type",
+            "options"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "select"
+            },
+            "label": {
+              "$ref": "#/$defs/text",
+              "description": "Label shown above the control."
+            },
+            "options": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/text"
+              },
+              "description": "Choices."
+            },
+            "selected": {
+              "type": "number",
+              "description": "Index of the pre-selected option (default 0)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Checkbox with a label.",
+          "required": [
+            "type",
+            "label"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "checkbox"
+            },
+            "label": {
+              "$ref": "#/$defs/text",
+              "description": "Label shown above the control."
+            },
+            "checked": {
+              "type": "boolean",
+              "description": "Start ticked."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "On/off switch with a label.",
+          "required": [
+            "type",
+            "label"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "toggle"
+            },
+            "label": {
+              "$ref": "#/$defs/text",
+              "description": "Label shown above the control."
+            },
+            "checked": {
+              "type": "boolean",
+              "description": "Start switched on."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Radio group.",
+          "required": [
+            "type",
+            "options"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "radio"
+            },
+            "label": {
+              "$ref": "#/$defs/text",
+              "description": "Label shown above the control."
+            },
+            "options": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/text"
+              },
+              "description": "Choices."
+            },
+            "selected": {
+              "type": "number",
+              "description": "Index of the pre-selected option (default 0)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Range slider.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "slider"
+            },
+            "label": {
+              "$ref": "#/$defs/text",
+              "description": "Label shown above the control."
+            },
+            "value": {
+              "type": "number",
+              "description": "Start position, 0 to 100 (default 30)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Button. Navigates with `go`, shows a message with `toast`, or both.",
+          "required": [
+            "type",
+            "label"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "button"
+            },
+            "label": {
+              "$ref": "#/$defs/text",
+              "description": "Button text."
+            },
+            "primary": {
+              "type": "boolean",
+              "description": "Heavier border: the main action on the screen."
+            },
+            "disabled": {
+              "type": "boolean",
+              "description": "Grey out the button."
+            },
+            "go": {
+              "type": "string",
+              "description": "Id of the screen to open when clicked."
+            },
+            "toast": {
+              "$ref": "#/$defs/text",
+              "description": "Message shown in a toast when clicked."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Filter pills. Clicking one selects it and shows a “Results updated” toast.",
+          "required": [
+            "type",
+            "options"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "chips"
+            },
+            "options": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/text"
+              },
+              "description": "Pill labels."
+            },
+            "active": {
+              "type": "number",
+              "description": "Index of the selected pill (default 0)."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Tab strip. Each tab has its own list of blocks.",
+          "required": [
+            "type",
+            "tabs"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "tabs"
+            },
+            "tabs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "label"
+                ],
+                "properties": {
+                  "label": {
+                    "$ref": "#/$defs/text"
+                  },
+                  "children": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/block"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "List of `{ label, children }`."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "“Next →” strip at the bottom of a screen. Hidden in the PDF.",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "nextbar"
+            },
+            "label": {
+              "$ref": "#/$defs/text",
+              "description": "Bold lead-in (default “Next →”)."
+            },
+            "text": {
+              "$ref": "#/$defs/text",
+              "description": "What happens next."
+            },
+            "button": {
+              "$ref": "#/$defs/text",
+              "description": "Button text (default “Continue →”)."
+            },
+            "go": {
+              "type": "string",
+              "description": "Id of the screen to open when clicked."
+            },
+            "toast": {
+              "$ref": "#/$defs/text",
+              "description": "Message shown in a toast when clicked."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Table. A cell is text or a block (e.g. `badge`, `button`). A row can be `{ cells, go }` to make it clickable.",
+          "required": [
+            "type",
+            "columns",
+            "rows"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "table"
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/text"
+              },
+              "description": "Column headings."
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/cell"
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "cells"
+                    ],
+                    "properties": {
+                      "cells": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/$defs/cell"
+                        }
+                      },
+                      "go": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "description": "List of rows: `[cell, cell]` or `{ cells: [...], go: screenId }`."
+            }
+          }
+        }
+      ]
+    }
+  }
+}

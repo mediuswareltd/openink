@@ -1,0 +1,112 @@
+# yaml-language-server: $schema=../../schema/spec.schema.json
+# A small SaaS admin: analytics, users, settings. Shows that sketchframe is not tied to any one domain.
+name: Acme Analytics
+
+nav:
+  - { label: Overview, go: overview }
+  - { label: Users, go: users }
+  - { label: Settings, go: settings }
+
+screens:
+  - id: overview
+    title: Overview
+    note: Charts are placeholders. Date range chips filter every widget on the page.
+    blocks:
+      - type: row
+        between: true
+        children:
+          - { type: h1, text: Overview }
+          - { type: chips, options: [7 days, 30 days, 12 months], active: 1 }
+      - type: grid
+        cols: 3
+        children:
+          - type: card
+            title: Visitors
+            children:
+              - { type: h2, text: "12,480" }
+              - { type: badge, status: on, text: "+8% vs last period" }
+          - type: card
+            title: Sign-ups
+            children:
+              - { type: h2, text: "342" }
+              - { type: badge, status: on, text: "+3%" }
+          - type: card
+            title: Churn
+            children:
+              - { type: h2, text: "2.1%" }
+              - { type: badge, status: wait, text: "+0.4 pts" }
+      - { type: box, h: 220, label: "Line chart: visitors over time" }
+      - type: grid
+        cols: 2
+        children:
+          - { type: box, h: 160, label: Top pages }
+          - { type: box, h: 160, label: Traffic sources }
+
+  - id: users
+    title: Users
+    blocks:
+      - type: row
+        between: true
+        children:
+          - { type: h1, text: Users }
+          - { type: button, label: Invite user, primary: true, toast: Invitation sent }
+      - { type: input, placeholder: Search by name or email }
+      - type: table
+        columns: [User, Role, Status, ""]
+        rows:
+          - cells:
+              - type: row
+                children:
+                  - { type: image, round: true, h: 36 }
+                  - Ana Keller
+              - Admin
+              - { type: badge, status: on, text: Active }
+              - Edit →
+            go: user
+          - cells:
+              - type: row
+                children:
+                  - { type: image, round: true, h: 36 }
+                  - Marc Dubois
+              - Editor
+              - { type: badge, status: wait, text: Invited }
+              - Edit →
+            go: user
+
+  - id: user
+    title: Edit user
+    blocks:
+      - { type: h1, text: Ana Keller }
+      - type: tabs
+        tabs:
+          - label: Profile
+            children:
+              - { type: input, label: Name, value: Ana Keller }
+              - { type: input, label: Email, value: ana@acme.com }
+              - { type: select, label: Role, options: [Admin, Editor, Viewer] }
+          - label: Permissions
+            children:
+              - { type: checkbox, label: Manage billing, checked: true }
+              - { type: checkbox, label: Export data }
+              - { type: checkbox, label: Invite users, checked: true }
+      - type: row
+        children:
+          - { type: button, label: Save, primary: true, go: users, toast: Saved }
+          - { type: button, label: Cancel, go: users }
+
+  - id: settings
+    title: Settings
+    blocks:
+      - { type: h1, text: Settings }
+      - type: card
+        title: Notifications
+        children:
+          - { type: toggle, label: Weekly report by email, checked: true }
+          - { type: toggle, label: Alert when traffic drops }
+          - { type: radio, label: Digest, options: [Daily, Weekly, Never], selected: 1 }
+      - type: card
+        title: Danger zone
+        dash: true
+        children:
+          - { type: text, muted: true, text: Deleting the workspace cannot be undone. }
+          - { type: button, label: Delete workspace, toast: Are you sure? }
