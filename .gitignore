@@ -5,3 +5,6 @@ dist/
 .DS_Store
 
 projects/
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+docs/public/

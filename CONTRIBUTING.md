@@ -9,6 +9,7 @@ git clone https://github.com/mediuswareltd/openink && cd openink
 npm install
 npm test                # unit + CLI tests, no browser needed
 npm run dev             # live preview of examples/rental-portal at http://localhost:3000
+npm run docs:dev        # the documentation website, with the examples as live demos
 ```
 
 Node 20 or newer. `pdf`, `png` and `npm run screenshots` also need Chrome, Chromium or Edge (set `CHROME_PATH` if it is not found).
@@ -27,6 +28,7 @@ Node 20 or newer. `pdf`, `png` and `npm run screenshots` also need Chrome, Chrom
 | `src/cli.js` `build.js` `dev.js` `export.js` | Command line, build pipeline, dev server, PDF/PNG |
 | `examples/` | Example projects; they are validated by the tests and used for README screenshots |
 | `templates/starter/` | What `openink init` copies |
+| `docs/` | Markdown docs, also the source of the [documentation website](https://mediuswareltd.github.io/openink/) (VitePress, config in `docs/.vitepress/`). It is deployed to GitHub Pages by `.github/workflows/pages.yml` on every push to `main` |
 
 ## Adding a block
 

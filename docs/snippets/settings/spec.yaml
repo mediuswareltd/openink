@@ -1,0 +1,13 @@
+name: Settings
+theme: pastel
+screens:
+  - id: settings
+    width: narrow
+    blocks:
+      - { type: h1, text: Settings }
+      - { type: toggle, label: Email notifications, checked: true }
+      - { type: toggle, label: Dark mode }
+      - { type: select, label: Language, options: [English, Deutsch] }
+      - { type: radio, label: Plan, options: [Free, Pro, Team], selected: 1 }
+      - { type: slider, label: Volume, value: 60 }
+      - { type: button, label: Save, primary: true, toast: Saved }

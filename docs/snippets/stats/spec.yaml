@@ -1,0 +1,12 @@
+name: KPIs
+theme: color
+screens:
+  - id: kpis
+    blocks:
+      - type: grid
+        cols: 4
+        children:
+          - { type: stat, label: Revenue, value: $48k, delta: +12% }
+          - { type: stat, label: Orders, value: "1,204", delta: +5% }
+          - { type: stat, label: Refunds, value: "18", delta: "+3", trend: down }
+          - { type: stat, label: Rating, value: "4.8", delta: ±0, trend: flat }

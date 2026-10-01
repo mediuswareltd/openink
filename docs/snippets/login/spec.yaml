@@ -1,0 +1,16 @@
+name: Acme
+screens:
+  - id: login
+    width: narrow
+    blocks:
+      - type: card
+        children:
+          - { type: h1, text: Welcome back }
+          - { type: input, label: Email, inputType: email }
+          - { type: input, label: Password, inputType: password }
+          - { type: checkbox, label: Remember me }
+          - { type: button, label: Log in, primary: true, go: home }
+          - { type: link, text: Forgot password?, toast: Link sent }
+  - id: home
+    blocks:
+      - { type: alert, kind: success, text: You are logged in. }

@@ -1,0 +1,18 @@
+name: Lumen
+theme: color
+screens:
+  - id: home
+    blocks:
+      - type: hero
+        title: Plan trips together
+        text: Shared maps, group votes and split bills in one app.
+        tone: purple
+        fill: true
+        children:
+          - { type: button, label: Get started, primary: true, toast: Hi! }
+      - type: grid
+        cols: 3
+        children:
+          - { type: card, title: Plan, children: [Drop pins on a map.] }
+          - { type: card, title: Vote, children: [Pick dates together.] }
+          - { type: card, title: Split, children: [Settle up in a tap.] }

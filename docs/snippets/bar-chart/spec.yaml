@@ -1,0 +1,11 @@
+name: Sales report
+theme: color
+screens:
+  - id: report
+    blocks:
+      - { type: h2, text: Monthly sales }
+      - type: chart
+        kind: bar
+        h: 220
+        label: Units sold
+        values: [12, 19, 8, 24, 17, 30]   # your own numbers

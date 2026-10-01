@@ -1,0 +1,17 @@
+name: Product
+screens:
+  - id: product
+    blocks:
+      - { type: h2, text: Trail runner 2 }
+      - type: tabs
+        tabs:
+          - label: Details
+            children:
+              - { type: image, h: 120, label: Photo }
+              - { type: text, text: "Light, grippy and waterproof." }
+          - label: Reviews
+            children:
+              - { type: rating, value: 4, text: (128 reviews) }
+          - label: Shipping
+            children:
+              - { type: text, text: Free delivery in 2 days. }

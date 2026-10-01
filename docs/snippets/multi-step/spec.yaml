@@ -1,0 +1,20 @@
+name: Onboarding
+screens:
+  - id: account
+    width: narrow
+    blocks:
+      - { type: steps, items: [Account, Profile, Done], active: 0 }
+      - { type: input, label: Email }
+      - { type: button, label: Next, primary: true, go: profile }
+  - id: profile
+    width: narrow
+    blocks:
+      - { type: steps, items: [Account, Profile, Done], active: 1 }
+      - { type: input, label: Full name }
+      - { type: button, label: Finish, primary: true, go: done }
+  - id: done
+    width: narrow
+    blocks:
+      - { type: steps, items: [Account, Profile, Done], active: 2 }
+      - { type: alert, kind: success, text: All set! }
+      - { type: link, text: Start over, go: account }

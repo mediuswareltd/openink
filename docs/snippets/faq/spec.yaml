@@ -1,0 +1,14 @@
+name: Help
+screens:
+  - id: faq
+    blocks:
+      - { type: h2, text: Frequently asked questions }
+      - type: accordion
+        open: 0                            # first one starts open
+        items:
+          - label: How do I reset my password?
+            children: [Use the link on the login page.]
+          - label: Can I cancel any time?
+            children: [Yes. Your plan runs until the period ends.]
+          - label: Do you offer refunds?
+            children: ["Within 14 days, no questions asked."]

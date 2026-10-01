@@ -29,6 +29,16 @@ test("every example validates with no errors and no warnings", () => {
   }
 });
 
+test("every docs snippet validates with no errors and no warnings", () => {
+  const snippets = fs.readdirSync(path.join(root, "docs/snippets"), { withFileTypes: true }).filter((d) => d.isDirectory());
+  assert.ok(snippets.length >= 1);
+  for (const d of snippets) {
+    const spec = YAML.parse(read(`docs/snippets/${d.name}/spec.yaml`));
+    const { errors, warnings } = validate(spec);
+    assert.deepEqual([...errors, ...warnings], [], d.name);
+  }
+});
+
 test("the starter template validates", () => {
   const spec = YAML.parse(read("templates/starter/spec.yaml").replaceAll("{{name}}", "demo"));
   const { errors, warnings } = validate(spec);
