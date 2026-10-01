@@ -1,24 +1,30 @@
-name: Pulse
+name: Acme Analytics
 theme: color
+nav:
+  - { icon: chart, label: Overview, go: overview }
+  - { icon: users, label: Users, toast: Users screen }
+  - { icon: plus, label: Invite, open: invite }
 screens:
-  - id: home
+  - id: overview
     blocks:
       - type: row
+        between: true
         children:
-          - { type: button, label: Invite, primary: true, open: invite }
-          - { type: button, label: Export, icon: download, toast: Saved }
-          - { type: button, label: Share, tone: pink, toast: Link copied }
+          - { type: h1, text: Overview }
+          - { type: chips, options: [Week, Month, Year], active: 1 }
       - type: grid
-        cols: 3
+        cols: 4
         children:
-          - { type: stat, label: Sales, value: $48k, tone: green }
-          - { type: stat, label: Users, value: 1.2k, tone: blue }
-          - { type: stat, label: NPS, value: "62", tone: pink }
-      - { type: chart, kind: area, h: 250, tone: teal }
+          - { type: stat, label: Visitors, value: "12,480", delta: +8% }
+          - { type: stat, label: Sign-ups, value: "342", delta: +3% }
+          - { type: stat, label: Churn, value: 2.1%, delta: "+0.4", trend: down }
+          - { type: stat, label: MRR, value: $8.2k, delta: ±0, trend: flat }
+      - { type: chart, kind: area, h: 240, label: Visitors over time }
       - type: grid
         children:
-          - { type: chart, kind: bar, h: 220, tone: yellow }
-          - { type: chart, kind: donut, h: 220, tone: purple }
+          - { type: chart, kind: bar, h: 200, label: Top pages }
+          - { type: chart, kind: donut, h: 200, label: Traffic sources }
+      - { type: alert, kind: warning, text: Your trial ends in 3 days. }
 modals:
   - id: invite
     title: Invite a teammate

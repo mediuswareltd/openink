@@ -49,7 +49,7 @@ The preview is the real output of the YAML next to it. No design tool, no HTML. 
 
 </div>
 <div class="oi-split-preview">
-  <div class="oi-split-bar"><span></span><span></span><span></span><em>Click <b>Invite</b>, <b>Export</b> or <b>Share</b>.</em><a href="/openink/demos/dashboard/index.html" target="_blank">Open ↗</a></div>
+  <div class="oi-split-bar"><span></span><span></span><span></span><em>Try the nav, the date chips and <b>Invite</b>.</em><a href="/openink/demos/dashboard/index.html" target="_blank">Open ↗</a></div>
   <div class="oi-frame"><iframe src="/openink/demos/dashboard/index.html" title="Live preview: Dashboard" scrolling="no" @load="fit"></iframe></div>
 </div>
 </div>
@@ -105,7 +105,7 @@ onMounted(() => {
   gap: 20px;
   margin: 0 0 24px;
 }
-.oi-split-code { --vp-code-font-size: 12.5px; }
+.oi-split-code { --vp-code-font-size: 12px; }
 .oi-split-code div[class*="language-"] { margin: 0 !important; height: 100%; }
 .oi-split-preview {
   display: flex;
