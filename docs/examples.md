@@ -4,11 +4,11 @@ Each example below is the real output of `openink build`, made from the spec in 
 
 | Example | Shows | Spec |
 |---|---|---|
-| <a href="/openink/demos/photo-sharing/" target="_blank">Photo sharing</a> | 17 screens: feed, stories, reels, explore, messages, profile, a phone-frame mobile view, global modals, and colour on only a few parts | [spec.yaml](https://github.com/mediuswareltd/openink/blob/main/examples/photo-sharing/spec.yaml) |
-| <a href="/openink/demos/saas-admin/" target="_blank">SaaS admin</a> | The `color` theme: stat cards, area/bar/donut charts, tables, an invite modal | [spec.yaml](https://github.com/mediuswareltd/openink/blob/main/examples/saas-admin/spec.yaml) |
-| <a href="/openink/demos/rental-portal/" target="_blank">Rental portal</a> | Two languages and two header nav sets (public vs owner) | [spec.yaml](https://github.com/mediuswareltd/openink/blob/main/examples/rental-portal/spec.yaml) |
-| <a href="/openink/demos/gallery/" target="_blank">Gallery</a> | Every block on one screen per family | [spec.yaml](https://github.com/mediuswareltd/openink/blob/main/examples/gallery/spec.yaml) |
-| <a href="/openink/demos/gallery-dark/" target="_blank">Gallery, dark theme</a> | The same gallery built with `--theme dark` | [spec.yaml](https://github.com/mediuswareltd/openink/blob/main/examples/gallery/spec.yaml) |
+| <a href="/openink/demos/photo-sharing/index.html" target="_blank">Photo sharing</a> | 17 screens: feed, stories, reels, explore, messages, profile, a phone-frame mobile view, global modals, and colour on only a few parts | [spec.yaml](https://github.com/mediuswareltd/openink/blob/main/examples/photo-sharing/spec.yaml) |
+| <a href="/openink/demos/saas-admin/index.html" target="_blank">SaaS admin</a> | The `color` theme: stat cards, area/bar/donut charts, tables, an invite modal | [spec.yaml](https://github.com/mediuswareltd/openink/blob/main/examples/saas-admin/spec.yaml) |
+| <a href="/openink/demos/rental-portal/index.html" target="_blank">Rental portal</a> | Two languages and two header nav sets (public vs owner) | [spec.yaml](https://github.com/mediuswareltd/openink/blob/main/examples/rental-portal/spec.yaml) |
+| <a href="/openink/demos/gallery/index.html" target="_blank">Gallery</a> | Every block on one screen per family | [spec.yaml](https://github.com/mediuswareltd/openink/blob/main/examples/gallery/spec.yaml) |
+| <a href="/openink/demos/gallery-dark/index.html" target="_blank">Gallery, dark theme</a> | The same gallery built with `--theme dark` | [spec.yaml](https://github.com/mediuswareltd/openink/blob/main/examples/gallery/spec.yaml) |
 
 ## Run one locally
 
