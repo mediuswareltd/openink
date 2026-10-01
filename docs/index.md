@@ -38,6 +38,12 @@ features:
 
 <div class="vp-doc" style="max-width: 1152px; margin: 64px auto 0; padding: 0 24px">
 
+## Open Ink in 35 seconds
+
+<video controls preload="metadata" playsinline poster="../assets/openink-explainer-poster.jpg" style="width: 100%; border-radius: 12px; border: 1px solid var(--vp-c-divider)">
+  <source src="../assets/openink-explainer.mp4" type="video/mp4" />
+</video>
+
 ## Write this. Click through that.
 
 The preview is the real output of the YAML next to it. No design tool, no HTML. One line picks the theme, and `tone` colours any part.

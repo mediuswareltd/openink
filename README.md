@@ -9,6 +9,11 @@
 
 Static HTML you can host or open from disk, plus PDF and PNG export. Built on [wired-elements](https://github.com/rough-stuff/wired-elements) and [RoughJS](https://github.com/rough-stuff/rough), so it looks like a sketch and nobody mistakes it for the final design. Keep it plain pencil, or turn on colour for a whole project or just one part.
 
+<p align="center">
+  <a href="https://mediuswareltd.github.io/openink/"><img src="assets/openink-explainer-poster.jpg" width="720" alt="Open Ink in 35 seconds: watch the explainer video" /></a><br />
+  <sub>&#9654; <a href="https://mediuswareltd.github.io/openink/">Watch Open Ink in 35 seconds</a> (<a href="assets/openink-explainer.mp4">MP4</a>)</sub>
+</p>
+
 <p>
   <img src="docs/img/photo-feed.png" width="32%" alt="Photo-sharing app: feed with stories, carousel and action icons" />
   <img src="docs/img/photo-mobile.png" width="32%" alt="The same feed inside a phone frame with a tab bar" />
