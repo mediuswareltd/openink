@@ -1,14 +1,18 @@
 import { $$, config, redraw } from "./dom.js";
 
-/** Show one screen (and the header nav set it asks for). */
-export function go(id) {
+/**
+ * Show one screen (and the header nav set it asks for).
+ * `remember: false` leaves the URL alone: a "#screen" written before the page has loaded makes the
+ * browser scroll to it, and inside an iframe that scrolls the embedding page too.
+ */
+export function go(id, { remember = true } = {}) {
   const el = document.getElementById(id);
   if (!el || !el.classList.contains("screen")) return;
   $$(".screen").forEach((s) => s.classList.remove("on"));
   el.classList.add("on");
   $$("header nav").forEach((n) => (n.hidden = n.dataset.nav !== el.dataset.nav));
   document.title = el.dataset.title + " · " + document.title.split(" · ").pop();
-  history.replaceState(null, "", "#" + id);
+  if (remember) history.replaceState(null, "", "#" + id);
   window.scrollTo({ top: 0 });
   redraw();
 }
@@ -23,5 +27,6 @@ export function toast(message) {
 
 export function initNavigation() {
   window.addEventListener("hashchange", () => go(location.hash.slice(1)));
-  go(location.hash.slice(1) || config.first);
+  // The start screen: the URL already says which one, or it is the first screen.
+  go(location.hash.slice(1) || config.first, { remember: false });
 }
