@@ -10,6 +10,11 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
   a recipes page of ready-to-paste specs (charts, forms, pricing, tables, modals, mobile) shown beside live previews, and an
   About page.
 
+### Fixed
+
+- A prototype embedded in an `<iframe>` no longer scrolls the surrounding page down to itself when it loads. Opening a
+  prototype without a `#screen` in the URL no longer adds one for the start screen.
+
 ## [0.1.1]
 
 ### Changed
