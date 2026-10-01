@@ -56,7 +56,7 @@ Every preview below is the real, clickable output of the YAML next to it. No des
 </div>
 <div class="oi-split-preview">
   <div class="oi-split-bar"><span></span><span></span><span></span><em>Tap the card to book the stay.</em><a href="/openink/demos/travel/index.html" target="_blank">Open ↗</a></div>
-  <iframe :src="seen.has('travel') ? '/openink/demos/travel/index.html' : undefined" title="Live preview: Mobile app"></iframe>
+  <div class="oi-frame"><iframe :src="seen.has('travel') ? '/openink/demos/travel/index.html' : undefined" title="Live preview: Mobile app" scrolling="no" @load="fit"></iframe></div>
 </div>
 </div>
 
@@ -68,7 +68,7 @@ Every preview below is the real, clickable output of the YAML next to it. No des
 </div>
 <div class="oi-split-preview">
   <div class="oi-split-bar"><span></span><span></span><span></span><em>Stats and hand-drawn charts in one short spec.</em><a href="/openink/demos/dashboard/index.html" target="_blank">Open ↗</a></div>
-  <iframe :src="seen.has('dashboard') ? '/openink/demos/dashboard/index.html' : undefined" title="Live preview: Dashboard"></iframe>
+  <div class="oi-frame"><iframe :src="seen.has('dashboard') ? '/openink/demos/dashboard/index.html' : undefined" title="Live preview: Dashboard" scrolling="no" @load="fit"></iframe></div>
 </div>
 </div>
 
@@ -80,7 +80,7 @@ Every preview below is the real, clickable output of the YAML next to it. No des
 </div>
 <div class="oi-split-preview">
   <div class="oi-split-bar"><span></span><span></span><span></span><em>Fill in the card and press <b>Pay</b>.</em><a href="/openink/demos/checkout/index.html" target="_blank">Open ↗</a></div>
-  <iframe :src="seen.has('checkout') ? '/openink/demos/checkout/index.html' : undefined" title="Live preview: Checkout flow"></iframe>
+  <div class="oi-frame"><iframe :src="seen.has('checkout') ? '/openink/demos/checkout/index.html' : undefined" title="Live preview: Checkout flow" scrolling="no" @load="fit"></iframe></div>
 </div>
 </div>
 
@@ -99,7 +99,7 @@ Requires Node 20+. Read the [getting started guide](/getting-started) next, or c
 </div>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 
 // Hidden iframes would draw their sketches at zero size, so each preview loads the first time
 // its tab is shown.
@@ -109,6 +109,29 @@ function show(id) {
   tab.value = id;
   seen.add(id);
 }
+
+// Grow each preview to the height of its page, so there is no scrollbar inside it. The dashboard
+// is drawn at 160% and scaled down (.oi-zoom), so its box is 0.625 of the page height.
+function fit(event) {
+  const frame = event.target;
+  const doc = frame.contentDocument;
+  if (!doc?.body) return;
+  const zoom = frame.closest(".oi-zoom") ? 0.625 : 1;
+  const resize = () => {
+    const height = Math.ceil(doc.body.getBoundingClientRect().height);
+    frame.style.height = height + "px";
+    frame.parentElement.style.height = Math.ceil(height * zoom) + "px";
+  };
+  new frame.contentWindow.ResizeObserver(resize).observe(doc.body);
+  resize();
+}
+
+// The first preview can finish loading before the page is interactive.
+onMounted(() => {
+  for (const frame of document.querySelectorAll(".oi-frame iframe")) {
+    if (frame.contentDocument?.readyState === "complete" && frame.src) fit({ target: frame });
+  }
+});
 </script>
 
 <style>
@@ -128,23 +151,19 @@ function show(id) {
 .oi-split {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
   gap: 20px;
-  height: 500px;
   margin: 0 0 24px;
 }
-.oi-split-code { min-height: 0; }
-.oi-split-code div[class*="language-"] { margin: 0 !important; height: 100%; overflow: auto; }
 .oi-split-code { --vp-code-font-size: 12.5px; }
+.oi-split-code div[class*="language-"] { margin: 0 !important; height: 100%; }
 .oi-split-preview {
-  display: flex;
-  flex-direction: column;
   border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
   overflow: hidden;
   background: var(--vp-c-bg-soft);
 }
 .oi-split-bar {
-  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -155,14 +174,12 @@ function show(id) {
 .oi-split-bar span { width: 10px; height: 10px; border-radius: 50%; background: var(--vp-c-divider); }
 .oi-split-bar em { margin-left: 8px; font-style: normal; color: var(--vp-c-text-2); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .oi-split-bar a { margin-left: auto; white-space: nowrap; }
-.oi-split-preview iframe { flex: 1; width: 100%; border: 0; background: #fff; }
+.oi-frame { height: 420px; overflow: hidden; }
+.oi-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
 /* Desktop layouts: draw the page at 160% and scale it down, so grids keep their columns. */
-.oi-zoom .oi-split-preview { position: relative; }
-.oi-zoom .oi-split-preview iframe { flex: none; position: absolute; top: 37px; left: 0; width: 160%; height: calc((100% - 37px) * 1.6); transform: scale(0.625); transform-origin: 0 0; }
+.oi-zoom .oi-frame iframe { width: 160%; transform: scale(0.625); transform-origin: 0 0; }
 @media (max-width: 960px) {
-  .oi-split { grid-template-columns: minmax(0, 1fr); height: auto; }
-  .oi-split-code div[class*="language-"] { max-height: 420px; }
-  .oi-split-preview { height: 600px; }
+  .oi-split { grid-template-columns: minmax(0, 1fr); }
   .oi-split-bar em { display: none; }
 }
 </style>
