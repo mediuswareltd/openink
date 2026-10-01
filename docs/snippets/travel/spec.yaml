@@ -1,0 +1,50 @@
+name: Wanderly
+screens:
+  - id: explore
+    title: Explore
+    blocks:
+      - type: device                         # a phone frame around the app
+        children:
+          - { type: search, placeholder: Where to next? }
+          - { type: chips, options: [All, Beaches, Mountains, Cities] }
+          - type: card
+            go: stay                         # tap the card → stay screen
+            children:
+              - { type: carousel, h: 160, count: 5, label: Alfama loft }
+              - type: row
+                between: true
+                children:
+                  - { type: h3, text: "Alfama loft, Lisbon" }
+                  - { type: icon, name: heart, filled: true, tone: red }
+              - { type: rating, value: 5, text: "4.9 · $120 / night" }
+          - type: card
+            go: stay
+            children:
+              - { type: image, h: 110, label: Alpine cabin }
+              - { type: h3, text: "Cabin, Zermatt" }
+              - { type: rating, value: 4, text: "4.7 · $210 / night" }
+          - type: tabbar
+            items:
+              - { icon: search, label: Explore, go: explore }
+              - { icon: heart, label: Saved, toast: 3 saved stays }
+              - { icon: calendar, label: Trips, go: stay }
+              - { icon: user, label: Profile }
+  - id: stay
+    title: Alfama loft
+    blocks:
+      - type: device
+        children:
+          - { type: button, icon: arrow-left, label: Back, go: explore }
+          - { type: carousel, h: 180, count: 5, label: Alfama loft }
+          - { type: h2, text: "Alfama loft, Lisbon" }
+          - { type: avatar, name: Hosted by Inês, sub: Superhost · 6 years }
+          - { type: chips, options: [Wi-Fi, Kitchen, River view, Balcony] }
+          - { type: map, h: 120 }
+          - { type: button, label: Reserve · $360, icon: calendar, primary: true, open: booked }
+modals:
+  - id: booked
+    title: You're going to Lisbon!
+    width: narrow
+    children:
+      - { type: alert, kind: success, text: "3 nights · 12–15 May · confirmation sent" }
+      - { type: button, label: View trip, primary: true, close: true }

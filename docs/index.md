@@ -38,19 +38,49 @@ features:
 
 <div class="vp-doc" style="max-width: 1152px; margin: 64px auto 0; padding: 0 24px">
 
-## From this… to this
+## Write this. Click through that.
 
-Write the YAML on the left; get the prototype on the right. The preview is the real output of this exact spec, so try it: click the card, then **Add to cart**.
+Every preview below is the real, clickable output of the YAML next to it. No design tool, no HTML, and one line picks the theme.
 
-<div class="oi-split">
+<div class="oi-tabs" role="tablist">
+  <button role="tab" :class="{ active: tab === 'travel' }" :aria-selected="tab === 'travel'" @click="show('travel')">Mobile app <small>sketch</small></button>
+  <button role="tab" :class="{ active: tab === 'dashboard' }" :aria-selected="tab === 'dashboard'" @click="show('dashboard')">Dashboard <small>color</small></button>
+  <button role="tab" :class="{ active: tab === 'checkout' }" :aria-selected="tab === 'checkout'" @click="show('checkout')">Checkout flow <small>blueprint</small></button>
+</div>
+
+<div class="oi-split" v-show="tab === 'travel'">
 <div class="oi-split-code">
 
-<<< @/snippets/shop/spec.yaml
+<<< @/snippets/travel/spec.yaml
 
 </div>
 <div class="oi-split-preview">
-  <div class="oi-split-bar"><span></span><span></span><span></span><a href="/openink/demos/shop/index.html" target="_blank">Open in a new tab ↗</a></div>
-  <iframe src="/openink/demos/shop/index.html" title="Live preview of the Shop spec" loading="lazy"></iframe>
+  <div class="oi-split-bar"><span></span><span></span><span></span><em>Tap a stay, then <b>Reserve</b>. The tab bar works too.</em><a href="/openink/demos/travel/index.html" target="_blank">Open ↗</a></div>
+  <iframe :src="seen.has('travel') ? '/openink/demos/travel/index.html' : undefined" title="Live preview: Mobile app"></iframe>
+</div>
+</div>
+
+<div class="oi-split oi-zoom" v-show="tab === 'dashboard'">
+<div class="oi-split-code">
+
+<<< @/snippets/dashboard/spec.yaml
+
+</div>
+<div class="oi-split-preview">
+  <div class="oi-split-bar"><span></span><span></span><span></span><em>Click <b>Invite</b>, switch the date chips, try the nav.</em><a href="/openink/demos/dashboard/index.html" target="_blank">Open ↗</a></div>
+  <iframe :src="seen.has('dashboard') ? '/openink/demos/dashboard/index.html' : undefined" title="Live preview: Dashboard"></iframe>
+</div>
+</div>
+
+<div class="oi-split" v-show="tab === 'checkout'">
+<div class="oi-split-code">
+
+<<< @/snippets/checkout/spec.yaml
+
+</div>
+<div class="oi-split-preview">
+  <div class="oi-split-bar"><span></span><span></span><span></span><em>Go through <b>Continue</b> → <b>Pay</b> to place the order.</em><a href="/openink/demos/checkout/index.html" target="_blank">Open ↗</a></div>
+  <iframe :src="seen.has('checkout') ? '/openink/demos/checkout/index.html' : undefined" title="Live preview: Checkout flow"></iframe>
 </div>
 </div>
 
@@ -68,15 +98,42 @@ Requires Node 20+. Read the [getting started guide](/getting-started) next, or c
 
 </div>
 
+<script setup>
+import { reactive, ref } from "vue";
+
+// Hidden iframes would draw their sketches at zero size, so each preview loads the first time
+// its tab is shown.
+const tab = ref("travel");
+const seen = reactive(new Set(["travel"]));
+function show(id) {
+  tab.value = id;
+  seen.add(id);
+}
+</script>
+
 <style>
+.oi-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 12px; }
+.oi-tabs button {
+  padding: 6px 14px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--vp-c-text-2);
+  transition: all 0.2s;
+}
+.oi-tabs button small { margin-left: 4px; font-size: 12px; opacity: 0.7; font-family: var(--vp-font-family-mono); }
+.oi-tabs button:hover { color: var(--vp-c-text-1); border-color: var(--vp-c-brand-1); }
+.oi-tabs button.active { color: var(--vp-c-white); background: var(--vp-c-brand-1); border-color: var(--vp-c-brand-1); }
 .oi-split {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
   gap: 20px;
-  align-items: stretch;
-  margin: 16px 0 24px;
+  height: 640px;
+  margin: 0 0 24px;
 }
-.oi-split-code div[class*="language-"] { margin: 0 !important; height: 100%; }
+.oi-split-code { min-height: 0; }
+.oi-split-code div[class*="language-"] { margin: 0 !important; height: 100%; overflow: auto; }
 .oi-split-code pre code { font-size: 13px; }
 .oi-split-preview {
   display: flex;
@@ -84,10 +141,10 @@ Requires Node 20+. Read the [getting started guide](/getting-started) next, or c
   border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
   overflow: hidden;
-  min-height: 480px;
   background: var(--vp-c-bg-soft);
 }
 .oi-split-bar {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -96,10 +153,16 @@ Requires Node 20+. Read the [getting started guide](/getting-started) next, or c
   font-size: 13px;
 }
 .oi-split-bar span { width: 10px; height: 10px; border-radius: 50%; background: var(--vp-c-divider); }
-.oi-split-bar a { margin-left: auto; }
+.oi-split-bar em { margin-left: 8px; font-style: normal; color: var(--vp-c-text-2); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.oi-split-bar a { margin-left: auto; white-space: nowrap; }
 .oi-split-preview iframe { flex: 1; width: 100%; border: 0; background: #fff; }
+/* Desktop layouts: draw the page at 160% and scale it down, so grids keep their columns. */
+.oi-zoom .oi-split-preview { position: relative; }
+.oi-zoom .oi-split-preview iframe { flex: none; position: absolute; top: 37px; left: 0; width: 160%; height: calc((100% - 37px) * 1.6); transform: scale(0.625); transform-origin: 0 0; }
 @media (max-width: 960px) {
-  .oi-split { grid-template-columns: minmax(0, 1fr); }
-  .oi-split-preview { min-height: 520px; }
+  .oi-split { grid-template-columns: minmax(0, 1fr); height: auto; }
+  .oi-split-code div[class*="language-"] { max-height: 420px; }
+  .oi-split-preview { height: 600px; }
+  .oi-split-bar em { display: none; }
 }
 </style>

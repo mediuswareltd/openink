@@ -1,0 +1,45 @@
+name: Pulse
+theme: color                                 # one line switches the whole look
+nav:
+  - { icon: chart, label: Overview, go: overview }
+  - { icon: users, label: Customers, go: overview }
+  - { icon: settings, label: Settings, toast: Coming soon }
+screens:
+  - id: overview
+    title: Overview
+    blocks:
+      - type: row
+        between: true
+        children:
+          - { type: h1, text: "Good morning, Sam" }
+          - { type: chips, options: [7 days, 30 days, 12 months], active: 1 }
+      - type: grid
+        cols: 4
+        children:
+          - { type: stat, label: Revenue, value: $48.2k, delta: +12% }
+          - { type: stat, label: Customers, value: "1,284", delta: +86 }
+          - { type: stat, label: Churn, value: 2.1%, delta: +0.4 pts, trend: down }
+          - { type: stat, label: NPS, value: "62", delta: unchanged, trend: flat }
+      - { type: chart, kind: area, h: 180, label: Revenue, values: [12, 18, 15, 24, 22, 31, 38] }
+      - type: grid
+        children:
+          - { type: chart, kind: bar, h: 150, label: Sign-ups by channel }
+          - { type: chart, kind: donut, h: 150, label: Plans }
+      - type: row
+        between: true
+        children:
+          - { type: h2, text: Latest customers }
+          - { type: button, label: Invite, icon: plus, primary: true, open: invite }
+      - type: table
+        columns: [Customer, Plan, Status]
+        rows:
+          - [Acme Inc., Team, { type: badge, status: on, text: Active }]
+          - [Globex, Pro, { type: badge, status: wait, text: Trial }]
+          - [Initech, Free, { type: badge, status: off, text: Paused }]
+modals:
+  - id: invite
+    title: Invite a teammate
+    children:
+      - { type: input, label: Email, placeholder: sam@company.com }
+      - { type: select, label: Role, options: [Admin, Editor, Viewer] }
+      - { type: button, label: Send invite, icon: send, primary: true, close: true, toast: Invite sent }
