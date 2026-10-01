@@ -18,6 +18,7 @@ export default defineConfig({
     nav: [
       { text: "Guide", link: "/getting-started", activeMatch: "^/(getting-started|spec|ai-assistants|extending|architecture)" },
       { text: "Blocks", link: "/blocks" },
+      { text: "Recipes", link: "/recipes" },
       { text: "Examples", link: "/examples" },
       { text: "About", link: "/about" },
       { text: "Changelog", link: `${repo}/blob/main/CHANGELOG.md` },
@@ -29,6 +30,7 @@ export default defineConfig({
           { text: "Getting started", link: "/getting-started" },
           { text: "Spec reference", link: "/spec" },
           { text: "Block reference", link: "/blocks" },
+          { text: "Recipes", link: "/recipes" },
           { text: "Working with AI assistants", link: "/ai-assistants" },
         ],
       },

@@ -1,0 +1,18 @@
+name: Shop
+nav:                                       # header buttons on every screen
+  - { icon: home, label: Home, go: home }
+  - { icon: cart, label: Cart, go: cart }
+screens:
+  - id: home
+    blocks:
+      - { type: h1, text: New arrivals }
+      - type: card
+        go: cart                           # the whole card is clickable
+        children:
+          - { type: image, h: 100, label: Blue shirt }
+          - { type: h3, text: Blue shirt · $29 }
+  - id: cart
+    blocks:
+      - { type: h1, text: Your cart }
+      - { type: text, text: 1 × Blue shirt }
+      - { type: button, label: Back to shop, go: home }

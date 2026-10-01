@@ -1,0 +1,30 @@
+name: Pricing
+theme: color
+screens:
+  - id: pricing
+    blocks:
+      - { type: h1, text: Simple pricing }
+      - type: grid
+        cols: 3
+        children:
+          - type: card
+            children:
+              - { type: h3, text: Free }
+              - { type: h2, text: $0 }
+              - { type: list, items: [1 project, Community help] }
+              - { type: button, label: Start, toast: Welcome! }
+          - type: card
+            tone: purple                   # highlight one plan
+            fill: true
+            children:
+              - { type: badge, status: wait, text: Popular }
+              - { type: h3, text: Pro }
+              - { type: h2, text: $12 }
+              - { type: list, items: [Unlimited projects, PDF export] }
+              - { type: button, label: Buy Pro, primary: true }
+          - type: card
+            children:
+              - { type: h3, text: Team }
+              - { type: h2, text: $49 }
+              - { type: list, items: [Everything in Pro, SSO] }
+              - { type: button, label: Contact us }

@@ -1,0 +1,10 @@
+name: Budget
+theme: color
+screens:
+  - id: budget
+    blocks:
+      - { type: h2, text: Where the money goes }
+      - type: grid
+        children:
+          - { type: chart, kind: pie, h: 180, label: Pie }
+          - { type: chart, kind: donut, h: 180, tone: pink }

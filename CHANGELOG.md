@@ -6,7 +6,9 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ### Added
 
-- Documentation website at <https://mediuswareltd.github.io/openink/> with search, live clickable demos of every example, and an About page.
+- Documentation website at <https://mediuswareltd.github.io/openink/> with search, live clickable demos of every example,
+  a recipes page of ready-to-paste specs (charts, forms, pricing, tables, modals, mobile) shown beside live previews, and an
+  About page.
 
 ## [0.1.1]
 

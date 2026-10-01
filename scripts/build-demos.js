@@ -14,8 +14,12 @@ const demos = [
   { name: "rental-portal", dir: "examples/rental-portal" },
   { name: "gallery", dir: "examples/gallery" },
   { name: "gallery-dark", dir: "examples/gallery", theme: "dark" },
-  { name: "dashboard", dir: "docs/snippets/dashboard" }, // the code-and-preview on the home page
 ];
+
+// Every docs snippet (the side-by-side examples on the home and recipes pages) gets a live demo.
+for (const d of fs.readdirSync(path.join(root, "docs/snippets"), { withFileTypes: true })) {
+  if (d.isDirectory()) demos.push({ name: d.name, dir: `docs/snippets/${d.name}` });
+}
 
 fs.mkdirSync(pub, { recursive: true });
 for (const logo of ["logo-black.svg", "logo-white.svg", "mark-black.svg", "mark-white.svg"]) {

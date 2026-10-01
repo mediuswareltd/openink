@@ -1,0 +1,16 @@
+name: Files
+screens:
+  - id: files
+    blocks:
+      - { type: h2, text: report.pdf }
+      - { type: button, label: Delete, icon: trash, tone: red, open: confirm }
+modals:
+  - id: confirm
+    title: Delete this file?
+    width: narrow
+    children:
+      - { type: text, text: This cannot be undone. }
+      - type: row
+        children:
+          - { type: button, label: Delete, tone: red, close: true, toast: Done }
+          - { type: button, label: Cancel, close: true }

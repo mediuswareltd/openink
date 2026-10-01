@@ -49,6 +49,7 @@
     "!docs/examples.md",
     "!docs/about.md",
     "!docs/snippets",
+    "!docs/recipes.md",
     "LICENSE",
     "README.md",
     "CHANGELOG.md"

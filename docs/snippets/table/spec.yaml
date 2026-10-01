@@ -1,0 +1,13 @@
+name: Orders
+theme: color
+screens:
+  - id: orders
+    blocks:
+      - { type: search, placeholder: Search orders }
+      - type: table
+        columns: [Order, Customer, Status]
+        rows:
+          - ["#1042", Ana, { type: badge, status: on, text: Paid }]
+          - ["#1041", Marc, { type: badge, status: wait, text: Pending }]
+          - ["#1040", Lea, { type: badge, status: off, text: Refunded }]
+      - { type: pagination, pages: 5, active: 1 }

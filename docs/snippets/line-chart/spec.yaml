@@ -1,0 +1,11 @@
+name: Traffic
+theme: color
+screens:
+  - id: traffic
+    blocks:
+      - { type: h2, text: Visitors this week }
+      - type: chart
+        kind: line                         # or area
+        h: 220
+        tone: teal
+        values: [120, 180, 150, 240, 210, 320, 290]

@@ -1,0 +1,21 @@
+name: Notes
+theme: pastel
+screens:
+  - id: notes
+    blocks:
+      - type: device                       # phone frame
+        children:
+          - { type: h2, text: My notes }
+          - { type: card, go: note, children: [Shopping list] }
+          - { type: card, go: note, children: [Trip ideas] }
+          - type: tabbar
+            items:
+              - { icon: home, label: Notes, go: notes }
+              - { icon: plus, label: New, go: note }
+  - id: note
+    blocks:
+      - type: device
+        children:
+          - { type: link, text: ← Back, go: notes }
+          - { type: textarea, label: Shopping list, rows: 6 }
+          - { type: button, label: Save, primary: true, go: notes }
