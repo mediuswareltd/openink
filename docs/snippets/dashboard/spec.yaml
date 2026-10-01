@@ -1,16 +1,16 @@
 name: Pulse
-theme: color                    # one line restyles everything
+theme: color
 screens:
   - id: home
     blocks:
       - type: grid
         cols: 3
         children:
-          - { type: stat, label: Sales, value: $48k, delta: +12% }
-          - { type: stat, label: Users, value: 1.2k, delta: +8% }
-          - { type: stat, label: NPS, value: "62", delta: +4 }
-      - { type: chart, kind: area, h: 160, label: Sales }
+          - { type: stat, label: Sales, value: $48k, tone: green }
+          - { type: stat, label: Users, value: 1.2k, tone: blue }
+          - { type: stat, label: NPS, value: "62", tone: pink }
+      - { type: chart, kind: area, h: 150, tone: teal }
       - type: grid
         children:
-          - { type: chart, kind: bar, h: 130, label: Sign-ups }
-          - { type: chart, kind: donut, h: 130, label: Plans }
+          - { type: chart, kind: bar, h: 130, tone: yellow }
+          - { type: chart, kind: donut, h: 130, tone: purple }

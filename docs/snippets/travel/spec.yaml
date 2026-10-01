@@ -1,16 +1,20 @@
 name: Wanderly
+theme: pastel
 screens:
   - id: explore
     blocks:
       - type: device                # a phone frame
+        tone: purple                # colours all inside it
         children:
           - { type: search, placeholder: Where to next? }
           - { type: chips, options: [All, Beach, Mountains] }
           - type: card
-            toast: Booked for 3 nights!   # tap the card
+            tone: pink
+            fill: true
+            toast: Booked for 3 nights!
             children:
               - { type: carousel, h: 120, label: Lisbon loft }
-              - { type: h3, text: "Alfama loft, Lisbon" }
-              - { type: rating, value: 5, text: $120 / night }
+              - { type: h3, text: "Alfama loft · $120" }
+              - { type: rating, value: 5, tone: orange }
           - type: tabbar
             items: [{ icon: home }, { icon: pin }, { icon: user }]

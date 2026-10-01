@@ -40,12 +40,12 @@ features:
 
 ## Write this. Click through that.
 
-Every preview below is the real, clickable output of the YAML next to it. No design tool, no HTML, and one line picks the theme.
+Every preview below is the real, clickable output of the YAML next to it. No design tool, no HTML. One line picks the theme, and `tone` colours any part.
 
 <div class="oi-tabs" role="tablist">
-  <button role="tab" :class="{ active: tab === 'travel' }" :aria-selected="tab === 'travel'" @click="show('travel')">Mobile app <small>sketch</small></button>
+  <button role="tab" :class="{ active: tab === 'travel' }" :aria-selected="tab === 'travel'" @click="show('travel')">Mobile app <small>pastel</small></button>
   <button role="tab" :class="{ active: tab === 'dashboard' }" :aria-selected="tab === 'dashboard'" @click="show('dashboard')">Dashboard <small>color</small></button>
-  <button role="tab" :class="{ active: tab === 'checkout' }" :aria-selected="tab === 'checkout'" @click="show('checkout')">Checkout flow <small>blueprint</small></button>
+  <button role="tab" :class="{ active: tab === 'landing' }" :aria-selected="tab === 'landing'" @click="show('landing')">Landing page <small>dark</small></button>
 </div>
 
 <div class="oi-split" v-show="tab === 'travel'">
@@ -55,7 +55,7 @@ Every preview below is the real, clickable output of the YAML next to it. No des
 
 </div>
 <div class="oi-split-preview">
-  <div class="oi-split-bar"><span></span><span></span><span></span><em>Tap the card to book the stay.</em><a href="/openink/demos/travel/index.html" target="_blank">Open ↗</a></div>
+  <div class="oi-split-bar"><span></span><span></span><span></span><em>Tap the pink card to book.</em><a href="/openink/demos/travel/index.html" target="_blank">Open ↗</a></div>
   <div class="oi-frame"><iframe :src="seen.has('travel') ? '/openink/demos/travel/index.html' : undefined" title="Live preview: Mobile app" scrolling="no" @load="fit"></iframe></div>
 </div>
 </div>
@@ -67,20 +67,20 @@ Every preview below is the real, clickable output of the YAML next to it. No des
 
 </div>
 <div class="oi-split-preview">
-  <div class="oi-split-bar"><span></span><span></span><span></span><em>Stats and hand-drawn charts in one short spec.</em><a href="/openink/demos/dashboard/index.html" target="_blank">Open ↗</a></div>
+  <div class="oi-split-bar"><span></span><span></span><span></span><em>One colour per part with <code>tone</code>.</em><a href="/openink/demos/dashboard/index.html" target="_blank">Open ↗</a></div>
   <div class="oi-frame"><iframe :src="seen.has('dashboard') ? '/openink/demos/dashboard/index.html' : undefined" title="Live preview: Dashboard" scrolling="no" @load="fit"></iframe></div>
 </div>
 </div>
 
-<div class="oi-split" v-show="tab === 'checkout'">
+<div class="oi-split" v-show="tab === 'landing'">
 <div class="oi-split-code">
 
-<<< @/snippets/checkout/spec.yaml
+<<< @/snippets/landing/spec.yaml
 
 </div>
 <div class="oi-split-preview">
-  <div class="oi-split-bar"><span></span><span></span><span></span><em>Fill in the card and press <b>Pay</b>.</em><a href="/openink/demos/checkout/index.html" target="_blank">Open ↗</a></div>
-  <div class="oi-frame"><iframe :src="seen.has('checkout') ? '/openink/demos/checkout/index.html' : undefined" title="Live preview: Checkout flow" scrolling="no" @load="fit"></iframe></div>
+  <div class="oi-split-bar"><span></span><span></span><span></span><em>Press <b>Start free</b>.</em><a href="/openink/demos/landing/index.html" target="_blank">Open ↗</a></div>
+  <div class="oi-frame"><iframe :src="seen.has('landing') ? '/openink/demos/landing/index.html' : undefined" title="Live preview: Landing page" scrolling="no" @load="fit"></iframe></div>
 </div>
 </div>
 
@@ -176,7 +176,7 @@ onMounted(() => {
 .oi-split-bar a { margin-left: auto; white-space: nowrap; }
 .oi-frame { height: 420px; overflow: hidden; }
 .oi-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
-/* Desktop layouts: draw the page at 160% and scale it down, so grids keep their columns. */
+/* Desktop layouts (the dashboard): draw the page at 160% and scale it down, so grids keep their columns. */
 .oi-zoom .oi-frame iframe { width: 160%; transform: scale(0.625); transform-origin: 0 0; }
 @media (max-width: 960px) {
   .oi-split { grid-template-columns: minmax(0, 1fr); }

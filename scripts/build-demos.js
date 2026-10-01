@@ -17,7 +17,7 @@ const demos = [
   // the code-and-preview showcase on the home page
   { name: "travel", dir: "docs/snippets/travel" },
   { name: "dashboard", dir: "docs/snippets/dashboard" },
-  { name: "checkout", dir: "docs/snippets/checkout" },
+  { name: "landing", dir: "docs/snippets/landing" },
 ];
 
 fs.mkdirSync(pub, { recursive: true });
