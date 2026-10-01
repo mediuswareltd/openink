@@ -3,14 +3,25 @@ theme: color
 screens:
   - id: home
     blocks:
+      - type: row
+        children:
+          - { type: button, label: Invite, primary: true, open: invite }
+          - { type: button, label: Export, icon: download, toast: Saved }
+          - { type: button, label: Share, tone: pink, toast: Link copied }
       - type: grid
         cols: 3
         children:
           - { type: stat, label: Sales, value: $48k, tone: green }
           - { type: stat, label: Users, value: 1.2k, tone: blue }
           - { type: stat, label: NPS, value: "62", tone: pink }
-      - { type: chart, kind: area, h: 150, tone: teal }
+      - { type: chart, kind: area, h: 250, tone: teal }
       - type: grid
         children:
-          - { type: chart, kind: bar, h: 130, tone: yellow }
-          - { type: chart, kind: donut, h: 130, tone: purple }
+          - { type: chart, kind: bar, h: 220, tone: yellow }
+          - { type: chart, kind: donut, h: 220, tone: purple }
+modals:
+  - id: invite
+    title: Invite a teammate
+    children:
+      - { type: input, label: Email, placeholder: sam@team.com }
+      - { type: button, label: Send invite, primary: true, close: true }
