@@ -1,47 +1,19 @@
 name: Checkout
 theme: blueprint
 screens:
-  - id: bag
-    title: Your bag
-    width: medium
-    blocks:
-      - { type: steps, items: [Bag, Delivery, Payment], active: 0 }
-      - type: card
-        children:
-          - type: row
-            between: true
-            children:
-              - { type: avatar, name: Trail runner 2, sub: "Size 42 · Ocean blue", size: 64 }
-              - { type: h3, text: $129 }
-          - { type: divider }
-          - type: row
-            between: true
-            children:
-              - { type: avatar, name: Merino socks, sub: "2 × M", size: 64 }
-              - { type: h3, text: $24 }
-      - { type: progress, value: 80, label: "$12 away from free delivery" }
-      - { type: button, label: Continue to delivery, icon: arrow-right, primary: true, go: delivery }
-  - id: delivery
-    title: Delivery
-    width: medium
-    blocks:
-      - { type: steps, items: [Bag, Delivery, Payment], active: 1 }
-      - type: grid
-        children:
-          - { type: input, label: Full name, value: Sam Rivera }
-          - { type: input, label: Postcode, placeholder: "10115" }
-      - { type: input, label: Street and number }
-      - { type: radio, label: Speed, options: [Standard · free, Express · $9, Pickup point], selected: 0 }
-      - { type: toggle, label: Save this address, checked: true }
-      - type: row
-        between: true
-        children:
-          - { type: button, label: Back, icon: arrow-left, go: bag }
-          - { type: button, label: Pay $153, icon: lock, primary: true, open: paid }
-modals:
-  - id: paid
-    title: Order placed 🎉
+  - id: pay
     width: narrow
+    blocks:
+      - { type: steps, items: [Bag, Delivery, Pay], active: 2 }
+      - { type: input, label: Card number, placeholder: 4242 … }
+      - type: row
+        children:
+          - { type: input, label: Expiry, placeholder: MM/YY }
+          - { type: input, label: CVC, placeholder: "123" }
+      - { type: toggle, label: Save this card, checked: true }
+      - { type: button, label: Pay, primary: true, open: done }
+modals:
+  - id: done
+    title: Order placed!
     children:
-      - { type: alert, kind: success, title: Thank you!, text: Your order ships tomorrow. }
-      - { type: button, label: Back to the shop, close: true, go: bag }
+      - { type: alert, kind: success, text: It ships tomorrow. }

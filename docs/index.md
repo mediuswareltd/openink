@@ -55,7 +55,7 @@ Every preview below is the real, clickable output of the YAML next to it. No des
 
 </div>
 <div class="oi-split-preview">
-  <div class="oi-split-bar"><span></span><span></span><span></span><em>Tap a stay, then <b>Reserve</b>. The tab bar works too.</em><a href="/openink/demos/travel/index.html" target="_blank">Open ↗</a></div>
+  <div class="oi-split-bar"><span></span><span></span><span></span><em>Tap the card to book the stay.</em><a href="/openink/demos/travel/index.html" target="_blank">Open ↗</a></div>
   <iframe :src="seen.has('travel') ? '/openink/demos/travel/index.html' : undefined" title="Live preview: Mobile app"></iframe>
 </div>
 </div>
@@ -67,7 +67,7 @@ Every preview below is the real, clickable output of the YAML next to it. No des
 
 </div>
 <div class="oi-split-preview">
-  <div class="oi-split-bar"><span></span><span></span><span></span><em>Click <b>Invite</b>, switch the date chips, try the nav.</em><a href="/openink/demos/dashboard/index.html" target="_blank">Open ↗</a></div>
+  <div class="oi-split-bar"><span></span><span></span><span></span><em>Stats and hand-drawn charts in one short spec.</em><a href="/openink/demos/dashboard/index.html" target="_blank">Open ↗</a></div>
   <iframe :src="seen.has('dashboard') ? '/openink/demos/dashboard/index.html' : undefined" title="Live preview: Dashboard"></iframe>
 </div>
 </div>
@@ -79,7 +79,7 @@ Every preview below is the real, clickable output of the YAML next to it. No des
 
 </div>
 <div class="oi-split-preview">
-  <div class="oi-split-bar"><span></span><span></span><span></span><em>Go through <b>Continue</b> → <b>Pay</b> to place the order.</em><a href="/openink/demos/checkout/index.html" target="_blank">Open ↗</a></div>
+  <div class="oi-split-bar"><span></span><span></span><span></span><em>Fill in the card and press <b>Pay</b>.</em><a href="/openink/demos/checkout/index.html" target="_blank">Open ↗</a></div>
   <iframe :src="seen.has('checkout') ? '/openink/demos/checkout/index.html' : undefined" title="Live preview: Checkout flow"></iframe>
 </div>
 </div>
@@ -127,14 +127,14 @@ function show(id) {
 .oi-tabs button.active { color: var(--vp-c-white); background: var(--vp-c-brand-1); border-color: var(--vp-c-brand-1); }
 .oi-split {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 20px;
-  height: 640px;
+  height: 500px;
   margin: 0 0 24px;
 }
 .oi-split-code { min-height: 0; }
 .oi-split-code div[class*="language-"] { margin: 0 !important; height: 100%; overflow: auto; }
-.oi-split-code pre code { font-size: 13px; }
+.oi-split-code { --vp-code-font-size: 12.5px; }
 .oi-split-preview {
   display: flex;
   flex-direction: column;
