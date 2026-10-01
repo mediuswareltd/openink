@@ -68,7 +68,8 @@
     "docs:demos": "node scripts/build-demos.js",
     "docs:dev": "npm run docs:demos && vitepress dev docs",
     "docs:build": "npm run docs:demos && vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "docs:deploy": "npm run docs:build && node scripts/deploy-docs.js"
   },
   "dependencies": {
     "esbuild": "^0.28.2",

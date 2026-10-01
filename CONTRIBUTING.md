@@ -28,7 +28,7 @@ Node 20 or newer. `pdf`, `png` and `npm run screenshots` also need Chrome, Chrom
 | `src/cli.js` `build.js` `dev.js` `export.js` | Command line, build pipeline, dev server, PDF/PNG |
 | `examples/` | Example projects; they are validated by the tests and used for README screenshots |
 | `templates/starter/` | What `openink init` copies |
-| `docs/` | Markdown docs, also the source of the [documentation website](https://mediuswareltd.github.io/openink/) (VitePress, config in `docs/.vitepress/`). It is deployed to GitHub Pages by `.github/workflows/pages.yml` on every push to `main` |
+| `docs/` | Markdown docs, also the source of the [documentation website](https://mediuswareltd.github.io/openink/) (VitePress, config in `docs/.vitepress/`). Publish it with `npm run docs:deploy` (see [Releasing](#releasing-maintainers)) |
 
 ## Adding a block
 
@@ -149,6 +149,16 @@ A release is only needed when something that ships in the package changes (`bin/
    ```
 
 `publishConfig.access` is `public`, so no `--access` flag is needed. To see whether a pull request has been merged: `gh pr view <number> --json state,mergedAt`.
+
+### Documentation website
+
+The website at <https://mediuswareltd.github.io/openink/> is also published by hand, and only needs it when `docs/` changes. From an up-to-date `main`:
+
+```bash
+npm run docs:deploy             # builds the site and force-pushes it to the gh-pages branch
+```
+
+GitHub Pages serves the `gh-pages` branch (Settings → Pages → "Deploy from a branch", `gh-pages`, `/ (root)`). The branch only ever holds the latest built site; never edit it by hand.
 
 ## Reporting bugs
 
