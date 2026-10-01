@@ -4,6 +4,10 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ## [Unreleased]
 
+### Added
+
+- Documentation website at <https://mediuswareltd.github.io/openink/> with search, live clickable demos of every example, and an About page.
+
 ## [0.1.1]
 
 ### Changed

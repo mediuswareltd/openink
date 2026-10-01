@@ -139,6 +139,8 @@ npx openink dev examples/photo-sharing
 
 ## Documentation
 
+**[mediuswareltd.github.io/openink](https://mediuswareltd.github.io/openink/)**: the full docs, with search and live demos of every example.
+
 - [Getting started](docs/getting-started.md)
 - [Spec reference](docs/spec.md): screens, colour, modals, navigation, languages, icons
 - [Block reference](docs/blocks.md)
