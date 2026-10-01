@@ -14,6 +14,7 @@ const demos = [
   { name: "rental-portal", dir: "examples/rental-portal" },
   { name: "gallery", dir: "examples/gallery" },
   { name: "gallery-dark", dir: "examples/gallery", theme: "dark" },
+  { name: "shop", dir: "docs/snippets/shop" }, // the side-by-side preview on the home page
 ];
 
 fs.mkdirSync(pub, { recursive: true });

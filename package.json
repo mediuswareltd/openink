@@ -48,6 +48,7 @@
     "!docs/index.md",
     "!docs/examples.md",
     "!docs/about.md",
+    "!docs/snippets",
     "LICENSE",
     "README.md",
     "CHANGELOG.md"

@@ -38,42 +38,23 @@ features:
 
 <div class="vp-doc" style="max-width: 1152px; margin: 64px auto 0; padding: 0 24px">
 
-## From this…
+## From this… to this
 
-```yaml
-name: Shop
-theme: color
-nav:
-  - { icon: home, label: Home, go: home }
-screens:
-  - id: home
-    title: Home
-    blocks:
-      - { type: h1, text: Welcome }
-      - type: card
-        go: product                  # click → opens the product screen
-        children:
-          - { type: image, h: 120, label: Photo }
-          - { type: h3, text: Blue shirt }
-          - { type: rating, value: 4, text: (128 reviews) }
-  - id: product
-    title: Product
-    blocks:
-      - { type: button, label: Add to cart, icon: cart, primary: true, open: added }
-modals:
-  - id: added
-    title: Added to cart
-    children:
-      - { type: button, label: Keep shopping, close: true, go: home }
-```
+Write the YAML on the left; get the prototype on the right. The preview is the real output of this exact spec, so try it: click the card, then **Add to cart**.
 
-## …to this
+<div class="oi-split">
+<div class="oi-split-code">
 
-<p>
-  <img src="./img/photo-feed.png" width="32%" alt="Photo-sharing app: feed with stories, carousel and action icons" />
-  <img src="./img/photo-mobile.png" width="32%" alt="The same feed inside a phone frame with a tab bar" />
-  <img src="./img/saas-overview.png" width="32%" alt="SaaS dashboard in the colour theme with stats and charts" />
-</p>
+<<< @/snippets/shop/spec.yaml
+
+</div>
+<div class="oi-split-preview">
+  <div class="oi-split-bar"><span></span><span></span><span></span><a href="/openink/demos/shop/index.html" target="_blank">Open in a new tab ↗</a></div>
+  <iframe src="/openink/demos/shop/index.html" title="Live preview of the Shop spec" loading="lazy"></iframe>
+</div>
+</div>
+
+More screens, themes and devices: see the [live examples](/examples).
 
 ## Try it
 
@@ -86,3 +67,39 @@ npx openink dev                 # live preview at http://localhost:3000
 Requires Node 20+. Read the [getting started guide](/getting-started) next, or click through the [live examples](/examples).
 
 </div>
+
+<style>
+.oi-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: stretch;
+  margin: 16px 0 24px;
+}
+.oi-split-code div[class*="language-"] { margin: 0 !important; height: 100%; }
+.oi-split-code pre code { font-size: 13px; }
+.oi-split-preview {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  overflow: hidden;
+  min-height: 480px;
+  background: var(--vp-c-bg-soft);
+}
+.oi-split-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--vp-c-divider);
+  font-size: 13px;
+}
+.oi-split-bar span { width: 10px; height: 10px; border-radius: 50%; background: var(--vp-c-divider); }
+.oi-split-bar a { margin-left: auto; }
+.oi-split-preview iframe { flex: 1; width: 100%; border: 0; background: #fff; }
+@media (max-width: 960px) {
+  .oi-split { grid-template-columns: minmax(0, 1fr); }
+  .oi-split-preview { min-height: 520px; }
+}
+</style>
