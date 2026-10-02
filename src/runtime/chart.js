@@ -12,7 +12,7 @@ class Chart extends HTMLElement {
     const kind = this.getAttribute("kind") || "line";
     const values = (this.getAttribute("values") || "").split(",").map((s) => s.trim()).filter(Boolean).map(Number).filter(Number.isFinite);
     const data = values.length ? values : SAMPLE[kind] || SAMPLE.line;
-    this.style.cssText += `display:block;position:relative;height:${h}px`;
+    this.style.cssText += `display:block;position:relative;height:${h}px;--oi-w:${Math.round((h * 4) / 3)}px`;
 
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.style.cssText = "position:absolute;inset:0;width:100%;height:100%";

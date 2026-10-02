@@ -364,7 +364,7 @@
         },
         {
           "type": "object",
-          "description": "Horizontal row that wraps on small screens.",
+          "description": "Horizontal row that wraps on small screens. Images, videos, maps and charts in a row are 4:3 thumbnails of their height.",
           "required": [
             "type"
           ],

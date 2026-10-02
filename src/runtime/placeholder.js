@@ -11,7 +11,7 @@ class Placeholder extends HTMLElement {
     const h = +this.getAttribute("h") || 120;
     // A round placeholder (avatar) is square and must have a width of its own to sit in a flex row.
     const width = this.hasAttribute("round") ? `width:${h}px;flex:none;` : "";
-    this.style.cssText += `display:block;position:relative;height:${h}px;${width}`;
+    this.style.cssText += `display:block;position:relative;height:${h}px;--oi-w:${Math.round((h * 4) / 3)}px;${width}`;
 
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.style.cssText = "position:absolute;inset:0;width:100%;height:100%";

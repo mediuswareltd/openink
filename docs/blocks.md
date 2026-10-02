@@ -43,7 +43,7 @@ Vertical stack of blocks.
 
 ### `row` · children
 
-Horizontal row that wraps on small screens.
+Horizontal row that wraps on small screens. Images, videos, maps and charts in a row are 4:3 thumbnails of their height.
 
 | Prop | Type | Description |
 |---|---|---|
