@@ -5,6 +5,7 @@ import "./chart.js";
 import { $$, redraw } from "./dom.js";
 import { go, toast, initNavigation } from "./navigation.js";
 import { setLang, initI18n } from "./i18n.js";
+import { initPrint } from "./print.js";
 
 function select(buttons, active) {
   buttons.forEach((b) => {
@@ -61,4 +62,5 @@ document.addEventListener("toggle", (e) => e.target.tagName === "DETAILS" && red
 window.addEventListener("DOMContentLoaded", () => {
   initI18n();
   initNavigation();
+  initPrint();
 });

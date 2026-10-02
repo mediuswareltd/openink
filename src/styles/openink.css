@@ -102,7 +102,7 @@ p { margin: 0; }
 .row.between { justify-content: space-between; }
 .row.center { justify-content: center; }
 .grid { display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: var(--gap); align-items: start; }
-@media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+@media (max-width: 720px) { html:not(.oi-print) .grid { grid-template-columns: 1fr; } }
 .card { display: block; padding: 1rem; background: var(--card-bg); }
 .card.dash { background: transparent; }
 .center-items { justify-items: center; text-align: center; }
@@ -238,13 +238,16 @@ oi-placeholder[upload] .ph-label { inset: auto 0 22px 0; }
 .toast { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--paper); padding: .5rem 1rem; border-radius: 6px; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 100; }
 .toast.show { opacity: 1; }
 
-/* print / PDF: every screen on its own page */
+/* print / PDF: every screen on its own page. The runtime adds .oi-print before printing (and removes
+   it after) so it can measure the print layout and shrink screens too tall for one page; the layout
+   width is the @page's printable width. */
 @page { size: A4 landscape; margin: 10mm; }
 @media print {
   body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .oi-bar nav, .lang, .print-btn, .toast, .nextbar, .modal { display: none !important; }
-  .screen, .screen.on { display: block !important; break-after: page; }
-  .screen:last-of-type { break-after: auto; }
-  .screen-title { display: block; font-family: "Caveat", cursive; font-size: 1.3rem; color: var(--muted); border-bottom: 2px dashed var(--line); }
-  .tab-panel { display: block; }
 }
+html.oi-print { width: 277mm; }
+.oi-print .oi-bar nav, .oi-print .lang, .oi-print .print-btn, .oi-print .toast, .oi-print .nextbar, .oi-print .modal { display: none !important; }
+.oi-print .screen, .oi-print .screen.on { display: block !important; break-after: page; }
+.oi-print .screen:last-of-type { break-after: auto; }
+.oi-print .screen-title { display: block; font-family: "Caveat", cursive; font-size: 1.3rem; color: var(--muted); border-bottom: 2px dashed var(--line); }
+.oi-print .tab-panel { display: block; }
