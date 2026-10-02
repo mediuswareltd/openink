@@ -4,6 +4,11 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ## [Unreleased]
 
+### Added
+
+- Claude Code plugin. `/plugin marketplace add mediuswareltd/openink`, then `/plugin install openink@openink`, adds a
+  `wireframe` skill that turns a description into a validated, screenshot-checked prototype in any folder.
+
 ### Fixed
 
 - The PDF button (and Ctrl+P) no longer prints image, video and map placeholders and charts as empty boxes with only

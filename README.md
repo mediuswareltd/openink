@@ -82,6 +82,17 @@ openink dev
 
 Requires Node 20+. PDF and PNG export need Chrome, Chromium or Edge installed (set `CHROME_PATH` if it isn't found).
 
+### With Claude Code
+
+Install the Open Ink plugin once, then just describe what you want ("wireframe a booking app for a hair salon"):
+
+```text
+/plugin marketplace add mediuswareltd/openink
+/plugin install openink@openink
+```
+
+Claude writes and validates the spec, checks screenshots of every screen and tells you where the prototype is. See [docs/ai-assistants.md](docs/ai-assistants.md).
+
 ## What you can draw
 
 48 blocks in 10 groups; see the [block reference](docs/blocks.md) and the [gallery example](examples/gallery), which shows every one.

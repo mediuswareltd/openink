@@ -6,6 +6,21 @@ Open Ink is designed so that an assistant (Claude Code, Cursor, Copilot, ChatGPT
 
 The assistant writes `spec.yaml`, the tool checks it, and you get a consistent hand-drawn result. Because the spec is small and validated, it is cheap to iterate: "add a second tab to the listing page" is a five-line diff.
 
+## Claude Code plugin
+
+With [Claude Code](https://claude.com/claude-code), install the Open Ink plugin once:
+
+```text
+/plugin marketplace add mediuswareltd/openink
+/plugin install openink@openink
+```
+
+From the terminal, the same is `claude plugin marketplace add mediuswareltd/openink` and `claude plugin install openink@openink`.
+
+The plugin adds a `wireframe` skill. Claude uses it whenever you ask for a wireframe, mockup or clickable prototype, in any folder, so you do not need to mention Open Ink or run `init` first. You can also call it directly with `/openink:wireframe`. It follows the same steps as the `AGENTS.md` below: it reads the block reference, edits only `spec.yaml`, validates until the spec is clean, checks a PNG of every screen and tells you where the result is. In a folder without a spec, it creates the project in a new subfolder so it does not overwrite your files.
+
+To get plugin updates, run `/plugin marketplace update openink`.
+
 ## How it works
 
 `openink init` puts an `AGENTS.md` in your project. Most assistants read it automatically; it tells them to:

@@ -1,0 +1,13 @@
+{
+  "name": "openink",
+  "owner": { "name": "Mediusware", "url": "https://github.com/mediuswareltd" },
+  "description": "Open Ink: sketchy, clickable wireframe prototypes from a YAML spec.",
+  "plugins": [
+    {
+      "name": "openink",
+      "source": "./plugin",
+      "description": "Describe a product and get a hand-drawn, clickable wireframe prototype (HTML, PDF, PNG), built with the openink CLI.",
+      "category": "design"
+    }
+  ]
+}
