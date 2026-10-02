@@ -72,6 +72,7 @@ class Placeholder extends HTMLElement {
       }
     };
 
+    this.draw = draw; // print draws every screen at once, before a ResizeObserver would fire
     draw();
     new ResizeObserver(draw).observe(this);
 

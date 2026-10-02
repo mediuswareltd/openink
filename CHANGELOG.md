@@ -4,6 +4,11 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ## [Unreleased]
 
+### Fixed
+
+- The PDF button (and Ctrl+P) no longer prints image, video and map placeholders and charts as empty boxes with only
+  their label. Screens that had not been opened were printed before their sketches were drawn.
+
 ## [0.1.1] - 2026-10-02
 
 ### Added
