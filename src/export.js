@@ -55,9 +55,9 @@ export async function exportFiles({ dir = ".", out = "dist", png = false, theme 
       return { files };
     }
 
-    // Print media shows every screen; the ones that were hidden have never been drawn, so force a render.
+    // Lay the page out for print and shrink any screen too tall for one page, as the PDF button does.
     await page.emulateMediaType("print");
-    await page.evaluate(() => document.querySelectorAll("*").forEach((e) => e.wiredRender?.(true)));
+    await page.evaluate(() => window.openink.preparePrint());
     await wait(500);
     const file = path.join(outDir, `${slug(spec.name)}.pdf`);
     await page.pdf({ path: file, format: "A4", landscape: true, printBackground: true, preferCSSPageSize: true });

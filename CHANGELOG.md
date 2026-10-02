@@ -14,6 +14,10 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 - A prototype embedded in an `<iframe>` no longer scrolls the surrounding page down to itself when it loads. Opening a
   prototype without a `#screen` in the URL no longer adds one for the start screen.
+- A tall screen is no longer split across two PDF pages. Each screen is scaled down to fit one A4 landscape page, so the
+  PDF has exactly one page per screen. This applies to `openink pdf`, the prototype's PDF button and the browser's
+  own print (Ctrl+P).
+- The PDF button now draws the sketched outlines of screens that had never been opened, as `openink pdf` already did.
 
 ## [0.1.1]
 
