@@ -24,11 +24,13 @@ export function preparePrint() {
     return { zoom: r.height > room ? Math.max(room / r.height, 0.3) : 1, width: r.width };
   });
 
+  // Draw everything now: the browser prints straight after this returns, before a ResizeObserver
+  // would draw the placeholders and charts on screens that were hidden.
   // Draw before zooming: wired-elements size their sketch from the zoomed box, and the zoom then
   // shrinks the sketch a second time. Keep the screen's unzoomed width so its layout (and so the
   // sketches) only scales, and record the zoomed box as the size last drawn, so a resize
   // (wired-card watches its own) does not redraw at that size.
-  $$("*").forEach((el) => el.wiredRender?.(true));
+  $$("*").forEach((el) => (el.wiredRender ? el.wiredRender(true) : el.draw?.()));
   screens.forEach((s, i) => {
     const { zoom, width } = zooms[i];
     if (zoom === 1) return;
