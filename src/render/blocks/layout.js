@@ -13,7 +13,7 @@ export default [
   {
     name: "row",
     group: "Layout",
-    summary: "Horizontal row that wraps on small screens.",
+    summary: "Horizontal row that wraps on small screens. Images, videos, maps and charts in a row are 4:3 thumbnails of their height.",
     children: true,
     props: {
       between: { type: "boolean", doc: "Push the first and last child to opposite ends." },

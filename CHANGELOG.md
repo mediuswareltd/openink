@@ -13,6 +13,8 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ### Fixed
 
+- An image, video, map, dropzone or chart placed directly in a `row` is drawn as a 4:3 thumbnail of its height. It
+  used to collapse to the width of its label and showed no box (#17).
 - The PDF button (and Ctrl+P) no longer prints image, video and map placeholders and charts as empty boxes with only
   their label. Screens that had not been opened were printed before their sketches were drawn.
 
@@ -26,7 +28,7 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ### Changed
 
-- `openink dev` uses the next free port (3001, 3002, â€¦ up to 10 tries) when the requested one is already in use, instead of failing with `EADDRINUSE`.
+- `openink dev` uses the next free port (3001, 3002, … up to 10 tries) when the requested one is already in use, instead of failing with `EADDRINUSE`.
 
 ### Fixed
 

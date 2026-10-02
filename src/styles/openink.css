@@ -101,6 +101,8 @@ p { margin: 0; }
 .row { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; }
 .row.between { justify-content: space-between; }
 .row.center { justify-content: center; }
+/* placeholders and charts have no content width, so in a row they are a 4:3 thumbnail (--oi-w is set from their height) */
+.row > oi-placeholder:not([round]), .row > oi-chart { flex: none; width: var(--oi-w); max-width: 100%; }
 .grid { display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: var(--gap); align-items: start; }
 @media (max-width: 720px) { html:not(.oi-print) .grid { grid-template-columns: 1fr; } }
 .card { display: block; padding: 1rem; background: var(--card-bg); }
