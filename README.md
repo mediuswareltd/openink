@@ -82,16 +82,26 @@ openink dev
 
 Requires Node 20+. PDF and PNG export need Chrome, Chromium or Edge installed (set `CHROME_PATH` if it isn't found).
 
-### With Claude Code
+### With an AI coding agent
 
-Install the Open Ink plugin once, then just describe what you want ("wireframe a booking app for a hair salon"):
+Give your agent the Open Ink skill once, then just describe what you want ("wireframe a booking app for a hair salon").
 
-```text
-/plugin marketplace add mediuswareltd/openink
-/plugin install openink@openink
+**Claude Code**: install the plugin:
+
+```bash
+claude plugin marketplace add mediuswareltd/openink
+claude plugin install openink@openink
 ```
 
-Claude writes and validates the spec, checks screenshots of every screen and tells you where the prototype is. See [docs/ai-assistants.md](docs/ai-assistants.md).
+To get updates automatically, turn on auto-update for the **openink** marketplace in `/plugin` → **Marketplaces**.
+
+**Cursor, Codex, Gemini CLI, GitHub Copilot, Windsurf and other agents**: add the skill with the [skills](https://skills.sh) CLI, which asks which of your agents to install it for:
+
+```bash
+npx skills add mediuswareltd/openink
+```
+
+The agent writes and validates the spec, checks screenshots of every screen and tells you where the prototype is. See [docs/ai-assistants.md](docs/ai-assistants.md).
 
 ## What you can draw
 

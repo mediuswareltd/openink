@@ -6,8 +6,10 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ### Added
 
-- Claude Code plugin. `/plugin marketplace add mediuswareltd/openink`, then `/plugin install openink@openink`, adds a
-  `wireframe` skill that turns a description into a validated, screenshot-checked prototype in any folder.
+- A `wireframe` skill for AI coding agents that turns a description into a validated, screenshot-checked prototype in
+  any folder. Claude Code: `claude plugin marketplace add mediuswareltd/openink`, then
+  `claude plugin install openink@openink`. Cursor, Codex, Gemini CLI, GitHub Copilot and others:
+  `npx skills add mediuswareltd/openink`.
 
 ### Fixed
 
