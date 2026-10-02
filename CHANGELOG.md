@@ -4,11 +4,17 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-02
+
 ### Added
 
 - Documentation website at <https://mediuswareltd.github.io/openink/> with search, live clickable demos of every example,
   a recipes page of ready-to-paste specs (charts, forms, pricing, tables, modals, mobile) shown beside live previews, and an
   About page.
+
+### Changed
+
+- `openink dev` uses the next free port (3001, 3002, … up to 10 tries) when the requested one is already in use, instead of failing with `EADDRINUSE`.
 
 ### Fixed
 
@@ -18,12 +24,6 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
   PDF has exactly one page per screen. This applies to `openink pdf`, the prototype's PDF button and the browser's
   own print (Ctrl+P).
 - The PDF button now draws the sketched outlines of screens that had never been opened, as `openink pdf` already did.
-
-## [0.1.1]
-
-### Changed
-
-- `openink dev` uses the next free port (3001, 3002, … up to 10 tries) when the requested one is already in use, instead of failing with `EADDRINUSE`.
 
 ## [0.1.0]
 
