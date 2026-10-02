@@ -1,0 +1,10 @@
+{
+  "name": "openink",
+  "description": "Describe a product and get a hand-drawn, clickable wireframe prototype (HTML, PDF, PNG), built with the openink CLI.",
+  "version": "0.1.0",
+  "author": { "name": "Mediusware", "url": "https://github.com/mediuswareltd" },
+  "homepage": "https://mediuswareltd.github.io/openink/",
+  "repository": "https://github.com/mediuswareltd/openink",
+  "license": "MIT",
+  "keywords": ["wireframe", "prototype", "mockup", "ux", "yaml"]
+}

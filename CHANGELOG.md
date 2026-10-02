@@ -4,6 +4,13 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ## [Unreleased]
 
+### Added
+
+- A `wireframe` skill for AI coding agents that turns a description into a validated, screenshot-checked prototype in
+  any folder. Claude Code: `claude plugin marketplace add mediuswareltd/openink`, then
+  `claude plugin install openink@openink`. Cursor, Codex, Gemini CLI, GitHub Copilot and others:
+  `npx skills add mediuswareltd/openink`.
+
 ### Fixed
 
 - The PDF button (and Ctrl+P) no longer prints image, video and map placeholders and charts as empty boxes with only
