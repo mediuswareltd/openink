@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Product · wireframe</title>
+<link rel="stylesheet" href="openink.css" />
+
+
+
+<script>window.OPENINK={"languages":[],"first":"product"};</script>
+<script src="openink.js" defer></script>
+
+</head>
+<body>
+<div class="shell">
+<header class="oi-bar">
+<a class="brand" data-go="product">Product</a>
+<nav data-nav="default" hidden></nav>
+
+<wired-button class="print-btn" onclick="window.print()">PDF</wired-button>
+</header>
+<main>
+<section class="screen" id="product" data-title="product" data-nav="default">
+<p class="screen-title">product</p>
+
+<h2>Trail runner 2</h2>
+<div class="tabs" data-tabs><div class="row"><wired-button class="tab on" data-tab="0" elevation="3">Details</wired-button><wired-button class="tab" data-tab="1" elevation="1">Reviews</wired-button><wired-button class="tab" data-tab="2" elevation="1">Shipping</wired-button></div><div class="tab-panel on" data-panel="0"><div class="stack"><oi-placeholder h="120" cross label="Photo"></oi-placeholder><p class="">Light, grippy and waterproof.</p></div></div><div class="tab-panel" data-panel="1"><div class="stack"><div class="row rating"><oi-icon name="star" size="18" filled></oi-icon><oi-icon name="star" size="18" filled></oi-icon><oi-icon name="star" size="18" filled></oi-icon><oi-icon name="star" size="18" filled></oi-icon><oi-icon name="star" size="18"></oi-icon><span class="muted">(128 reviews)</span></div></div></div><div class="tab-panel" data-panel="2"><div class="stack"><p class="">Free delivery in 2 days.</p></div></div></div>
+</section>
+</main>
+
+<footer class="muted center">Wireframe · not the final design</footer>
+</div>
+<div class="toast" id="toast"></div>
+</body>
+</html>

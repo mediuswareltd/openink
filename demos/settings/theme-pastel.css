@@ -1,0 +1,26 @@
+/* pastel: soft and friendly. Good for consumer apps and kids' products. */
+:root {
+  --ink: #4a3f55;
+  --paper: #fff9f5;
+  --muted: #9a8fa5;
+  --line: #eadcf0;
+  --accent: #ec4899;
+  --note: #fef3c7;
+  --card-bg: #ffffff;
+  --ok: #10b981;
+  --oi-fill: #fdf2f8;
+  --oi-chart: #c084fc;
+  --wired-toggle-on-color: #c084fc;
+  --wired-slider-knob-color: #ec4899;
+  --wired-slider-bar-color: #c084fc;
+  --wired-progress-color: #f9a8d4;
+  --wired-radio-icon-color: #c084fc;
+  --wired-checkbox-icon-color: #c084fc;
+  --tone-bg: #fdf2f8;
+}
+h1, h2 { color: #7e3aa1; }
+wired-button { background: #fde2f3; color: #6b2a7a; }
+wired-button[elevation="3"] { background: #f9a8d4; color: #4a1d5c; }
+.badge.wait { background: #fde2f3; }
+.badge.on { background: #d1fae5; }
+.steps .on .dot { background: #ec4899; border-color: #ec4899; }

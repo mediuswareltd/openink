@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>KPIs · wireframe</title>
+<link rel="stylesheet" href="openink.css" />
+<link rel="stylesheet" href="theme-color.css" />
+
+
+<script>window.OPENINK={"languages":[],"first":"kpis"};</script>
+<script src="openink.js" defer></script>
+
+</head>
+<body>
+<div class="shell">
+<header class="oi-bar">
+<a class="brand" data-go="kpis">KPIs</a>
+<nav data-nav="default" hidden></nav>
+
+<wired-button class="print-btn" onclick="window.print()">PDF</wired-button>
+</header>
+<main>
+<section class="screen" id="kpis" data-title="kpis" data-nav="default">
+<p class="screen-title">kpis</p>
+
+<div class="grid" style="--cols:4"><wired-card elevation="1" class="card stat"><div class="stack tight"><span class="muted">Revenue</span><div class="stat-value">$48k</div><span class="badge on">+12%</span></div></wired-card><wired-card elevation="1" class="card stat"><div class="stack tight"><span class="muted">Orders</span><div class="stat-value">1,204</div><span class="badge on">+5%</span></div></wired-card><wired-card elevation="1" class="card stat"><div class="stack tight"><span class="muted">Refunds</span><div class="stat-value">18</div><span class="badge wait">+3</span></div></wired-card><wired-card elevation="1" class="card stat"><div class="stack tight"><span class="muted">Rating</span><div class="stat-value">4.8</div><span class="badge off">±0</span></div></wired-card></div>
+</section>
+</main>
+
+<footer class="muted center">Wireframe · not the final design</footer>
+</div>
+<div class="toast" id="toast"></div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Files · wireframe</title>
+<link rel="stylesheet" href="openink.css" />
+
+
+
+<script>window.OPENINK={"languages":[],"first":"files"};</script>
+<script src="openink.js" defer></script>
+
+</head>
+<body>
+<div class="shell">
+<header class="oi-bar">
+<a class="brand" data-go="files">Files</a>
+<nav data-nav="default" hidden></nav>
+
+<wired-button class="print-btn" onclick="window.print()">PDF</wired-button>
+</header>
+<main>
+<section class="screen" id="files" data-title="files" data-nav="default">
+<p class="screen-title">files</p>
+
+<h2>report.pdf</h2>
+<div class="tone" data-tone="red"><wired-button elevation="1" data-open="confirm"><oi-icon name="trash" size="18"></oi-icon><span class="btn-label">Delete</span></wired-button></div>
+</section>
+</main>
+<div class="modal" data-modal="confirm" data-width="narrow"><div class="modal-backdrop" data-close></div><wired-card elevation="3" class="modal-card"><div class="row between"><h3>Delete this file?</h3><wired-button data-close><oi-icon name="close" size="18"></oi-icon></wired-button></div><div class="stack"><p class="">This cannot be undone.</p><div class="row"><div class="tone" data-tone="red"><wired-button elevation="1" data-toast="Done" data-close><span class="btn-label">Delete</span></wired-button></div><wired-button elevation="1" data-close><span class="btn-label">Cancel</span></wired-button></div></div></wired-card></div>
+<footer class="muted center">Wireframe · not the final design</footer>
+</div>
+<div class="toast" id="toast"></div>
+</body>
+</html>

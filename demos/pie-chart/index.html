@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Budget · wireframe</title>
+<link rel="stylesheet" href="openink.css" />
+<link rel="stylesheet" href="theme-color.css" />
+
+
+<script>window.OPENINK={"languages":[],"first":"budget"};</script>
+<script src="openink.js" defer></script>
+
+</head>
+<body>
+<div class="shell">
+<header class="oi-bar">
+<a class="brand" data-go="budget">Budget</a>
+<nav data-nav="default" hidden></nav>
+
+<wired-button class="print-btn" onclick="window.print()">PDF</wired-button>
+</header>
+<main>
+<section class="screen" id="budget" data-title="budget" data-nav="default">
+<p class="screen-title">budget</p>
+
+<h2>Where the money goes</h2>
+<div class="grid" style="--cols:2"><oi-chart kind="pie" h="180" label="Pie"></oi-chart><div class="tone" data-tone="pink"><oi-chart kind="donut" h="180"></oi-chart></div></div>
+</section>
+</main>
+
+<footer class="muted center">Wireframe · not the final design</footer>
+</div>
+<div class="toast" id="toast"></div>
+</body>
+</html>

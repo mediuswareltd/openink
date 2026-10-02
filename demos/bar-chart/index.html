@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sales report · wireframe</title>
+<link rel="stylesheet" href="openink.css" />
+<link rel="stylesheet" href="theme-color.css" />
+
+
+<script>window.OPENINK={"languages":[],"first":"report"};</script>
+<script src="openink.js" defer></script>
+
+</head>
+<body>
+<div class="shell">
+<header class="oi-bar">
+<a class="brand" data-go="report">Sales report</a>
+<nav data-nav="default" hidden></nav>
+
+<wired-button class="print-btn" onclick="window.print()">PDF</wired-button>
+</header>
+<main>
+<section class="screen" id="report" data-title="report" data-nav="default">
+<p class="screen-title">report</p>
+
+<h2>Monthly sales</h2>
+<oi-chart kind="bar" h="220" values="12,19,8,24,17,30" label="Units sold"></oi-chart>
+</section>
+</main>
+
+<footer class="muted center">Wireframe · not the final design</footer>
+</div>
+<div class="toast" id="toast"></div>
+</body>
+</html>
