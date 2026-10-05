@@ -29,6 +29,8 @@ Used by `icon`, `button.icon`, nav items and `tabbar`:
 
 `home` · `search` · `heart` · `comment` · `share` · `bookmark` · `plus` · `bell` · `user` · `users` · `mail` · `settings` · `camera` · `image` · `video` · `star` · `menu` · `more` · `close` · `check` · `arrow-right` · `arrow-left` · `chevron-down` · `chevron-right` · `play` · `pin` · `trash` · `edit` · `upload` · `download` · `lock` · `cart` · `chart` · `calendar` · `filter` · `info` · `send` · `minus` · `arrow-up` · `arrow-down` · `chevron-up` · `chevron-left` · `external` · `link` · `refresh` · `login` · `logout` · `grid` · `list` · `pause` · `check-circle` · `warning` · `help` · `eye` · `eye-off` · `unlock` · `key` · `thumbs-up` · `smile` · `flag` · `zap` · `phone` · `inbox` · `paperclip` · `mic` · `volume` · `music` · `wifi` · `hash` · `at` · `rss` · `file` · `folder` · `copy` · `book` · `briefcase` · `printer` · `code` · `clock` · `bag` · `tag` · `gift` · `credit-card` · `dollar` · `truck` · `globe` · `map` · `sun` · `moon` · `cloud` · `facebook` · `x` · `instagram` · `linkedin` · `youtube` · `github` · `tiktok` · `whatsapp` · `telegram` · `discord` · `pinterest` · `reddit` · `snapchat` · `slack` · `spotify` · `apple` · `google` · `microsoft` · `dribbble` · `twitch`
 
+Brand names and logos are trademarks of their owners. Open Ink's brand icons are simplified sketches for wireframes only and do not imply endorsement. Use each brand's official assets in production.
+
 ## Layout
 
 ### `stack` · children

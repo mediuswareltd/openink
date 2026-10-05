@@ -45,6 +45,8 @@ export function blocksMarkdown() {
     "",
     ICON_NAMES.map((n) => `\`${n}\``).join(" · "),
     "",
+    "Brand names and logos are trademarks of their owners. Open Ink's brand icons are simplified sketches for wireframes only and do not imply endorsement. Use each brand's official assets in production.",
+    "",
   ];
   for (const g of groups) {
     out.push(`## ${g}`, "");

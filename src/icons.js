@@ -111,7 +111,8 @@ export const ICONS = {
   moon: ["M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"],
   cloud: ["M7 19a5 5 0 0 1-.5-10A6 6 0 0 1 18 9a5 5 0 0 1 0 10z"],
 
-  // brands: simplified outlines for "sign in with" buttons, share bars and footers
+  // brands: simplified outlines for "sign in with" buttons, share bars and footers. The names and logos are
+  // trademarks of their owners; these are wireframe sketches drawn for Open Ink, not the official artwork.
   facebook: [dot(12, 12, 9), "M15.5 8H14a2 2 0 0 0-2 2v11", "M9.5 13h5"],
   x: ["M4 4h4.5L20 20h-4.5z", "M20 4l-6.5 7.5M10.5 13.5L4 20"],
   instagram: [box(3, 3, 18, 18, 5), dot(12, 12, 4), dot(17, 7, 0.7)],

@@ -111,7 +111,7 @@ The agent writes and validates the spec, checks screenshots of every screen and 
 |---|---|
 | **Layout** | `stack` `row` `grid` `card` `accordion` `device` (phone / tablet / browser frame) `divider` `spacer` |
 | **Text** | `h1` `h2` `h3` `text` `list` `note` `badge` |
-| **Content** | `icon` (37 hand-drawn icons) `avatar` `hero` `stat` `rating` `link` |
+| **Content** | `icon` (110 hand-drawn icons, brand logos included) `avatar` `hero` `stat` `rating` `link` |
 | **Media** | `image` `map` `video` `carousel` `dropzone` `box` `chart` (line, area, bar, pie, donut) |
 | **Forms** | `input` `search` `textarea` `select` `checkbox` `toggle` `radio` `slider` |
 | **Actions** | `button` (with icon) `chips` `tabs` `nextbar` |
@@ -190,3 +190,5 @@ Issues and pull requests are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md). Ad
 ## License
 
 [MIT](LICENSE)
+
+Brand names and logos are trademarks of their owners. Open Ink's brand icons are simplified sketches for wireframes only and do not imply endorsement. Use each brand's official assets in production.
