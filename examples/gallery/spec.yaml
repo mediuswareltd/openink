@@ -11,6 +11,7 @@ nav:
   - { label: Media, go: media }
   - { label: Forms, go: forms }
   - { label: Navigation, go: navigation }
+  - { label: Icons, go: icons }
   - { label: Colours, go: colours }
 
 screens:
@@ -176,6 +177,145 @@ screens:
               - { icon: plus }
               - { icon: bell, label: Alerts }
               - { icon: user, label: Me }
+
+  # ------------------------------------------------------------------ icons
+  - id: icons
+    title: Icons
+    blocks:
+      - { type: h1, text: Icons }
+      - { type: text, muted: true, text: "Use them in icon, button.icon, nav items and tabbar. Add filled: true for a solid icon." }
+      - { type: h3, text: Interface }
+      - type: grid
+        cols: 6
+        children:
+          - { type: row, children: [{ type: icon, name: home }, { type: text, muted: true, text: "home" }] }
+          - { type: row, children: [{ type: icon, name: search }, { type: text, muted: true, text: "search" }] }
+          - { type: row, children: [{ type: icon, name: heart }, { type: text, muted: true, text: "heart" }] }
+          - { type: row, children: [{ type: icon, name: comment }, { type: text, muted: true, text: "comment" }] }
+          - { type: row, children: [{ type: icon, name: share }, { type: text, muted: true, text: "share" }] }
+          - { type: row, children: [{ type: icon, name: bookmark }, { type: text, muted: true, text: "bookmark" }] }
+          - { type: row, children: [{ type: icon, name: plus }, { type: text, muted: true, text: "plus" }] }
+          - { type: row, children: [{ type: icon, name: bell }, { type: text, muted: true, text: "bell" }] }
+          - { type: row, children: [{ type: icon, name: user }, { type: text, muted: true, text: "user" }] }
+          - { type: row, children: [{ type: icon, name: users }, { type: text, muted: true, text: "users" }] }
+          - { type: row, children: [{ type: icon, name: mail }, { type: text, muted: true, text: "mail" }] }
+          - { type: row, children: [{ type: icon, name: settings }, { type: text, muted: true, text: "settings" }] }
+          - { type: row, children: [{ type: icon, name: camera }, { type: text, muted: true, text: "camera" }] }
+          - { type: row, children: [{ type: icon, name: image }, { type: text, muted: true, text: "image" }] }
+          - { type: row, children: [{ type: icon, name: video }, { type: text, muted: true, text: "video" }] }
+          - { type: row, children: [{ type: icon, name: star }, { type: text, muted: true, text: "star" }] }
+          - { type: row, children: [{ type: icon, name: menu }, { type: text, muted: true, text: "menu" }] }
+          - { type: row, children: [{ type: icon, name: more }, { type: text, muted: true, text: "more" }] }
+          - { type: row, children: [{ type: icon, name: close }, { type: text, muted: true, text: "close" }] }
+          - { type: row, children: [{ type: icon, name: check }, { type: text, muted: true, text: "check" }] }
+          - { type: row, children: [{ type: icon, name: arrow-right }, { type: text, muted: true, text: "arrow-right" }] }
+          - { type: row, children: [{ type: icon, name: arrow-left }, { type: text, muted: true, text: "arrow-left" }] }
+          - { type: row, children: [{ type: icon, name: chevron-down }, { type: text, muted: true, text: "chevron-down" }] }
+          - { type: row, children: [{ type: icon, name: chevron-right }, { type: text, muted: true, text: "chevron-right" }] }
+          - { type: row, children: [{ type: icon, name: play }, { type: text, muted: true, text: "play" }] }
+          - { type: row, children: [{ type: icon, name: pin }, { type: text, muted: true, text: "pin" }] }
+          - { type: row, children: [{ type: icon, name: trash }, { type: text, muted: true, text: "trash" }] }
+          - { type: row, children: [{ type: icon, name: edit }, { type: text, muted: true, text: "edit" }] }
+          - { type: row, children: [{ type: icon, name: upload }, { type: text, muted: true, text: "upload" }] }
+          - { type: row, children: [{ type: icon, name: download }, { type: text, muted: true, text: "download" }] }
+          - { type: row, children: [{ type: icon, name: lock }, { type: text, muted: true, text: "lock" }] }
+          - { type: row, children: [{ type: icon, name: cart }, { type: text, muted: true, text: "cart" }] }
+          - { type: row, children: [{ type: icon, name: chart }, { type: text, muted: true, text: "chart" }] }
+          - { type: row, children: [{ type: icon, name: calendar }, { type: text, muted: true, text: "calendar" }] }
+          - { type: row, children: [{ type: icon, name: filter }, { type: text, muted: true, text: "filter" }] }
+          - { type: row, children: [{ type: icon, name: info }, { type: text, muted: true, text: "info" }] }
+          - { type: row, children: [{ type: icon, name: send }, { type: text, muted: true, text: "send" }] }
+          - { type: row, children: [{ type: icon, name: minus }, { type: text, muted: true, text: "minus" }] }
+          - { type: row, children: [{ type: icon, name: arrow-up }, { type: text, muted: true, text: "arrow-up" }] }
+          - { type: row, children: [{ type: icon, name: arrow-down }, { type: text, muted: true, text: "arrow-down" }] }
+          - { type: row, children: [{ type: icon, name: chevron-up }, { type: text, muted: true, text: "chevron-up" }] }
+          - { type: row, children: [{ type: icon, name: chevron-left }, { type: text, muted: true, text: "chevron-left" }] }
+          - { type: row, children: [{ type: icon, name: external }, { type: text, muted: true, text: "external" }] }
+          - { type: row, children: [{ type: icon, name: link }, { type: text, muted: true, text: "link" }] }
+          - { type: row, children: [{ type: icon, name: refresh }, { type: text, muted: true, text: "refresh" }] }
+          - { type: row, children: [{ type: icon, name: login }, { type: text, muted: true, text: "login" }] }
+          - { type: row, children: [{ type: icon, name: logout }, { type: text, muted: true, text: "logout" }] }
+          - { type: row, children: [{ type: icon, name: grid }, { type: text, muted: true, text: "grid" }] }
+          - { type: row, children: [{ type: icon, name: list }, { type: text, muted: true, text: "list" }] }
+          - { type: row, children: [{ type: icon, name: pause }, { type: text, muted: true, text: "pause" }] }
+          - { type: row, children: [{ type: icon, name: check-circle }, { type: text, muted: true, text: "check-circle" }] }
+          - { type: row, children: [{ type: icon, name: warning }, { type: text, muted: true, text: "warning" }] }
+          - { type: row, children: [{ type: icon, name: help }, { type: text, muted: true, text: "help" }] }
+          - { type: row, children: [{ type: icon, name: eye }, { type: text, muted: true, text: "eye" }] }
+          - { type: row, children: [{ type: icon, name: eye-off }, { type: text, muted: true, text: "eye-off" }] }
+          - { type: row, children: [{ type: icon, name: unlock }, { type: text, muted: true, text: "unlock" }] }
+          - { type: row, children: [{ type: icon, name: key }, { type: text, muted: true, text: "key" }] }
+          - { type: row, children: [{ type: icon, name: thumbs-up }, { type: text, muted: true, text: "thumbs-up" }] }
+          - { type: row, children: [{ type: icon, name: smile }, { type: text, muted: true, text: "smile" }] }
+          - { type: row, children: [{ type: icon, name: flag }, { type: text, muted: true, text: "flag" }] }
+          - { type: row, children: [{ type: icon, name: zap }, { type: text, muted: true, text: "zap" }] }
+          - { type: row, children: [{ type: icon, name: phone }, { type: text, muted: true, text: "phone" }] }
+          - { type: row, children: [{ type: icon, name: inbox }, { type: text, muted: true, text: "inbox" }] }
+          - { type: row, children: [{ type: icon, name: paperclip }, { type: text, muted: true, text: "paperclip" }] }
+          - { type: row, children: [{ type: icon, name: mic }, { type: text, muted: true, text: "mic" }] }
+          - { type: row, children: [{ type: icon, name: volume }, { type: text, muted: true, text: "volume" }] }
+          - { type: row, children: [{ type: icon, name: music }, { type: text, muted: true, text: "music" }] }
+          - { type: row, children: [{ type: icon, name: wifi }, { type: text, muted: true, text: "wifi" }] }
+          - { type: row, children: [{ type: icon, name: hash }, { type: text, muted: true, text: "hash" }] }
+          - { type: row, children: [{ type: icon, name: at }, { type: text, muted: true, text: "at" }] }
+          - { type: row, children: [{ type: icon, name: rss }, { type: text, muted: true, text: "rss" }] }
+          - { type: row, children: [{ type: icon, name: file }, { type: text, muted: true, text: "file" }] }
+          - { type: row, children: [{ type: icon, name: folder }, { type: text, muted: true, text: "folder" }] }
+          - { type: row, children: [{ type: icon, name: copy }, { type: text, muted: true, text: "copy" }] }
+          - { type: row, children: [{ type: icon, name: book }, { type: text, muted: true, text: "book" }] }
+          - { type: row, children: [{ type: icon, name: briefcase }, { type: text, muted: true, text: "briefcase" }] }
+          - { type: row, children: [{ type: icon, name: printer }, { type: text, muted: true, text: "printer" }] }
+          - { type: row, children: [{ type: icon, name: code }, { type: text, muted: true, text: "code" }] }
+          - { type: row, children: [{ type: icon, name: clock }, { type: text, muted: true, text: "clock" }] }
+          - { type: row, children: [{ type: icon, name: bag }, { type: text, muted: true, text: "bag" }] }
+          - { type: row, children: [{ type: icon, name: tag }, { type: text, muted: true, text: "tag" }] }
+          - { type: row, children: [{ type: icon, name: gift }, { type: text, muted: true, text: "gift" }] }
+          - { type: row, children: [{ type: icon, name: credit-card }, { type: text, muted: true, text: "credit-card" }] }
+          - { type: row, children: [{ type: icon, name: dollar }, { type: text, muted: true, text: "dollar" }] }
+          - { type: row, children: [{ type: icon, name: truck }, { type: text, muted: true, text: "truck" }] }
+          - { type: row, children: [{ type: icon, name: globe }, { type: text, muted: true, text: "globe" }] }
+          - { type: row, children: [{ type: icon, name: map }, { type: text, muted: true, text: "map" }] }
+          - { type: row, children: [{ type: icon, name: sun }, { type: text, muted: true, text: "sun" }] }
+          - { type: row, children: [{ type: icon, name: moon }, { type: text, muted: true, text: "moon" }] }
+          - { type: row, children: [{ type: icon, name: cloud }, { type: text, muted: true, text: "cloud" }] }
+      - { type: h3, text: Brands }
+      - type: grid
+        cols: 6
+        children:
+          - { type: row, children: [{ type: icon, name: facebook }, { type: text, muted: true, text: "facebook" }] }
+          - { type: row, children: [{ type: icon, name: x }, { type: text, muted: true, text: "x" }] }
+          - { type: row, children: [{ type: icon, name: instagram }, { type: text, muted: true, text: "instagram" }] }
+          - { type: row, children: [{ type: icon, name: linkedin }, { type: text, muted: true, text: "linkedin" }] }
+          - { type: row, children: [{ type: icon, name: youtube }, { type: text, muted: true, text: "youtube" }] }
+          - { type: row, children: [{ type: icon, name: github }, { type: text, muted: true, text: "github" }] }
+          - { type: row, children: [{ type: icon, name: tiktok }, { type: text, muted: true, text: "tiktok" }] }
+          - { type: row, children: [{ type: icon, name: whatsapp }, { type: text, muted: true, text: "whatsapp" }] }
+          - { type: row, children: [{ type: icon, name: telegram }, { type: text, muted: true, text: "telegram" }] }
+          - { type: row, children: [{ type: icon, name: discord }, { type: text, muted: true, text: "discord" }] }
+          - { type: row, children: [{ type: icon, name: pinterest }, { type: text, muted: true, text: "pinterest" }] }
+          - { type: row, children: [{ type: icon, name: reddit }, { type: text, muted: true, text: "reddit" }] }
+          - { type: row, children: [{ type: icon, name: snapchat }, { type: text, muted: true, text: "snapchat" }] }
+          - { type: row, children: [{ type: icon, name: slack }, { type: text, muted: true, text: "slack" }] }
+          - { type: row, children: [{ type: icon, name: spotify }, { type: text, muted: true, text: "spotify" }] }
+          - { type: row, children: [{ type: icon, name: apple }, { type: text, muted: true, text: "apple" }] }
+          - { type: row, children: [{ type: icon, name: google }, { type: text, muted: true, text: "google" }] }
+          - { type: row, children: [{ type: icon, name: microsoft }, { type: text, muted: true, text: "microsoft" }] }
+          - { type: row, children: [{ type: icon, name: dribbble }, { type: text, muted: true, text: "dribbble" }] }
+          - { type: row, children: [{ type: icon, name: twitch }, { type: text, muted: true, text: "twitch" }] }
+      - { type: h3, text: In use }
+      - type: row
+        children:
+          - { type: button, label: Continue with Google, icon: google }
+          - { type: button, label: Continue with Apple, icon: apple }
+          - { type: button, label: Sign in with GitHub, icon: github }
+      - type: row
+        children:
+          - { type: button, icon: facebook, toast: facebook }
+          - { type: button, icon: x, toast: x }
+          - { type: button, icon: instagram, toast: instagram }
+          - { type: button, icon: linkedin, toast: linkedin }
+          - { type: button, icon: youtube, toast: youtube }
+          - { type: button, icon: tiktok, toast: tiktok }
 
   # ------------------------------------------------------------------ colours
   - id: colours

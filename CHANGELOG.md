@@ -4,6 +4,12 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ## [Unreleased]
 
+### Added
+
+- 72 more icons, 110 in all: arrows, status, files, shopping, weather and 20 brand logos (Google, Apple, GitHub,
+  Facebook, X, Instagram, LinkedIn, YouTube, TikTok, WhatsApp and more) for sign-in buttons, share bars and footers.
+  The gallery has a new Icons screen that shows every icon with its name.
+
 ## [0.2.0] - 2026-10-02
 
 ### Added
