@@ -190,6 +190,8 @@ screens:
 
 `icon` blocks, `button.icon`, nav items and tab-bar items use a built-in set of hand-drawn icons (`home`, `search`, `heart`, `comment`, `send`, `bell`, `user`, `camera`, …). The full list is at the end of the [block reference](blocks.md#icons). An unknown name is an error with a "did you mean" hint.
 
+The set includes brand logos (`google`, `apple`, `github`, `facebook`, `x`, `linkedin`, …) for sign-in buttons, share bars and footers. Brand names and logos are trademarks of their owners. Open Ink's brand icons are simplified sketches for wireframes only and do not imply endorsement. Use each brand's official assets in production.
+
 ## Quoting text with commas
 
 Inside `{ ... }` a comma ends the value, so YAML reads `{ type: text, text: Hello, world }` as text `Hello` plus a stray key `world`. Wrap such text in quotes: `text: "Hello, world"`. `validate` warns when it sees this.

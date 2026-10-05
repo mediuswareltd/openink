@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { validate } from "../src/spec/validate.js";
+import { ICONS } from "../src/icons.js";
 
 const spec = (over = {}) => ({
   name: "T",
@@ -177,4 +178,13 @@ test("screens that nothing links to produce a warning", () => {
 test("bare strings are accepted as text shorthand", () => {
   const r = validate(spec({ screens: [{ id: "a", blocks: [{ type: "row", children: ["hello"] }] }] }));
   assert.deepEqual(r.errors, []);
+});
+
+test("every icon is a list of drawable paths, including the brands", () => {
+  for (const [name, paths] of Object.entries(ICONS)) {
+    assert.ok(Array.isArray(paths) && paths.length, name);
+    for (const d of paths) assert.match(d, /^M[\d.-]/, `${name}: ${d}`);
+  }
+  for (const name of ["google", "github", "x", "facebook", "instagram", "linkedin", "youtube", "whatsapp"]) assert.ok(ICONS[name], name);
+  assert.equal(validate(spec({ screens: [{ id: "a", blocks: [{ type: "button", label: "Continue with Google", icon: "google" }] }] })).errors.length, 0);
 });
