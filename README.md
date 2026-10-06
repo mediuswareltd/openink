@@ -71,6 +71,7 @@ npx openink pdf                 # dist/<name>.pdf, one screen per page
 npx openink png                 # dist/png/<screen>.png
 npx openink blocks              # list every block and its props
 npx openink dev --theme dark    # try a colour theme without editing the spec
+npx openink dev --open          # also open the preview in your browser
 ```
 
 Or install it once and drop the `npx`:

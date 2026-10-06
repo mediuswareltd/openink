@@ -1,3 +1,4 @@
+import { spawn } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -24,6 +25,7 @@ Commands:
 Options:
   --out <dir>      Output directory, relative to the project (default: dist)
   --port <n>       Dev server port (default: 3000; the next free port if taken)
+  --open           Open the prototype in the default browser when the dev server starts
   --theme <name>   Try a colour theme without editing the spec: sketch, color, pastel, blueprint, dark
   -v, --version    Print the version
   -h, --help       Show this help
@@ -40,6 +42,7 @@ function parse(argv) {
     const a = argv[i];
     if (a === "-h" || a === "--help") opts.help = true;
     else if (a === "-v" || a === "--version") opts.version = true;
+    else if (a === "--open") opts.open = true;
     else if (a === "--out" || a === "--port" || a === "--theme") {
       if (argv[i + 1] === undefined) throw new Error(`${a} needs a value`);
       opts[a.slice(2)] = argv[++i];
@@ -64,6 +67,18 @@ function init(dir = ".") {
   }
   const rel = path.relative(process.cwd(), target);
   console.log(green("✓") + ` Created ${rel || "."}/spec.yaml\n\nNext:\n  ${rel ? `cd ${rel} && ` : ""}npx openink dev`);
+}
+
+/** The command that opens a URL in the default browser on this platform. */
+export const openCommand = (url, platform = process.platform) =>
+  platform === "win32" ? ["cmd", ["/c", "start", '""', url]] : [platform === "darwin" ? "open" : "xdg-open", [url]];
+
+// a browser that fails to open is only worth a hint: the server keeps running
+function openBrowser(url) {
+  const [cmd, args] = openCommand(url);
+  const child = spawn(cmd, args, { stdio: "ignore", detached: true, windowsVerbatimArguments: process.platform === "win32" });
+  child.on("error", () => console.error(yellow(`Could not open a browser. Open ${url} yourself.`)));
+  child.unref();
 }
 
 /** @param {string[]} argv */
@@ -114,6 +129,7 @@ export async function run(argv) {
         onWarnings: (warnings) => printIssues(warnings, yellow, "warn "),
       });
       console.log(green("✓") + ` Serving ${server.url}  ${dim("(Ctrl+C to stop)")}`);
+      if (opts.open) openBrowser(server.url);
       process.on("SIGINT", () => { server.close(); process.exit(0); });
       return new Promise(() => {}); // keep running
     }

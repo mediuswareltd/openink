@@ -195,3 +195,12 @@ test("problems carry the file, line and column of the spec", () => {
   // a missing field points at its parent
   assert.match(stderr, /error spec\.yaml:11:5 screens\[1\]\.id:/);
 });
+
+test("dev --open uses the platform's opener", async () => {
+  const { openCommand } = await import("../src/cli.js");
+  const url = "http://localhost:3000";
+  assert.deepEqual(openCommand(url, "win32"), ["cmd", ["/c", "start", '""', url]]);
+  assert.deepEqual(openCommand(url, "darwin"), ["open", [url]]);
+  assert.deepEqual(openCommand(url, "linux"), ["xdg-open", [url]]);
+  assert.match(cli(["--help"]).stdout, /--open/);
+});

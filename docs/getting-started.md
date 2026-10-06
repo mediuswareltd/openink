@@ -8,7 +8,7 @@ cd my-wireframes
 npx openink dev
 ```
 
-Open <http://localhost:3000>. Edit `spec.yaml` and the page reloads on save.
+Open <http://localhost:3000> (or start with `npx openink dev --open` to open it for you). Edit `spec.yaml` and the page reloads on save.
 
 **Skipping `npx`.** `npx openink` downloads the tool on first use. To pin a version per project, or to type just `openink`, install it:
 
