@@ -127,3 +127,14 @@ test("dev falls back to the next free port when the requested one is taken", asy
     blocker.close();
   }
 });
+
+test("dev passes the warnings of each build to onWarnings", async () => {
+  const { dev } = await import("../src/dev.js");
+  const dir = tmp();
+  fs.writeFileSync(path.join(dir, "spec.yaml"), "name: x\ncolour: red\nscreens:\n  - { id: a, blocks: [] }\n");
+  const warnings = [];
+  const server = await dev({ dir, port: 0, log: () => {}, onWarnings: (w) => warnings.push(...w) });
+  server.close();
+  assert.equal(warnings.length, 1);
+  assert.equal(warnings[0].path, "colour");
+});

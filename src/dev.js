@@ -13,9 +13,9 @@ const MAX_PORT_TRIES = 10;
 
 /**
  * Serve the project with live reload: rebuilds when files change and the browser refreshes itself.
- * @param {{ dir?: string, out?: string, port?: number, theme?: string, log?: (msg: string) => void, onIssues?: (e: SpecError) => void }} [opts]
+ * @param {{ dir?: string, out?: string, port?: number, theme?: string, log?: (msg: string) => void, onIssues?: (e: SpecError) => void, onWarnings?: (warnings: {path:string,message:string}[]) => void }} [opts]
  */
-export async function dev({ dir = ".", out = ".openink-dev", port = 3000, theme, log = console.log, onIssues = () => {} } = {}) {
+export async function dev({ dir = ".", out = ".openink-dev", port = 3000, theme, log = console.log, onIssues = () => {}, onWarnings = () => {} } = {}) {
   const projectDir = path.resolve(dir);
   const outDir = path.resolve(projectDir, out);
   let version = String(Date.now());
@@ -25,6 +25,7 @@ export async function dev({ dir = ".", out = ".openink-dev", port = 3000, theme,
       const { warnings } = await build({ dir, out, dev: true, theme });
       version = String(Date.now());
       log(`✓ built${warnings.length ? ` (${warnings.length} warning${warnings.length > 1 ? "s" : ""})` : ""}`);
+      if (warnings.length) onWarnings(warnings);
     } catch (e) {
       if (e instanceof SpecError) onIssues(e);
       else log(`✗ ${e.message}`);

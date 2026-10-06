@@ -109,6 +109,7 @@ export async function run(argv) {
         port: opts.port ? +opts.port : 3000,
         theme: opts.theme,
         onIssues: (e) => { console.error(red("✗ " + e.message)); printIssues(e.issues, red, "error"); },
+        onWarnings: (warnings) => printIssues(warnings, yellow, "warn "),
       });
       console.log(green("✓") + ` Serving ${server.url}  ${dim("(Ctrl+C to stop)")}`);
       process.on("SIGINT", () => { server.close(); process.exit(0); });
