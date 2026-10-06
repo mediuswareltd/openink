@@ -31,7 +31,7 @@ When changing an existing prototype, edit only what the user asked for and keep 
 
 ## 4. Validate until clean
 
-Run `npx openink validate <dir>`. Fix every error, then run it again. Each problem gives its exact path in the spec and often a "did you mean" hint. Read the warnings too: they catch typos and unreachable screens.
+Run `npx openink validate <dir>`. Fix every error, then run it again. Each problem gives its line and column (`spec.yaml:42:7`), its exact path in the spec and often a "did you mean" hint. Read the warnings too: they catch typos and unreachable screens.
 
 ## 5. Look at the result
 

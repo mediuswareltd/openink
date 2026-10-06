@@ -6,6 +6,8 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ### Added
 
+- Spec errors and warnings start with the file, line and column (`spec.yaml:42:7`), in `validate`, `build`, `dev` and
+  the browser overlay. Most terminals and editors open that spot with a click (#24).
 - `openink dev` shows spec errors over the prototype in the browser, and hides them as soon as the spec builds again.
   Before, a failed rebuild only showed in the terminal, and the browser kept the last good build (#23).
 

@@ -49,8 +49,9 @@ function parse(argv) {
   return opts;
 }
 
+// `loc` (file:line:col) comes first, so terminals and editors can open the spot with a click
 const printIssues = (list, color, label) =>
-  list.forEach((i) => console.error(`  ${color(label)} ${dim(i.path || "spec")}: ${i.message}`));
+  list.forEach((i) => console.error(`  ${color(label)} ${i.loc ? `${i.loc} ` : ""}${dim(i.path || "spec")}: ${i.message}`));
 
 function init(dir = ".") {
   const target = path.resolve(dir);
@@ -81,8 +82,9 @@ export async function run(argv) {
       return console.log(blocksMarkdown());
 
     case "validate": {
-      const { spec } = loadSpec(dir);
-      const { errors, warnings } = validate(spec);
+      const { spec, locate } = loadSpec(dir);
+      const result = validate(spec);
+      const errors = result.errors.map(locate), warnings = result.warnings.map(locate);
       printIssues(warnings, yellow, "warn ");
       printIssues(errors, red, "error");
       if (errors.length) throw new SpecError(`${errors.length} error${errors.length > 1 ? "s" : ""}`);

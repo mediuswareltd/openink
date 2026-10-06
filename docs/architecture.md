@@ -17,7 +17,7 @@ dist/ ──► http server + fs.watch + reload poller              (dev.js)
 
 **One definition per block.** `src/render/blocks/` is the single source of truth. The validator, the JSON Schema, `docs/blocks.md` and `openink blocks` are all generated from it, and tests fail when the generated files are stale. Adding a block is one object.
 
-**Validate everything, early.** Assistants and humans both make typos. The validator never throws; it returns `{ errors, warnings }` with a path into the spec and a suggestion, and `build` refuses to write output if there are errors.
+**Validate everything, early.** Assistants and humans both make typos. The validator never throws; it returns `{ errors, warnings }` with a path into the spec and a suggestion; the CLI adds the line and column from the YAML source. `build` refuses to write output if there are errors.
 
 **Bundled runtime.** wired-elements and RoughJS are bundled into `openink.js` at build time, so a prototype has no CDN dependency (except the Google Fonts stylesheet, which falls back to a system cursive font offline).
 
