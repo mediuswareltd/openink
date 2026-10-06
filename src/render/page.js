@@ -1,7 +1,23 @@
 import { createContext, esc } from "./context.js";
 import { colorVar, isPreset } from "../themes.js";
 
-const DEV_RELOAD = `<script>(function(){var v;setInterval(function(){fetch("/__version").then(function(r){return r.text()}).then(function(t){if(v&&t!==v)location.reload();v=t}).catch(function(){})},600)})()</script>`;
+// Dev mode: polls the dev server, reloads after a good build and shows the errors of a failed one.
+const DEV_RELOAD = `<script>(function(){var v,box;
+function show(e){if(!box){box=document.createElement("div");box.id="oi-dev-error";box.setAttribute("role","alert");box.style.cssText="position:fixed;inset:0;z-index:2147483647;overflow:auto;margin:0;padding:32px;background:rgba(40,0,0,.92);color:#fff;font:14px/1.6 ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap";document.body.appendChild(box)}box.textContent="\\u2717 "+e+"\\n\\nFix the spec and save: this page updates by itself."}
+function hide(){if(box){box.remove();box=null}}
+setInterval(function(){fetch("/__version").then(function(r){return r.json()}).then(function(s){if(v&&s.version!==v)return location.reload();v=s.version;s.error?show(s.error):hide()}).catch(function(){})},600)})()</script>`;
+
+/** The page the dev server shows when there is no good build yet: only the poller, which shows the errors. */
+export const devErrorPage = () => `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>openink</title>
+${DEV_RELOAD}
+</head>
+<body></body>
+</html>
+`;
 
 /**
  * Render a validated spec to a complete HTML document.

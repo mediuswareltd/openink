@@ -4,6 +4,11 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ## [Unreleased]
 
+### Added
+
+- `openink dev` shows spec errors over the prototype in the browser, and hides them as soon as the spec builds again.
+  Before, a failed rebuild only showed in the terminal, and the browser kept the last good build (#23).
+
 ### Fixed
 
 - `openink dev` prints each warning with its path and message, not only how many there are (#22).

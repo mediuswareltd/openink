@@ -2,6 +2,7 @@ import fs from "node:fs";
 import http from "node:http";
 import path from "node:path";
 import { build, SpecError } from "./build.js";
+import { devErrorPage } from "./render/page.js";
 
 const MIME = {
   ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".json": "application/json",
@@ -11,6 +12,9 @@ const MIME = {
 
 const MAX_PORT_TRIES = 10;
 
+/** A failed build as plain text, for the overlay in the browser. */
+const describe = (e) => [e.message, ...(e.issues || []).map((i) => `  ${i.path || "spec"}: ${i.message}`)].join("\n");
+
 /**
  * Serve the project with live reload: rebuilds when files change and the browser refreshes itself.
  * @param {{ dir?: string, out?: string, port?: number, theme?: string, log?: (msg: string) => void, onIssues?: (e: SpecError) => void, onWarnings?: (warnings: {path:string,message:string}[]) => void }} [opts]
@@ -19,14 +23,17 @@ export async function dev({ dir = ".", out = ".openink-dev", port = 3000, theme,
   const projectDir = path.resolve(dir);
   const outDir = path.resolve(projectDir, out);
   let version = String(Date.now());
+  let error = null; // the last build's failure, shown in the browser until a build succeeds
 
   const rebuild = async () => {
     try {
       const { warnings } = await build({ dir, out, dev: true, theme });
       version = String(Date.now());
+      error = null;
       log(`✓ built${warnings.length ? ` (${warnings.length} warning${warnings.length > 1 ? "s" : ""})` : ""}`);
       if (warnings.length) onWarnings(warnings);
     } catch (e) {
+      error = describe(e);
       if (e instanceof SpecError) onIssues(e);
       else log(`✗ ${e.message}`);
     }
@@ -35,8 +42,12 @@ export async function dev({ dir = ".", out = ".openink-dev", port = 3000, theme,
 
   const server = http.createServer((req, res) => {
     const url = decodeURIComponent(new URL(req.url, "http://x").pathname);
-    if (url === "/__version") return void res.writeHead(200, { "Cache-Control": "no-store" }).end(version);
+    if (url === "/__version") {
+      return void res.writeHead(200, { "Content-Type": MIME[".json"], "Cache-Control": "no-store" }).end(JSON.stringify({ version, error }));
+    }
     const file = path.join(outDir, url === "/" ? "index.html" : url);
+    // no good build yet: a page that shows the errors and reloads once the spec builds
+    if (url === "/" && !fs.existsSync(file)) return void res.writeHead(200, { "Content-Type": MIME[".html"], "Cache-Control": "no-store" }).end(devErrorPage());
     if (!file.startsWith(outDir) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) return void res.writeHead(404).end("Not found");
     res.writeHead(200, { "Content-Type": MIME[path.extname(file)] || "application/octet-stream", "Cache-Control": "no-store" });
     fs.createReadStream(file).pipe(res);
@@ -65,5 +76,5 @@ export async function dev({ dir = ".", out = ".openink-dev", port = 3000, theme,
   });
 
   const close = () => { watcher.close(); server.close(); fs.rmSync(outDir, { recursive: true, force: true }); };
-  return { url: `http://localhost:${port}`, close };
+  return { url: `http://localhost:${server.address().port}`, close };
 }
