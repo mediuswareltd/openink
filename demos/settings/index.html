@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Settings · wireframe</title>
+<link rel="stylesheet" href="openink.css" />
+<link rel="stylesheet" href="theme-pastel.css" />
+
+
+<script>window.OPENINK={"languages":[],"first":"settings"};</script>
+<script src="openink.js" defer></script>
+
+</head>
+<body>
+<div class="shell">
+<header class="oi-bar">
+<a class="brand" data-go="settings">Settings</a>
+<nav data-nav="default" hidden></nav>
+
+<wired-button class="print-btn" onclick="window.print()">PDF</wired-button>
+</header>
+<main>
+<section class="screen" id="settings" data-title="settings" data-nav="default" data-width="narrow">
+<p class="screen-title">settings</p>
+
+<h1>Settings</h1>
+<div class="row">Email notifications<wired-toggle checked></wired-toggle></div>
+<div class="row">Dark mode<wired-toggle></wired-toggle></div>
+<div class="field"><label class="fl">Language</label><wired-combo selected="0"><wired-item value="0">English</wired-item><wired-item value="1">Deutsch</wired-item></wired-combo></div>
+<div class="field"><label class="fl">Plan</label><wired-radio-group selected="1"><wired-radio name="0">Free</wired-radio><wired-radio name="1">Pro</wired-radio><wired-radio name="2">Team</wired-radio></wired-radio-group></div>
+<div class="field"><label class="fl">Volume</label><wired-slider value="60"></wired-slider></div>
+<wired-button elevation="3" data-toast="Saved"><span class="btn-label">Save</span></wired-button>
+</section>
+</main>
+
+<footer class="muted center">Wireframe · not the final design</footer>
+</div>
+<div class="toast" id="toast"></div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RentDemo · wireframe</title>
+<link rel="stylesheet" href="openink.css" />
+
+
+<style>[data-l]{display:none}html[lang="en"] [data-l="en"]{display:inline}html[lang="de"] [data-l="de"]{display:inline}</style>
+<script>window.OPENINK={"languages":["en","de"],"first":"search"};</script>
+<script src="openink.js" defer></script>
+
+</head>
+<body>
+<div class="shell">
+<header class="oi-bar">
+<a class="brand" data-go="search">RentDemo</a>
+<nav data-nav="default" hidden><wired-button data-go="search"><span class="btn-label"><span data-l="en">Search</span><span data-l="de">Suche</span></span></wired-button><wired-button data-go="dashboard"><span class="btn-label"><span data-l="en">Owner login</span><span data-l="de">Anmelden</span></span></wired-button></nav><nav data-nav="owner" hidden><wired-button data-go="dashboard"><span class="btn-label">Dashboard</span></wired-button><wired-button data-go="new"><span class="btn-label">New listing</span></wired-button><wired-button data-go="search"><span class="btn-label">Public site</span></wired-button></nav>
+<div class="lang"><wired-button data-lang="en">EN</wired-button><wired-button data-lang="de">DE</wired-button></div>
+<wired-button class="print-btn" onclick="window.print()">PDF</wired-button>
+</header>
+<main>
+<section class="screen" id="search" data-title="Home + search" data-nav="default">
+<p class="screen-title"><span data-l="en">Home + search</span><span data-l="de">Startseite + Suche</span></p>
+<div class="note"><span data-l="en">Results are already showing. There is no Search button.</span><span data-l="de">Ergebnisse sind schon sichtbar. Kein Suchbutton.</span></div>
+<h1><span data-l="en">Find a property</span><span data-l="de">Immobilie finden</span></h1>
+<div class="row chips" data-chips><wired-button class="chip on" elevation="3">Rent</wired-button><wired-button class="chip" elevation="1">Buy</wired-button></div>
+<wired-card elevation="1" class="card"><div class="stack"><div class="field"><label class="fl"><span data-l="en">Location</span><span data-l="de">Ort</span></label><wired-input type="text" placeholder="Canton, PLZ or city" data-placeholder-en="Canton, PLZ or city" data-placeholder-de="Kanton, PLZ oder Stadt" value="Zürich"></wired-input></div><div class="field"><label class="fl">Property type</label><wired-combo selected="0"><wired-item value="0">Any</wired-item><wired-item value="1">Apartment</wired-item><wired-item value="2">House</wired-item><wired-item value="3">Commercial</wired-item></wired-combo></div></div></wired-card>
+<div class="grid" style="--cols:3"><wired-card elevation="1" data-go="detail" class="card click"><div class="stack"><oi-placeholder h="110" cross label="Photo"></oi-placeholder><h3>Bahnhofstr. 12</h3><p class="muted">3.5 rooms · CHF 2'450</p></div></wired-card><wired-card elevation="1" data-go="detail" class="card click"><div class="stack"><oi-placeholder h="110" cross label="Photo"></oi-placeholder><h3>Rue du Rhône 5</h3><p class="muted">2.5 rooms · CHF 1'980</p></div></wired-card><wired-card elevation="1" data-go="detail" class="card click"><div class="stack"><oi-placeholder h="110" cross label="Photo"></oi-placeholder><h3>Via Nassa 3</h3><p class="muted">House · CHF 1.25M</p></div></wired-card></div>
+</section>
+<section class="screen" id="detail" data-title="Listing page" data-nav="default">
+<p class="screen-title">Listing page</p>
+
+<h1>Bahnhofstrasse 12 · Zürich</h1>
+<div class="grid" style="--cols:2"><div class="stack"><oi-placeholder h="220" cross label="Photo gallery"></oi-placeholder><oi-placeholder h="130" label="Map" pin></oi-placeholder><div class="tabs" data-tabs><div class="row"><wired-button class="tab on" data-tab="0" elevation="3">Features</wired-button><wired-button class="tab" data-tab="1" elevation="1">Costs</wired-button></div><div class="tab-panel on" data-panel="0"><div class="stack"><ul class="oi-list"><li>Balcony</li><li>Elevator</li><li>Pets allowed</li></ul></div></div><div class="tab-panel" data-panel="1"><div class="stack"><p class="">Net rent CHF 2'200 + Nebenkosten CHF 250</p></div></div></div></div><wired-card elevation="1" class="card"><h3>Contact</h3><div class="stack"><div class="field"><label class="fl">Name</label><wired-input type="text" placeholder="Your name"></wired-input></div><div class="field"><label class="fl">Email</label><wired-input type="email" placeholder="you@email.ch"></wired-input></div><div class="field"><label class="fl">Message</label><wired-textarea rows="3" placeholder="I am interested…"></wired-textarea></div><wired-checkbox>Send me similar listings</wired-checkbox><wired-button elevation="3" data-toast="Interest sent" data-data-toast-en="Interest sent" data-data-toast-de="Anfrage gesendet"><span class="btn-label">Send interest</span></wired-button></div></wired-card></div>
+<div class="nextbar"><span><strong>Next →</strong> Owner side</span><wired-button elevation="2" data-go="dashboard">Go to dashboard →</wired-button></div>
+</section>
+<section class="screen" id="dashboard" data-title="Owner dashboard" data-nav="owner">
+<p class="screen-title">Owner dashboard</p>
+
+<div class="row between"><h1>Dashboard</h1><wired-button elevation="3" data-go="new"><span class="btn-label">+ New listing</span></wired-button></div>
+<table class="oi-table"><thead><tr><th>Listing</th><th>Status</th><th>Invoice</th><th></th></tr></thead><tbody><tr class="click" data-go="detail"><td>Bahnhofstr. 12</td><td><span class="badge on">Active</span></td><td><span class="badge wait">30d to pay</span></td><td>View →</td></tr><tr class="click" data-go="detail"><td>Rue du Rhône 5</td><td><span class="badge on">Active</span></td><td><span class="badge on">Paid</span></td><td>View →</td></tr></tbody></table>
+<wired-card elevation="1" class="card dash"><div class="stack"><div class="row">Email me on new leads<wired-toggle checked></wired-toggle></div><div class="field"><label class="fl">Billing cycle</label><wired-radio-group selected="0"><wired-radio name="0">Monthly</wired-radio><wired-radio name="1">Yearly</wired-radio></wired-radio-group></div><div class="field"><label class="fl">Photo quality</label><wired-slider value="30"></wired-slider></div></div></wired-card>
+</section>
+<section class="screen" id="new" data-title="New listing" data-nav="owner">
+<p class="screen-title">New listing</p>
+
+<h1>New listing</h1>
+<div class="grid" style="--cols:2"><div class="field"><label class="fl">Address</label><wired-input type="text" placeholder="Street, city"></wired-input></div><div class="field"><label class="fl">Net rent (CHF)</label><wired-input type="text" value="2200"></wired-input></div><div class="field"><label class="fl">Type</label><wired-combo selected="0"><wired-item value="0">Apartment</wired-item><wired-item value="1">House</wired-item><wired-item value="2">Plot</wired-item><wired-item value="3">Commercial</wired-item></wired-combo></div><oi-placeholder h="60" cross label="Upload photos (min 7)"></oi-placeholder></div>
+<wired-divider></wired-divider>
+<wired-button elevation="3" data-go="dashboard" data-toast="Published"><span class="btn-label">Publish</span></wired-button>
+</section>
+</main>
+
+<footer class="muted center">Wireframe · not the final design</footer>
+</div>
+<div class="toast" id="toast"></div>
+</body>
+</html>

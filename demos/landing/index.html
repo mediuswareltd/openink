@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lumen · wireframe</title>
+<link rel="stylesheet" href="openink.css" />
+<link rel="stylesheet" href="theme-color.css" />
+
+
+<script>window.OPENINK={"languages":[],"first":"home"};</script>
+<script src="openink.js" defer></script>
+
+</head>
+<body>
+<div class="shell">
+<header class="oi-bar">
+<a class="brand" data-go="home">Lumen</a>
+<nav data-nav="default" hidden></nav>
+
+<wired-button class="print-btn" onclick="window.print()">PDF</wired-button>
+</header>
+<main>
+<section class="screen" id="home" data-title="home" data-nav="default">
+<p class="screen-title">home</p>
+
+<div class="tone" data-tone="purple" data-fill><section class="hero"><h1>Plan trips together</h1><p class="lead">Shared maps, group votes and split bills in one app.</p><div class="stack hero-body"><wired-button elevation="3" data-toast="Hi!"><span class="btn-label">Get started</span></wired-button></div></section></div>
+<div class="grid" style="--cols:3"><wired-card elevation="1" class="card"><h3>Plan</h3><div class="stack"><p class="">Drop pins on a map.</p></div></wired-card><wired-card elevation="1" class="card"><h3>Vote</h3><div class="stack"><p class="">Pick dates together.</p></div></wired-card><wired-card elevation="1" class="card"><h3>Split</h3><div class="stack"><p class="">Settle up in a tap.</p></div></wired-card></div>
+</section>
+</main>
+
+<footer class="muted center">Wireframe · not the final design</footer>
+</div>
+<div class="toast" id="toast"></div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Acme Analytics · wireframe</title>
+<link rel="stylesheet" href="openink.css" />
+<link rel="stylesheet" href="theme-color.css" />
+<style>:root{--accent:#f97316}</style>
+
+<script>window.OPENINK={"languages":[],"first":"overview"};</script>
+<script src="openink.js" defer></script>
+
+</head>
+<body>
+<div class="shell">
+<header class="oi-bar">
+<a class="brand" data-go="overview">Acme Analytics</a>
+<nav data-nav="default" hidden><wired-button data-go="overview"><oi-icon name="chart" size="18"></oi-icon><span class="btn-label">Overview</span></wired-button><wired-button data-go="users"><oi-icon name="users" size="18"></oi-icon><span class="btn-label">Users</span></wired-button><wired-button data-go="settings"><oi-icon name="settings" size="18"></oi-icon><span class="btn-label">Settings</span></wired-button></nav>
+
+<wired-button class="print-btn" onclick="window.print()">PDF</wired-button>
+</header>
+<main>
+<section class="screen" id="overview" data-title="Overview" data-nav="default">
+<p class="screen-title">Overview</p>
+<div class="note">Charts show sample data. The date-range chips would filter every widget on the page.</div>
+<div class="row between"><h1>Overview</h1><div class="row chips" data-chips><wired-button class="chip" elevation="1">7 days</wired-button><wired-button class="chip on" elevation="3">30 days</wired-button><wired-button class="chip" elevation="1">12 months</wired-button></div></div>
+<div class="grid" style="--cols:4"><wired-card elevation="1" class="card stat"><div class="stack tight"><span class="muted">Visitors</span><div class="stat-value">12,480</div><span class="badge on">+8%</span></div></wired-card><wired-card elevation="1" class="card stat"><div class="stack tight"><span class="muted">Sign-ups</span><div class="stat-value">342</div><span class="badge on">+3%</span></div></wired-card><wired-card elevation="1" class="card stat"><div class="stack tight"><span class="muted">Churn</span><div class="stat-value">2.1%</div><span class="badge wait">+0.4 pts</span></div></wired-card><wired-card elevation="1" class="card stat"><div class="stack tight"><span class="muted">MRR</span><div class="stat-value">$8.2k</div><span class="badge off">unchanged</span></div></wired-card></div>
+<oi-chart kind="area" h="240" label="Visitors over time"></oi-chart>
+<div class="grid" style="--cols:2"><oi-chart kind="bar" h="200" label="Top pages"></oi-chart><oi-chart kind="donut" h="200" label="Traffic sources"></oi-chart></div>
+<div class="alert alert-warning"><oi-icon name="bell" size="22"></oi-icon><div><strong>Heads up</strong> Your trial ends in 3 days.</div></div>
+</section>
+<section class="screen" id="users" data-title="Users" data-nav="default">
+<p class="screen-title">Users</p>
+
+<div class="row between"><h1>Users</h1><wired-button elevation="3" data-open="invite"><oi-icon name="plus" size="18"></oi-icon><span class="btn-label">Invite user</span></wired-button></div>
+<wired-search-input placeholder="Search by name or email"></wired-search-input>
+<table class="oi-table"><thead><tr><th>User</th><th>Role</th><th>Status</th><th></th></tr></thead><tbody><tr class="click" data-go="user"><td><div class="avatar"><oi-placeholder h="36" round></oi-placeholder><div class="avatar-text"><strong>Ana Keller</strong><span class="muted">ana@acme.com</span></div></div></td><td>Admin</td><td><span class="badge on">Active</span></td><td><wired-button elevation="1"><oi-icon name="edit" size="18"></oi-icon></wired-button></td></tr><tr class="click" data-go="user"><td><div class="avatar"><oi-placeholder h="36" round></oi-placeholder><div class="avatar-text"><strong>Marc Dubois</strong><span class="muted">marc@acme.com</span></div></div></td><td>Editor</td><td><span class="badge wait">Invited</span></td><td><wired-button elevation="1"><oi-icon name="edit" size="18"></oi-icon></wired-button></td></tr><tr class="click" data-go="user"><td><div class="avatar"><oi-placeholder h="36" round></oi-placeholder><div class="avatar-text"><strong>Lea Meier</strong><span class="muted">lea@acme.com</span></div></div></td><td>Viewer</td><td><span class="badge off">Suspended</span></td><td><wired-button elevation="1"><oi-icon name="edit" size="18"></oi-icon></wired-button></td></tr></tbody></table>
+<div class="row pagination"><wired-button data-toast="Previous page"><oi-icon name="arrow-left" size="18"></oi-icon></wired-button><div class="row" data-chips><wired-button class="chip on" elevation="3">1</wired-button><wired-button class="chip" elevation="1">2</wired-button><wired-button class="chip" elevation="1">3</wired-button><wired-button class="chip" elevation="1">4</wired-button></div><wired-button data-toast="Next page"><oi-icon name="arrow-right" size="18"></oi-icon></wired-button></div>
+<div class="modal" data-modal="invite" data-width="medium"><div class="modal-backdrop" data-close></div><wired-card elevation="3" class="modal-card"><div class="row between"><h3>Invite a user</h3><wired-button data-close><oi-icon name="close" size="18"></oi-icon></wired-button></div><div class="stack"><div class="field"><label class="fl">Email</label><wired-input type="email" placeholder="name@company.com"></wired-input></div><div class="field"><label class="fl">Role</label><wired-combo selected="1"><wired-item value="0">Admin</wired-item><wired-item value="1">Editor</wired-item><wired-item value="2">Viewer</wired-item></wired-combo></div><div class="row"><wired-button elevation="3" data-toast="Invitation sent" data-close><oi-icon name="send" size="18"></oi-icon><span class="btn-label">Send invite</span></wired-button><wired-button elevation="1" data-close><span class="btn-label">Cancel</span></wired-button></div></div></wired-card></div>
+</section>
+<section class="screen" id="user" data-title="Edit user" data-nav="default" data-width="medium">
+<p class="screen-title">Edit user</p>
+
+<nav class="crumbs"><span>Users</span><span class="sep">/</span><span class="current">Ana Keller</span></nav>
+<div class="avatar"><oi-placeholder h="72" round></oi-placeholder><div class="avatar-text"><strong>Ana Keller</strong><span class="muted">Admin</span></div></div>
+<div class="tabs" data-tabs><div class="row"><wired-button class="tab on" data-tab="0" elevation="3">Profile</wired-button><wired-button class="tab" data-tab="1" elevation="1">Permissions</wired-button><wired-button class="tab" data-tab="2" elevation="1">Activity</wired-button></div><div class="tab-panel on" data-panel="0"><div class="stack"><div class="field"><label class="fl">Name</label><wired-input type="text" value="Ana Keller"></wired-input></div><div class="field"><label class="fl">Email</label><wired-input type="text" value="ana@acme.com"></wired-input></div><div class="field"><label class="fl">Role</label><wired-combo selected="0"><wired-item value="0">Admin</wired-item><wired-item value="1">Editor</wired-item><wired-item value="2">Viewer</wired-item></wired-combo></div></div></div><div class="tab-panel" data-panel="1"><div class="stack"><wired-checkbox checked>Manage billing</wired-checkbox><wired-checkbox>Export data</wired-checkbox><wired-checkbox checked>Invite users</wired-checkbox></div></div><div class="tab-panel" data-panel="2"><div class="stack"><oi-chart kind="line" h="160" label="Logins"></oi-chart></div></div></div>
+<div class="row"><wired-button elevation="3" data-go="users" data-toast="Saved"><oi-icon name="check" size="18"></oi-icon><span class="btn-label">Save</span></wired-button><wired-button elevation="1" data-go="users"><span class="btn-label">Cancel</span></wired-button></div>
+</section>
+<section class="screen" id="settings" data-title="Settings" data-nav="default" data-width="medium">
+<p class="screen-title">Settings</p>
+
+<h1>Settings</h1>
+<wired-card elevation="1" class="card"><h3>Notifications</h3><div class="stack"><div class="row">Weekly report by email<wired-toggle checked></wired-toggle></div><div class="row">Alert when traffic drops<wired-toggle></wired-toggle></div><div class="field"><label class="fl">Digest</label><wired-radio-group selected="1"><wired-radio name="0">Daily</wired-radio><wired-radio name="1">Weekly</wired-radio><wired-radio name="2">Never</wired-radio></wired-radio-group></div></div></wired-card>
+<wired-card elevation="1" class="card"><h3>Storage</h3><div class="stack"><div class="field"><label class="fl">7.2 GB of 10 GB used</label><wired-progress value="72" percentage></wired-progress></div><wired-button elevation="3"><oi-icon name="arrow-right" size="18"></oi-icon><span class="btn-label">Upgrade plan</span></wired-button></div></wired-card>
+<div class="tone" data-tone="red" data-fill><wired-card elevation="1" class="card"><h3>Danger zone</h3><div class="stack"><p class="">Deleting the workspace cannot be undone.</p><wired-button elevation="1" data-toast="Are you sure?"><oi-icon name="trash" size="18"></oi-icon><span class="btn-label">Delete workspace</span></wired-button></div></wired-card></div>
+</section>
+</main>
+
+<footer class="muted center">Wireframe · not the final design</footer>
+</div>
+<div class="toast" id="toast"></div>
+</body>
+</html>

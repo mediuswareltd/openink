@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Onboarding · wireframe</title>
+<link rel="stylesheet" href="openink.css" />
+
+
+
+<script>window.OPENINK={"languages":[],"first":"account"};</script>
+<script src="openink.js" defer></script>
+
+</head>
+<body>
+<div class="shell">
+<header class="oi-bar">
+<a class="brand" data-go="account">Onboarding</a>
+<nav data-nav="default" hidden></nav>
+
+<wired-button class="print-btn" onclick="window.print()">PDF</wired-button>
+</header>
+<main>
+<section class="screen" id="account" data-title="account" data-nav="default" data-width="narrow">
+<p class="screen-title">account</p>
+
+<ol class="steps"><li class="on"><span class="dot">1</span>Account</li><li class=""><span class="dot">2</span>Profile</li><li class=""><span class="dot">3</span>Done</li></ol>
+<div class="field"><label class="fl">Email</label><wired-input type="text"></wired-input></div>
+<wired-button elevation="3" data-go="profile"><span class="btn-label">Next</span></wired-button>
+</section>
+<section class="screen" id="profile" data-title="profile" data-nav="default" data-width="narrow">
+<p class="screen-title">profile</p>
+
+<ol class="steps"><li class="done"><span class="dot"><oi-icon name="check" size="14"></oi-icon></span>Account</li><li class="on"><span class="dot">2</span>Profile</li><li class=""><span class="dot">3</span>Done</li></ol>
+<div class="field"><label class="fl">Full name</label><wired-input type="text"></wired-input></div>
+<wired-button elevation="3" data-go="done"><span class="btn-label">Finish</span></wired-button>
+</section>
+<section class="screen" id="done" data-title="done" data-nav="default" data-width="narrow">
+<p class="screen-title">done</p>
+
+<ol class="steps"><li class="done"><span class="dot"><oi-icon name="check" size="14"></oi-icon></span>Account</li><li class="done"><span class="dot"><oi-icon name="check" size="14"></oi-icon></span>Profile</li><li class="on"><span class="dot">3</span>Done</li></ol>
+<div class="alert alert-success"><oi-icon name="check" size="22"></oi-icon><div>All set!</div></div>
+<a class="oi-link" data-go="account">Start over</a>
+</section>
+</main>
+
+<footer class="muted center">Wireframe · not the final design</footer>
+</div>
+<div class="toast" id="toast"></div>
+</body>
+</html>

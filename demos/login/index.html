@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Acme · wireframe</title>
+<link rel="stylesheet" href="openink.css" />
+
+
+
+<script>window.OPENINK={"languages":[],"first":"login"};</script>
+<script src="openink.js" defer></script>
+
+</head>
+<body>
+<div class="shell">
+<header class="oi-bar">
+<a class="brand" data-go="login">Acme</a>
+<nav data-nav="default" hidden></nav>
+
+<wired-button class="print-btn" onclick="window.print()">PDF</wired-button>
+</header>
+<main>
+<section class="screen" id="login" data-title="login" data-nav="default" data-width="narrow">
+<p class="screen-title">login</p>
+
+<wired-card elevation="1" class="card"><div class="stack"><h1>Welcome back</h1><div class="field"><label class="fl">Email</label><wired-input type="email"></wired-input></div><div class="field"><label class="fl">Password</label><wired-input type="password"></wired-input></div><wired-checkbox>Remember me</wired-checkbox><wired-button elevation="3" data-go="home"><span class="btn-label">Log in</span></wired-button><a class="oi-link" data-toast="Link sent">Forgot password?</a></div></wired-card>
+</section>
+<section class="screen" id="home" data-title="home" data-nav="default">
+<p class="screen-title">home</p>
+
+<div class="alert alert-success"><oi-icon name="check" size="22"></oi-icon><div>You are logged in.</div></div>
+</section>
+</main>
+
+<footer class="muted center">Wireframe · not the final design</footer>
+</div>
+<div class="toast" id="toast"></div>
+</body>
+</html>

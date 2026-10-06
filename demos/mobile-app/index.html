@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Notes · wireframe</title>
+<link rel="stylesheet" href="openink.css" />
+<link rel="stylesheet" href="theme-pastel.css" />
+
+
+<script>window.OPENINK={"languages":[],"first":"notes"};</script>
+<script src="openink.js" defer></script>
+
+</head>
+<body>
+<div class="shell">
+<header class="oi-bar">
+<a class="brand" data-go="notes">Notes</a>
+<nav data-nav="default" hidden></nav>
+
+<wired-button class="print-btn" onclick="window.print()">PDF</wired-button>
+</header>
+<main>
+<section class="screen" id="notes" data-title="notes" data-nav="default">
+<p class="screen-title">notes</p>
+
+<div class="device device-phone"><wired-card elevation="2" class="device-frame"><div class="device-notch"></div><div class="stack device-body"><h2>My notes</h2><wired-card elevation="1" data-go="note" class="card click"><div class="stack"><p class="">Shopping list</p></div></wired-card><wired-card elevation="1" data-go="note" class="card click"><div class="stack"><p class="">Trip ideas</p></div></wired-card><div class="tabbar"><wired-button class="tab-item on" elevation="3" data-go="notes"><oi-icon name="home" size="22" filled></oi-icon><span class="tab-label">Notes</span></wired-button><wired-button class="tab-item" elevation="1" data-go="note"><oi-icon name="plus" size="22"></oi-icon><span class="tab-label">New</span></wired-button></div></div></wired-card></div>
+</section>
+<section class="screen" id="note" data-title="note" data-nav="default">
+<p class="screen-title">note</p>
+
+<div class="device device-phone"><wired-card elevation="2" class="device-frame"><div class="device-notch"></div><div class="stack device-body"><a class="oi-link" data-go="notes">← Back</a><div class="field"><label class="fl">Shopping list</label><wired-textarea rows="6"></wired-textarea></div><wired-button elevation="3" data-go="notes"><span class="btn-label">Save</span></wired-button></div></wired-card></div>
+</section>
+</main>
+
+<footer class="muted center">Wireframe · not the final design</footer>
+</div>
+<div class="toast" id="toast"></div>
+</body>
+</html>

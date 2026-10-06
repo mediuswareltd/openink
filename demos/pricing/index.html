@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pricing · wireframe</title>
+<link rel="stylesheet" href="openink.css" />
+<link rel="stylesheet" href="theme-color.css" />
+
+
+<script>window.OPENINK={"languages":[],"first":"pricing"};</script>
+<script src="openink.js" defer></script>
+
+</head>
+<body>
+<div class="shell">
+<header class="oi-bar">
+<a class="brand" data-go="pricing">Pricing</a>
+<nav data-nav="default" hidden></nav>
+
+<wired-button class="print-btn" onclick="window.print()">PDF</wired-button>
+</header>
+<main>
+<section class="screen" id="pricing" data-title="pricing" data-nav="default">
+<p class="screen-title">pricing</p>
+
+<h1>Simple pricing</h1>
+<div class="grid" style="--cols:3"><wired-card elevation="1" class="card"><div class="stack"><h3>Free</h3><h2>$0</h2><ul class="oi-list"><li>1 project</li><li>Community help</li></ul><wired-button elevation="1" data-toast="Welcome!"><span class="btn-label">Start</span></wired-button></div></wired-card><div class="tone" data-tone="purple" data-fill><wired-card elevation="1" class="card"><div class="stack"><span class="badge wait">Popular</span><h3>Pro</h3><h2>$12</h2><ul class="oi-list"><li>Unlimited projects</li><li>PDF export</li></ul><wired-button elevation="3"><span class="btn-label">Buy Pro</span></wired-button></div></wired-card></div><wired-card elevation="1" class="card"><div class="stack"><h3>Team</h3><h2>$49</h2><ul class="oi-list"><li>Everything in Pro</li><li>SSO</li></ul><wired-button elevation="1"><span class="btn-label">Contact us</span></wired-button></div></wired-card></div>
+</section>
+</main>
+
+<footer class="muted center">Wireframe · not the final design</footer>
+</div>
+<div class="toast" id="toast"></div>
+</body>
+</html>

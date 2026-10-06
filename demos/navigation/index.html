@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Shop · wireframe</title>
+<link rel="stylesheet" href="openink.css" />
+
+
+
+<script>window.OPENINK={"languages":[],"first":"home"};</script>
+<script src="openink.js" defer></script>
+
+</head>
+<body>
+<div class="shell">
+<header class="oi-bar">
+<a class="brand" data-go="home">Shop</a>
+<nav data-nav="default" hidden><wired-button data-go="home"><oi-icon name="home" size="18"></oi-icon><span class="btn-label">Home</span></wired-button><wired-button data-go="cart"><oi-icon name="cart" size="18"></oi-icon><span class="btn-label">Cart</span></wired-button></nav>
+
+<wired-button class="print-btn" onclick="window.print()">PDF</wired-button>
+</header>
+<main>
+<section class="screen" id="home" data-title="home" data-nav="default">
+<p class="screen-title">home</p>
+
+<h1>New arrivals</h1>
+<wired-card elevation="1" data-go="cart" class="card click"><div class="stack"><oi-placeholder h="100" cross label="Blue shirt"></oi-placeholder><h3>Blue shirt · $29</h3></div></wired-card>
+</section>
+<section class="screen" id="cart" data-title="cart" data-nav="default">
+<p class="screen-title">cart</p>
+
+<h1>Your cart</h1>
+<p class="">1 × Blue shirt</p>
+<wired-button elevation="1" data-go="home"><span class="btn-label">Back to shop</span></wired-button>
+</section>
+</main>
+
+<footer class="muted center">Wireframe · not the final design</footer>
+</div>
+<div class="toast" id="toast"></div>
+</body>
+</html>

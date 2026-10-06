@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Acme Analytics · wireframe</title>
+<link rel="stylesheet" href="openink.css" />
+<link rel="stylesheet" href="theme-color.css" />
+
+
+<script>window.OPENINK={"languages":[],"first":"overview"};</script>
+<script src="openink.js" defer></script>
+
+</head>
+<body>
+<div class="shell">
+<header class="oi-bar">
+<a class="brand" data-go="overview">Acme Analytics</a>
+<nav data-nav="default" hidden><wired-button data-go="overview"><oi-icon name="chart" size="18"></oi-icon><span class="btn-label">Overview</span></wired-button><wired-button data-toast="Users screen"><oi-icon name="users" size="18"></oi-icon><span class="btn-label">Users</span></wired-button><wired-button data-open="invite"><oi-icon name="plus" size="18"></oi-icon><span class="btn-label">Invite</span></wired-button></nav>
+
+<wired-button class="print-btn" onclick="window.print()">PDF</wired-button>
+</header>
+<main>
+<section class="screen" id="overview" data-title="overview" data-nav="default">
+<p class="screen-title">overview</p>
+
+<div class="row between"><h1>Overview</h1><div class="row chips" data-chips><wired-button class="chip" elevation="1">Week</wired-button><wired-button class="chip on" elevation="3">Month</wired-button><wired-button class="chip" elevation="1">Year</wired-button></div></div>
+<div class="grid" style="--cols:4"><wired-card elevation="1" class="card stat"><div class="stack tight"><span class="muted">Visitors</span><div class="stat-value">12,480</div><span class="badge on">+8%</span></div></wired-card><wired-card elevation="1" class="card stat"><div class="stack tight"><span class="muted">Sign-ups</span><div class="stat-value">342</div><span class="badge on">+3%</span></div></wired-card><wired-card elevation="1" class="card stat"><div class="stack tight"><span class="muted">Churn</span><div class="stat-value">2.1%</div><span class="badge wait">+0.4</span></div></wired-card><wired-card elevation="1" class="card stat"><div class="stack tight"><span class="muted">MRR</span><div class="stat-value">$8.2k</div><span class="badge off">±0</span></div></wired-card></div>
+<oi-chart kind="area" h="240" label="Visitors over time"></oi-chart>
+<div class="grid" style="--cols:2"><oi-chart kind="bar" h="200" label="Top pages"></oi-chart><oi-chart kind="donut" h="200" label="Traffic sources"></oi-chart></div>
+<div class="alert alert-warning"><oi-icon name="bell" size="22"></oi-icon><div>Your trial ends in 3 days.</div></div>
+</section>
+</main>
+<div class="modal" data-modal="invite" data-width="medium"><div class="modal-backdrop" data-close></div><wired-card elevation="3" class="modal-card"><div class="row between"><h3>Invite a teammate</h3><wired-button data-close><oi-icon name="close" size="18"></oi-icon></wired-button></div><div class="stack"><div class="field"><label class="fl">Email</label><wired-input type="text" placeholder="sam@team.com"></wired-input></div><wired-button elevation="3" data-close><span class="btn-label">Send invite</span></wired-button></div></wired-card></div>
+<footer class="muted center">Wireframe · not the final design</footer>
+</div>
+<div class="toast" id="toast"></div>
+</body>
+</html>

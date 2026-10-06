@@ -1,0 +1,31 @@
+/* dark: for dashboards, dev tools, media apps. */
+:root {
+  --ink: #e8eaf0;
+  --paper: #14161c;
+  --muted: #8b90a0;
+  --line: #2f3340;
+  --accent: #ff7a59;
+  --note: #4a4320;
+  --card-bg: #1c1f28;
+  --ok: #4ade80;
+  --oi-stroke: #6b7080;
+  --oi-fill: #1f232d;
+  --oi-line: #3a3f4e;
+  --oi-chart: #ff7a59;
+  --wired-toggle-on-color: #ff7a59;
+  --wired-toggle-off-color: #6b7080;
+  --wired-slider-knob-color: #ff7a59;
+  --wired-slider-bar-color: #8b90a0;
+  --wired-progress-color: #ff7a59;
+  --wired-radio-icon-color: #e8eaf0;
+  --wired-checkbox-icon-color: #e8eaf0;
+  --wired-item-selected-bg: #2f3340;
+  --wired-item-selected-color: #fff;
+  --tone-bg: #262a36;
+}
+.note { color: #f5e9a8; }
+wired-button[elevation="3"] { background: #ff7a59; color: #14161c; }
+wired-input, wired-textarea, wired-search-input { color: var(--ink); }
+wired-combo { border-color: #4a4f60; }
+.modal-backdrop { background: rgba(0, 0, 0, .65); }
+.alert { background: color-mix(in srgb, var(--k) 16%, var(--paper)); }
