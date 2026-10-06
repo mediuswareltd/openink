@@ -138,3 +138,32 @@ test("dev passes the warnings of each build to onWarnings", async () => {
   assert.equal(warnings.length, 1);
   assert.equal(warnings[0].path, "colour");
 });
+
+test("dev reports a failed build to the browser until the spec builds again", async () => {
+  const { dev } = await import("../src/dev.js");
+  const dir = tmp();
+  const spec = path.join(dir, "spec.yaml");
+  fs.writeFileSync(spec, "name: x\nscreens:\n  - { id: a, blocks: [{ type: buton }] }\n");
+  const server = await dev({ dir, port: 0, log: () => {} });
+  const status = async () => (await fetch(`${server.url}/__version`)).json();
+  const until = async (ok) => {
+    for (let i = 0; i < 50; i++, await new Promise((r) => setTimeout(r, 100))) {
+      const s = await status();
+      if (ok(s)) return s;
+    }
+    assert.fail("the dev server did not rebuild");
+  };
+  try {
+    // no good build yet: the page is only the poller, which shows the error
+    const page = await (await fetch(server.url)).text();
+    assert.match(page, /__version/);
+    const failed = await status();
+    assert.match(failed.error, /screens\[0\]\.blocks\[0\]\.type: .*buton/);
+
+    fs.writeFileSync(spec, "name: x\nscreens:\n  - { id: a, blocks: [{ type: button, label: Go }] }\n");
+    const fixed = await until((s) => s.error === null);
+    assert.notEqual(fixed.version, failed.version);
+  } finally {
+    server.close();
+  }
+});
