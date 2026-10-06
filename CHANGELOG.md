@@ -4,6 +4,10 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ## [Unreleased]
 
+### Fixed
+
+- `openink dev` prints each warning with its path and message, not only how many there are (#22).
+
 ## [0.3.0] - 2026-10-05
 
 ### Added
