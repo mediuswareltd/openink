@@ -13,7 +13,7 @@ const MIME = {
 const MAX_PORT_TRIES = 10;
 
 /** A failed build as plain text, for the overlay in the browser. */
-const describe = (e) => [e.message, ...(e.issues || []).map((i) => `  ${i.path || "spec"}: ${i.message}`)].join("\n");
+const describe = (e) => [e.message, ...(e.issues || []).map((i) => `  ${i.loc ? `${i.loc} ` : ""}${i.path || "spec"}: ${i.message}`)].join("\n");
 
 /**
  * Serve the project with live reload: rebuilds when files change and the browser refreshes itself.

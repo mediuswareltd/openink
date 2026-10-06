@@ -19,17 +19,46 @@ export class SpecError extends Error {
   }
 }
 
-/** Find and parse the spec in a project directory. */
+/** The source range of a validator path such as `screens[3].blocks[2].type`, or of its nearest existing parent. */
+function rangeAt(doc, issuePath) {
+  const keys = (issuePath.match(/[^.[\]]+/g) || []).map((k) => (/^\d+$/.test(k) ? Number(k) : k));
+  let node = doc.contents;
+  let range = node?.range;
+  for (const key of keys) {
+    if (YAML.isAlias(node)) node = node.resolve(doc);
+    if (YAML.isMap(node)) {
+      // point at the key (`type:`), which is where an editor should put the cursor
+      const pair = node.items.find((p) => String(YAML.isScalar(p.key) ? p.key.value : p.key) === String(key));
+      if (!pair) break;
+      range = pair.key?.range ?? range;
+      node = pair.value;
+    } else if (YAML.isSeq(node) && typeof key === "number" && node.items[key]) {
+      node = node.items[key];
+      range = node.range ?? range;
+    } else break;
+  }
+  return range;
+}
+
+/**
+ * Find and parse the spec in a project directory.
+ * `locate(issue)` returns the issue with `loc` set to `file:line:col` (relative to the working directory).
+ */
 export function loadSpec(dir = ".") {
   const file = SPEC_FILES.map((f) => path.join(dir, f)).find(fs.existsSync);
   if (!file) throw new SpecError(`No spec.yaml found in ${path.resolve(dir)}. Run \`openink init\` to create one.`);
-  let spec;
-  try {
-    spec = YAML.parse(fs.readFileSync(file, "utf8"));
-  } catch (e) {
-    throw new SpecError(`${path.basename(file)} is not valid YAML: ${e.message}`);
-  }
-  return { spec, file };
+  const lineCounter = new YAML.LineCounter();
+  const doc = YAML.parseDocument(fs.readFileSync(file, "utf8"), { lineCounter });
+  if (doc.errors.length) throw new SpecError(`${path.basename(file)} is not valid YAML: ${doc.errors[0].message}`);
+  const spec = doc.toJS();
+  const name = path.relative(process.cwd(), file) || path.basename(file);
+  const locate = (issue) => {
+    const range = rangeAt(doc, issue.path || "");
+    if (!range) return issue;
+    const { line, col } = lineCounter.linePos(range[0]);
+    return { ...issue, loc: `${name}:${line}:${col}` };
+  };
+  return { spec, file, locate };
 }
 
 let runtimeCache;
@@ -44,7 +73,7 @@ async function bundleRuntime() {
 /**
  * Build a project into static files.
  * @param {{ dir?: string, out?: string, dev?: boolean, theme?: string }} [opts]  `theme` overrides the spec's theme
- * @returns {Promise<{ outDir: string, spec: object, warnings: {path:string,message:string}[] }>}
+ * @returns {Promise<{ outDir: string, spec: object, warnings: {path:string,message:string,loc?:string}[] }>}
  */
 export async function build({ dir = ".", out = "dist", dev = false, theme } = {}) {
   const projectDir = path.resolve(dir);
@@ -53,14 +82,16 @@ export async function build({ dir = ".", out = "dist", dev = false, theme } = {}
     throw new Error(`Output directory ${outDir} would contain the project itself. Choose a different --out.`);
   }
 
-  const { spec } = loadSpec(projectDir);
+  const { spec, locate } = loadSpec(projectDir);
   if (theme) spec.theme = theme;
-  const { errors, warnings } = validate(spec);
+  const result = validate(spec);
+  const errors = result.errors;
   const customTheme = typeof spec?.theme === "string" && !isPreset(spec.theme) && spec.theme.endsWith(".css");
   if (customTheme && !fs.existsSync(path.join(projectDir, spec.theme))) {
     errors.push({ path: "theme", message: `Theme file "${spec.theme}" not found next to the spec.` });
   }
-  if (errors.length) throw new SpecError(`${errors.length} problem${errors.length > 1 ? "s" : ""} in the spec`, errors);
+  if (errors.length) throw new SpecError(`${errors.length} problem${errors.length > 1 ? "s" : ""} in the spec`, errors.map(locate));
+  const warnings = result.warnings.map(locate);
 
   fs.rmSync(outDir, { recursive: true, force: true });
   fs.mkdirSync(outDir, { recursive: true });

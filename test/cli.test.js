@@ -167,3 +167,31 @@ test("dev reports a failed build to the browser until the spec builds again", as
     server.close();
   }
 });
+
+test("problems carry the file, line and column of the spec", () => {
+  const dir = tmp();
+  fs.writeFileSync(
+    path.join(dir, "spec.yaml"),
+    [
+      "name: x",
+      "colour: red",
+      "x-card: &card",
+      "  type: card",
+      "  children: [{ type: txt }]",
+      "screens:",
+      "  - id: a",
+      "    blocks:",
+      "      - type: buton",
+      "      - *card",
+      "  - title: no id",
+      "",
+    ].join("\n"),
+  );
+  const { stderr } = cli(["validate"], dir);
+  assert.match(stderr, /warn {2}spec\.yaml:2:1 colour: Unknown top-level field/);
+  assert.match(stderr, /error spec\.yaml:9:9 screens\[0\]\.blocks\[0\]\.type: Unknown block type "buton"/);
+  // through an alias, the location is where the anchored block is defined
+  assert.match(stderr, /error spec\.yaml:5:16 screens\[0\]\.blocks\[1\]\.children\[0\]\.type: Unknown block type "txt"/);
+  // a missing field points at its parent
+  assert.match(stderr, /error spec\.yaml:11:5 screens\[1\]\.id:/);
+});
