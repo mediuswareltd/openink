@@ -1,6 +1,6 @@
 {
   "name": "openink",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Describe screens in YAML, get a clickable hand-drawn wireframe prototype (static HTML, PDF, PNG). Built on wired-elements and RoughJS.",
   "keywords": [
     "wireframe",
